@@ -1,5 +1,3 @@
-![Image](Branding/Images/smart_pillow_logo.png?raw=true){ style="dispaly: block; margin: 0 auto" }
-
 <p align="center">
     <img src="Branding/Images/smart_pillow_logo.png" alt="Smart Pillow Icon"/>
 </p>
