@@ -15,4 +15,4 @@ This application is currently under heavy contruction.
 - Quoc Nhan
 
 ### Powered By
-[![Footer](https://d585tldpucybw.cloudfront.net/sfimages/default-source/productsimages/justmock/justmock__net_770.png?sfvrsn=b4522579_1)](https://dotnet.microsoft.com/download)
+[![Footer](https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3AXamarin_logo_and_wordmark.png&psig=AOvVaw2h4T66xSX0ykAj31OROt2B&ust=1592250119333000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPi7-IiIguoCFQAAAAAdAAAAABAD)](https://dotnet.microsoft.com/apps/xamarin/xamarin-forms)
