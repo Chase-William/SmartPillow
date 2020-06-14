@@ -1,8 +1,11 @@
-![Image](Branding/Images/smart_pillow_logo.png?raw=true)
+![Image](Branding/Images/smart_pillow_logo.png?raw=true){ style="dispaly: block; margin: 0 auto" }
+
+## Smart Pillow
+This app is designed to allow users to interface with their Smart Pillow pillow.
 
 **Version 1.0.0** - [Change Log](CHANGELOG.md)
 
-This app is designed to allow users to interface with their Smart Pillow pillow.
+This application is currently under heavy contruction.
 
 ## CONRTIBUTORS
 ---
