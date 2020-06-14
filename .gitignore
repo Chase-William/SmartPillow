@@ -1,0 +1,7 @@
+#Excluded Dirs
+SmartPillow/SmartPillow/bin
+SmartPillow/SmartPillow/obj
+SmartPillow/SmartPillow.Android/bin
+SmartPillow/SmartPillow.Android/obj
+SmartPillow/SmartPillow.iOS/bin
+SmartPillow/SmartPillow.iOS/obj
