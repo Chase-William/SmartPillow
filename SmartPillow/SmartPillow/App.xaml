@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              x:Class="SmartPillow.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Color x:Key="GradientBlue">#5D8298</Color>
+            <Color x:Key="GradientPurp">#7F6A96</Color>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
