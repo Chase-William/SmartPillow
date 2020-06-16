@@ -37,6 +37,7 @@
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
                     <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
+                    <nav_items:MasterPageImgItem Title="Alarms" TargetType="{x:Type pages:AlarmsPage}"/>
                 </x:Array>
             </ListView.ItemsSource>
 
