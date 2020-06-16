@@ -26,6 +26,8 @@
         <skia:SKCanvasView x:Name="SKCanvas"
                            PaintSurface="SKCanvas_PaintSurface"/>
 
+        <Image Source="cloud.png" VerticalOptions="CenterAndExpand" Aspect="Fill"/>
+        
         <ListView x:Name="MasterPageNavListView"
                   x:FieldModifier="public" 
                   Margin="0,100,0,0"
