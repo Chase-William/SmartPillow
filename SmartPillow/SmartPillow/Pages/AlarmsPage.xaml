@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
-             x:Class="SmartPillow.Pages.AlarmsPage">
+             x:Class="SmartPillow.Pages.AlarmsPage"
+             Title="Alarms">
 
     <Grid>
 
