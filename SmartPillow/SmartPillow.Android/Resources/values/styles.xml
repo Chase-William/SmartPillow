@@ -20,7 +20,9 @@
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
-
+	  <!-- transparent for the status bar -->
+	 <item name="android:windowTranslucentStatus">true</item>
+	  
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>
 
