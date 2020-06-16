@@ -31,7 +31,9 @@
         <ListView x:Name="MasterPageNavListView"
                   x:FieldModifier="public" 
                   Margin="0,100,0,0"
-                  HasUnevenRows="True">
+                  HasUnevenRows="True"
+                  SeparatorColor="Transparent"
+                  >
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
                     <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
