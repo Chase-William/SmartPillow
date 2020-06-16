@@ -17,8 +17,8 @@
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <!-- Main page is our default home page -->
-                <pages:MainPage/>
+                <!-- home page is our default home page -->
+                <pages:HomePage/>
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>
