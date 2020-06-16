@@ -1,6 +1,10 @@
 ﻿using Xamarin.Forms;
 using SmartPillow.Pages.Nav;
 
+/// <summary>
+///     We use Roboto font as our primary font. 
+/// </summary>
+[assembly: ExportFont("Roboto-Medium.ttf", Alias = "Roboto")] 
 namespace SmartPillow
 {
     public partial class App : Application
