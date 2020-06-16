@@ -27,28 +27,40 @@
                            PaintSurface="SKCanvas_PaintSurface"/>
 
         <Image Source="cloud.png" VerticalOptions="CenterAndExpand" Aspect="Fill"/>
-        
-        <ListView x:Name="MasterPageNavListView"
-                  x:FieldModifier="public" 
-                  Margin="0,100,0,0"
-                  HasUnevenRows="True"
-                  SeparatorColor="Transparent"
-                  >
-            <ListView.ItemsSource>
-                <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
-                    <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
-                    <nav_items:MasterPageImgItem Title="Alarms" TargetType="{x:Type pages:AlarmsPage}"/>
-                </x:Array>
-            </ListView.ItemsSource>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <!-- Cell for the menu items -->
-                    <ViewCell>
-                        <Label Style="{StaticResource NavLabelStyle}"/>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Image is in the header area - Will insert an image later -->
+            <Image BackgroundColor="Black" Opacity=".5"/>
+            
+            <ListView x:Name="MasterPageNavListView"
+                  x:FieldModifier="public"
+                  Grid.Row="1"
+                  Grid.RowSpan="2"
+                  HasUnevenRows="True"
+                  SeparatorColor="Transparent">
+
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
+                        <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
+                        <nav_items:MasterPageImgItem Title="Alarms" TargetType="{x:Type pages:AlarmsPage}"/>
+                    </x:Array>
+                </ListView.ItemsSource>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Cell for the menu items -->
+                        <ViewCell>
+                            <Label Style="{StaticResource NavLabelStyle}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </ContentPage>
