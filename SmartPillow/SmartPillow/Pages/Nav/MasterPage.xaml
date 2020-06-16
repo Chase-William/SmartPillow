@@ -34,7 +34,7 @@
                   HasUnevenRows="True">
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
-                    <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:MainPage}"/>
+                    <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
                 </x:Array>
             </ListView.ItemsSource>
 
