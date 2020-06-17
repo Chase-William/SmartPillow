@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:SmartPillow.Pages"
+             xmlns:timed_alarm_pages="clr-namespace:SmartPillow.Pages.TimedAlarmPages"
              xmlns:nav_items="clr-namespace:SmartPillow.Pages.Nav"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="SmartPillow.Pages.Nav.MasterPage"
@@ -49,6 +50,7 @@
                     <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
                         <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
                         <nav_items:MasterPageImgItem Title="Alarms" TargetType="{x:Type pages:AlarmsPage}"/>
+                        <nav_items:MasterPageImgItem Title="Alarms" TargetType="{x:Type timed_alarm_pages:TimedAlarmsPage}"/>
                     </x:Array>
                 </ListView.ItemsSource>
 

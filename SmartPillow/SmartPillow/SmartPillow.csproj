@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SmartPillowLib\SmartPillowLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Pages\AlarmsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -38,11 +42,35 @@
     <EmbeddedResource Update="Pages\Nav\TransparentNavigationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TimedAlarmPages\CreateTimedAlarmPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TimedAlarmPages\PhoneAlarmSettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TimedAlarmPages\PillowAlarmSettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TimedAlarmPages\SnoozeSettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TimedAlarmPages\TimedAlarmsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\TimedAlarmPages\CreateTimedAlarmPage.xaml.cs">
+      <DependentUpon>CreateTimedAlarmPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\TimedAlarmPages\SnoozeSettingsPage.xaml.cs">
+      <DependentUpon>SnoozeSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\TimedAlarmPages\TimedAlarmsPage.xaml.cs">
+      <DependentUpon>TimedAlarmsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

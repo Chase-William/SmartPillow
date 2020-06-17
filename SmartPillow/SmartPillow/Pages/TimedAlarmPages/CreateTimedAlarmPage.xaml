@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib"
+             xmlns:alarm_prop="clr-namespace:SmartPillow.Pages.TimedAlarmPages" xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             mc:Ignorable="d"
+             x:Name="page"
+             x:Class="SmartPillow.Pages.TimedAlarmPages.CreateTimedAlarmPage">
+
+    <ContentPage.BindingContext>
+        <vm:CreateTimedAlarmVM x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Line Seperator -->
+            <Style TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="20"/>
+                <Setter Property="Color" Value="Blue"/>
+            </Style>
+            <!-- Aligns all switch controls -->
+            <Style TargetType="Switch">
+                <Setter Property="Grid.RowSpan" Value="2"/>
+                <Setter Property="Grid.Column" Value="1"/>
+            </Style>
+            <!-- Property text style -->
+            <Style x:Key="PropertyLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="BackgroundColor" Value="Yellow"/>
+            </Style>
+            <!-- Value of a given property text style -->
+            <Style x:Key="PropValueLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextColor" Value="{StaticResource PropertyValueTxtColor}"/>
+                <Setter Property="Grid.Row" Value="1"/>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="Padding" Value="15,5"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"
+                     Priority="0"
+                     Order="Primary"
+                     IconImageSource="check_mark"
+                     Command="{Binding SaveAlarmCMD}"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+
+        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+
+        <Frame Margin="20"
+               CornerRadius="10">
+            <StackLayout>
+                <TimePicker Format="T"/>
+                <Entry/>
+
+                <!-- Pillow -->
+                <Grid BackgroundColor="Red">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prop Title -->
+                    <Label Style="{StaticResource PropertyLabel}" Text="Pillow"/>
+                    <!-- Prop Value Text -->
+                    <Label Style="{StaticResource PropValueLabel}" Text="Vibration Only" BackgroundColor="Black"/>
+                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                    <Switch IsToggled="{Binding NewAlarm.PillowProps.IsEnabled}" BackgroundColor="Gray"/>
+                </Grid>
+                <!-- Phone -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prop Title -->
+                    <Label Style="{StaticResource PropertyLabel}" Text="Phone"/>
+                    <!-- Prop Value Text -->
+                    <Label Style="{StaticResource PropValueLabel}" Text=""/>
+                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                </Grid>
+                <!-- Snooze -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prop Title -->
+                    <Label Style="{StaticResource PropertyLabel}" Text="Snooze"/>
+                    <!-- Prop Value Text -->
+                    <Label Style="{StaticResource PropValueLabel}" Text=""/>
+                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                </Grid>
+                <!-- Fade -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prop Title -->
+                    <Label Style="{StaticResource PropertyLabel}" Text="Fade"/>
+                    <!-- Prop Value Text -->
+                    <Label Style="{StaticResource PropValueLabel}" Text=""/>
+                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                </Grid>
+
+                <Entry/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

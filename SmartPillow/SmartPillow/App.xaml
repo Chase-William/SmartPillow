@@ -9,6 +9,8 @@
         <ResourceDictionary>
             <Color x:Key="GradientBlue">#215C77</Color>
             <Color x:Key="GradientPurp">#593573</Color>
+            <!-- Used alot in the TimedAlarmPages for the value of the given property -->
+            <Color x:Key="PropertyValueTxtColor">#00C2FF</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
