@@ -19,10 +19,10 @@ namespace SmartPillow.Pages.Nav
             if (item != null)
             {
                 //it will use TransparentNavigationPage if HomePage is selected 
-                if(e.ItemIndex == 0)
+                if (e.ItemIndex == 0)
                     Detail = new TransparentNavigationPage((Page)Activator.CreateInstance(item.TargetType));
 
-                //otherwise, it uses GradientNavigationPage <-- will be added to the project soon
+                //otherwise, it uses NavigationPage
                 else
                     Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 
