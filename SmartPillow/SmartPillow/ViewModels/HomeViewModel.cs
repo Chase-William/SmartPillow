@@ -13,11 +13,15 @@ namespace SmartPillow.ViewModels
         public string ProfileImage
         {
             get { return profileImage; }
-            set { profileImage = value; }
+            set { 
+                profileImage = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public HomeViewModel()
         {
+            //testing to see if image is displayed sucessfully
             ProfileImage = "Zack.png";
         }
 

@@ -16,11 +16,24 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="{Binding ProfileImage}" Command="{Binding .}"/>
     </ContentPage.ToolbarItems>
-    
+
     <Grid>
+
+        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+
+        <Image Source="bedBackground.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout BackgroundColor="Black" Opacity=".76" Margin="15,80,15,0"/>
+
+            <StackLayout Grid.Row="1" BackgroundColor="Black" Opacity=".76" Margin="15,10,15,15"/>
+        </Grid>
         
-        <skia:SKCanvasView x:Name="SKCanvas"
-                           PaintSurface="SKCanvas_PaintSurface"/>
     </Grid>
 
 </ContentPage>
