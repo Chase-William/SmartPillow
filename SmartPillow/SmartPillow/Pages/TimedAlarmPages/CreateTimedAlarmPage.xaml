@@ -36,7 +36,7 @@
                 <Setter Property="TextColor" Value="{StaticResource PropertyValueTxtColor}"/>
                 <Setter Property="Grid.Row" Value="1"/>
             </Style>
-            <Style TargetType="Grid">
+            <Style x:Key="PropertyGroup" TargetType="Grid">
                 <Setter Property="Padding" Value="15,5"/>
             </Style>
         </ResourceDictionary>
@@ -50,18 +50,20 @@
                      Command="{Binding SaveAlarmCMD}"/>
     </ContentPage.ToolbarItems>
 
-    <StackLayout>
+    <Grid>
 
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
 
         <Frame Margin="20"
-               CornerRadius="10">
+               CornerRadius="20"
+               Opacity="0.60"               
+               BackgroundColor="{StaticResource BackgroundColor}">
             <StackLayout>
                 <TimePicker Format="T"/>
                 <Entry/>
 
                 <!-- Pillow -->
-                <Grid BackgroundColor="Red">
+                <Grid BackgroundColor="Red" Style="{StaticResource PropertyGroup}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -80,7 +82,7 @@
                     <Switch IsToggled="{Binding NewAlarm.PillowProps.IsEnabled}" BackgroundColor="Gray"/>
                 </Grid>
                 <!-- Phone -->
-                <Grid>
+                <Grid Style="{StaticResource PropertyGroup}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -99,7 +101,7 @@
                     <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
                 </Grid>
                 <!-- Snooze -->
-                <Grid>
+                <Grid Style="{StaticResource PropertyGroup}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -118,7 +120,7 @@
                     <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
                 </Grid>
                 <!-- Fade -->
-                <Grid>
+                <Grid Style="{StaticResource PropertyGroup}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -140,5 +142,5 @@
                 <Entry/>
             </StackLayout>
         </Frame>
-    </StackLayout>
+    </Grid>
 </ContentPage>
