@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModel="clr-namespace:SmartPillow.ViewModels"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              mc:Ignorable="d"
              Title="Home"
              x:Class="SmartPillow.Pages.HomePage">
@@ -29,9 +30,20 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout BackgroundColor="Black" Opacity=".76" Margin="15,80,15,0"/>
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="pancake:PancakeView">
+                        <Setter Property="CornerRadius" Value="14.5"/>
+                        <Setter Property="BackgroundColor" Value="Black"/>
+                        <Setter Property="Opacity" Value=".76"/>
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+            
+            <pancake:PancakeView Margin="15,80,15,0"/>
 
-            <StackLayout Grid.Row="1" BackgroundColor="Black" Opacity=".76" Margin="15,10,15,15"/>
+            <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>
+            
         </Grid>
         
     </Grid>
