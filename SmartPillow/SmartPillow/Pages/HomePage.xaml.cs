@@ -1,6 +1,7 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.ViewModels;
+using SmartPillowLib.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,8 +51,8 @@ namespace SmartPillow.Pages
         {
             if (App.IsUserLogged == false)
                 await this.Navigation.PushModalAsync(new LoginPage(), true);
-            else
-                await this.Navigation.PushModalAsync(new LoginPage(), true);
+
+            //else
         }
     }
 }
