@@ -1,5 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SmartPillow.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,9 @@ namespace SmartPillow.Pages
         public HomePage()
         {
             InitializeComponent();
+
+            var vm = BindingContext as HomeViewModel;
+            vm.Navigation = Navigation;
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -40,6 +44,14 @@ namespace SmartPillow.Pages
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
+        }
+
+        private async void Profile_Clicked(object sender, EventArgs e)
+        {
+            if (App.IsUserLogged == false)
+                await this.Navigation.PushModalAsync(new LoginPage(), true);
+            else
+                await this.Navigation.PushModalAsync(new LoginPage(), true);
         }
     }
 }
