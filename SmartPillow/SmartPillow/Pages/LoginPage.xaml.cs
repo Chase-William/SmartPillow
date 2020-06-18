@@ -1,11 +1,9 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SmartPillow.ViewModels;
+using SmartPillowLib.Models;
+using SmartPillowLib.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -39,6 +37,40 @@ namespace SmartPillow.Pages
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
+        }
+
+        private async void LoginButton_Clicked(object sender, EventArgs e)
+        {
+            // !!! I need to code this deeper for login function
+
+            await this.Navigation.PopModalAsync();
+
+            var vm = BindingContext as HomeViewModel;
+
+            //var user = new User()
+            //{
+            //    FirstName = "Mark",
+            //    LastName = "Zuckerberg",
+            //    Image = "Zack.png",
+            //    Email = "Email@gmail.com",
+            //    PhoneNumber = "585-585-5858"
+            //};
+
+            //vm.User = user;
+
+            vm.IsUserLogged = true;
+        }
+
+        private async void NewUser_Tapped(object sender, EventArgs e)
+        {
+            // !!! Need to code this deeper for new user function
+            await this.Navigation.PopModalAsync();
+        }
+
+        private async void Forget_Tapped(object sender, EventArgs e)
+        {
+            // !!! Need to code this deeper for forget password function
+            await this.Navigation.PopModalAsync();
         }
     }
 }
