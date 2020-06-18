@@ -40,11 +40,6 @@ namespace SmartPillowLib.ViewModels
 
         public HomeViewModel()
         {
-            IsUserLogged = false;
-
-            //var userData = new UserInformation();
-            //var guest = userData.User;
-
             var guest = new User() { Image = "Guest.png" };
             //testing to see if image is displayed sucessfully
             if (IsUserLogged == false)
@@ -53,10 +48,10 @@ namespace SmartPillowLib.ViewModels
 
         public User User
         {
-            get { return user; }
+            get { return UserInformation.User; }
             set
             {
-                user = value;
+                UserInformation.User = value;
                 NotifyPropertyChanged();
             }
         }
