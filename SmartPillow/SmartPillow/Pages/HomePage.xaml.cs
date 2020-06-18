@@ -1,5 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SmartPillowLib;
 using SmartPillowLib.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,11 @@ namespace SmartPillow.Pages
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            rightIcon.IconImageSource = UserInformation.User.Image;
         }
     }
 }
