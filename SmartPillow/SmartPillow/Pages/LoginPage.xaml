@@ -11,7 +11,7 @@
              x:Class="SmartPillow.Pages.LoginPage">
 
     <ContentPage.BindingContext>
-        <viewModel:HomeViewModel/>
+        <viewModel:LoginViewModel/>
     </ContentPage.BindingContext>
     
     <Grid>
@@ -91,11 +91,13 @@
 
                 <Grid Grid.Row="1" HorizontalOptions="Center">
                     <Grid VerticalOptions="Start">
+                        <!-- New User Button -->
                         <Label Text="New User ? SIGN UP" Opacity=".5" TextColor="White" HorizontalOptions="Start" FontFamily="Bahnschrift">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="NewUser_Tapped"/>
                             </Label.GestureRecognizers>
                         </Label>
+                        <!-- Forget Password Button -->
                         <Label Text="Forget Password ?"  Opacity=".5" TextColor="White" HorizontalOptions="End" FontFamily="Bahnschrift">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Forget_Tapped"/>
@@ -103,7 +105,10 @@
                         </Label>
                     </Grid>
                     <Grid Grid.Row="1" VerticalOptions="End" HorizontalOptions="Center">
-                        <ImageButton Source="LoginButton.png" BackgroundColor="Transparent"  VerticalOptions="End" WidthRequest="300" Clicked="LoginButton_Clicked"/>
+                        <!-- Login Button -->
+                        <ImageButton Source="LoginButton.png" BackgroundColor="Transparent"
+                                     VerticalOptions="End" WidthRequest="300" Command="{Binding LoginCommand}"
+                                     IsEnabled="{Binding IsBusy}" />
                     </Grid>
                 </Grid>
                 
@@ -131,9 +136,14 @@
                     </StackLayout>
                     
                     <StackLayout Grid.Row="1" Orientation="Vertical" HorizontalOptions="Center">
-                        <ImageButton Source="TwitterButton.png" Clicked="LoginButton_Clicked"/>
-                        <ImageButton Source="GoogleButton.png" Clicked="LoginButton_Clicked"/>
-                        <ImageButton Source="FacebookButton.png" Clicked="LoginButton_Clicked"/>
+                        <!-- Twitter Button -->
+                        <ImageButton Source="TwitterButton.png" />
+
+                        <!-- Google Button -->
+                        <ImageButton Source="GoogleButton.png" />
+
+                        <!-- Facebook Button -->
+                        <ImageButton Source="FacebookButton.png" />
                     </StackLayout>
                     
                 </Grid>
