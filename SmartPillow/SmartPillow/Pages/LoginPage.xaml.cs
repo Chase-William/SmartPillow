@@ -13,9 +13,15 @@ namespace SmartPillow.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        public LoginViewModel VM => (LoginViewModel)BindingContext;
         public LoginPage()
         {
             InitializeComponent();
+
+            VM.PopAsyncPage += async delegate
+            {
+                await this.Navigation.PopModalAsync();
+            };
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -38,28 +44,6 @@ namespace SmartPillow.Pages
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
-        }
-
-        private async void LoginButton_Clicked(object sender, EventArgs e)
-        {
-            IsEnabled = false;
-            // !!! I need to code this deeper for login function
-
-            var user = new User()
-            {
-                FirstName = "Mark",
-                LastName = "Zuckerberg",
-                Image = "Zack.png",
-                Email = "Email@gmail.com",
-                PhoneNumber = "585-585-5858"
-            };
-
-            UserInformation.User = user;
-            UserInformation.IsUserLogged = true;
-
-            await this.Navigation.PopModalAsync();
-
-            IsEnabled = true;
         }
 
         private async void NewUser_Tapped(object sender, EventArgs e)
