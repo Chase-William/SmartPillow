@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows.Input;
 using Xamarin.Forms;
 using SmartPillowLib.Models;
-using SmartPillowLib;
 
-namespace SmartPillow.ViewModels
+namespace SmartPillowLib.ViewModels
 {
     public class HomeViewModel : INotifyPropertyChanged
     {
@@ -20,25 +17,9 @@ namespace SmartPillow.ViewModels
         public bool IsUserLogged
         {
             get { return UserInformation.IsUserLogged; }
-            set { UserInformation.IsUserLogged = value; }
-        }
-
-        public User User
-        {
-            get { return user; }
             set 
             { 
-                user = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-
-        public string ProfileImage
-        {
-            get { return profileImage; }
-            set { 
-                profileImage = value;
+                UserInformation.IsUserLogged = value;
                 NotifyPropertyChanged();
             }
         }
@@ -56,9 +37,33 @@ namespace SmartPillow.ViewModels
         {
             IsUserLogged = false;
 
+            //var userData = new UserInformation();
+            //var guest = userData.User;
+
+            var guest = new User() { Image = "Guest.png" };
             //testing to see if image is displayed sucessfully
             if (IsUserLogged == false)
-                ProfileImage = "Guest.png";
+                User = guest;
+        }
+
+        public User User
+        {
+            get { return user; }
+            set
+            {
+                user = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string ProfileImage
+        {
+            get { return User.Image; }
+            set
+            {
+                User.Image = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
