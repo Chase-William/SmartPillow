@@ -27,7 +27,7 @@
         <skia:SKCanvasView x:Name="SKCanvas"
                            PaintSurface="SKCanvas_PaintSurface"/>
 
-        <Image Source="cloud.png" VerticalOptions="CenterAndExpand" Aspect="Fill"/>
+        <Image Source="cloudDrawerBackground.png" VerticalOptions="CenterAndExpand" Aspect="Fill"/>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -37,7 +37,7 @@
             </Grid.RowDefinitions>
 
             <!-- Image is in the header area - Will insert an image later -->
-            <Image BackgroundColor="Black" Opacity=".5"/>
+            <Image Source="SPlogo.png" VerticalOptions="Center" HeightRequest="100" Margin="0,45,0,0"/>
             
             <ListView x:Name="MasterPageNavListView"
                   x:FieldModifier="public"
