@@ -14,11 +14,7 @@ namespace SmartPillowLib
             //testing user
             var user = new User()
             {
-                FirstName = "Mark",
-                LastName = "Zuckerberg",
                 Image = "Zack.png",
-                Email = "Email@gmail.com",
-                PhoneNumber = "585-585-5858"
             };
 
             User = user;
