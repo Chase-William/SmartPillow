@@ -1,6 +1,5 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
-using SmartPillow.ViewModels;
 using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels;
 using System;
@@ -41,24 +40,27 @@ namespace SmartPillow.Pages
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
+            IsEnabled = false;
             // !!! I need to code this deeper for login function
 
             await this.Navigation.PopModalAsync();
 
             var vm = BindingContext as HomeViewModel;
 
-            //var user = new User()
-            //{
-            //    FirstName = "Mark",
-            //    LastName = "Zuckerberg",
-            //    Image = "Zack.png",
-            //    Email = "Email@gmail.com",
-            //    PhoneNumber = "585-585-5858"
-            //};
+            var user = new User()
+            {
+                FirstName = "Mark",
+                LastName = "Zuckerberg",
+                Image = "Zack.png",
+                Email = "Email@gmail.com",
+                PhoneNumber = "585-585-5858"
+            };
 
-            //vm.User = user;
-
+            vm.User = user;
+            vm.ProfileImage = user.Image;
             vm.IsUserLogged = true;
+
+            IsEnabled = true;
         }
 
         private async void NewUser_Tapped(object sender, EventArgs e)
