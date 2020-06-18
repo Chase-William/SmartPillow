@@ -5,8 +5,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
-using SmartPillow;
 using SmartPillowLib.Models;
+using SmartPillowLib;
 
 namespace SmartPillow.ViewModels
 {
@@ -14,15 +14,14 @@ namespace SmartPillow.ViewModels
     {
         private string profileImage;
         private User user;
-        private bool isUserLogged;
 
         public INavigation Navigation { get; set; }
 
-        //public bool IsUserLogged
-        //{
-        //    get { return isUserLogged; }
-        //    set { isUserLogged = value; }
-        //}
+        public bool IsUserLogged
+        {
+            get { return UserInformation.IsUserLogged; }
+            set { UserInformation.IsUserLogged = value; }
+        }
 
         public User User
         {
@@ -55,8 +54,11 @@ namespace SmartPillow.ViewModels
 
         public HomeViewModel()
         {
+            IsUserLogged = false;
+
             //testing to see if image is displayed sucessfully
-            ProfileImage = "Zack.png";
+            if (IsUserLogged == false)
+                ProfileImage = "Guest.png";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
