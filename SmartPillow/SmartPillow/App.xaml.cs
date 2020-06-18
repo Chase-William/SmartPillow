@@ -8,8 +8,9 @@ using SmartPillow.Pages.Nav;
 namespace SmartPillow
 {
     public partial class App : Application
-    {      
-
+    {
+        // Check if user is logged - setting to false for testing
+        public static bool IsUserLogged = false;
         public App()
         {
             InitializeComponent();
