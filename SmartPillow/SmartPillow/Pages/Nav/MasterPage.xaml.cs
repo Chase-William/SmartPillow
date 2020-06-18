@@ -34,6 +34,6 @@ namespace SmartPillow.Pages.Nav
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
-        }        
+        }
     }
 }
