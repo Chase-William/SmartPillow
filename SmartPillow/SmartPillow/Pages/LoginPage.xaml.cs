@@ -1,8 +1,10 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SmartPillowLib;
 using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels;
 using System;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -43,10 +45,6 @@ namespace SmartPillow.Pages
             IsEnabled = false;
             // !!! I need to code this deeper for login function
 
-            await this.Navigation.PopModalAsync();
-
-            var vm = BindingContext as HomeViewModel;
-
             var user = new User()
             {
                 FirstName = "Mark",
@@ -56,9 +54,10 @@ namespace SmartPillow.Pages
                 PhoneNumber = "585-585-5858"
             };
 
-            vm.User = user;
-            vm.ProfileImage = user.Image;
-            vm.IsUserLogged = true;
+            UserInformation.User = user;
+            UserInformation.IsUserLogged = true;
+
+            await this.Navigation.PopModalAsync();
 
             IsEnabled = true;
         }
