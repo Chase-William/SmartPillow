@@ -11,16 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Bahnschrift.TTF" />
     <None Remove="Fonts\Roboto-Medium.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Fonts\Bahnschrift.TTF" />
     <EmbeddedResource Include="Fonts\Roboto-Medium.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.3" />
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.967" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.4.2" />
   </ItemGroup>
