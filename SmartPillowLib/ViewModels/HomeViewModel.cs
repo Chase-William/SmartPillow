@@ -14,11 +14,6 @@ namespace SmartPillowLib.ViewModels
 
         public event Action OpenProfilePage;
 
-        private string profileImage;
-        private User user;
-
-        public INavigation Navigation { get; set; }
-
         public bool IsUserLogged
         {
             get { return UserInformation.IsUserLogged; }
@@ -40,10 +35,16 @@ namespace SmartPillowLib.ViewModels
 
         public HomeViewModel()
         {
-            var guest = new User() { Image = "Guest.png" };
             //testing to see if image is displayed sucessfully
+
+            var guest = new User() { Image = "Guest.png" };
+            var mark = new User() { Image = "Zack.png" };
+
             if (IsUserLogged == false)
                 User = guest;
+
+            else
+                User = mark;
         }
 
         public User User
