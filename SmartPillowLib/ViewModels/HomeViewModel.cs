@@ -4,11 +4,16 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using SmartPillowLib.Models;
+using System.Windows.Input;
 
 namespace SmartPillowLib.ViewModels
 {
     public class HomeViewModel : NotifyClass
     {
+        public event Action OpenLoginPage;
+
+        public event Action OpenProfilePage;
+
         private string profileImage;
         private User user;
 
@@ -24,14 +29,14 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        //public ICommand UserCommand => new Command(async () =>
-        //{
-        //    if (IsUserLogged == true)
-        //        await Navigation.PushAsync(new ProfilePage());
-        //    else
-        //        await Navigation.PushAsync(new LoginPage());
+        public ICommand UserCommand => new Command(() =>
+        {
+            if (IsUserLogged == false)
+                OpenLoginPage?.Invoke();
 
-        //});
+            else
+                OpenProfilePage?.Invoke();
+        });
 
         public HomeViewModel()
         {

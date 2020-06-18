@@ -16,12 +16,20 @@ namespace SmartPillow.Pages
     [DesignTimeVisible(false)]
     public partial class HomePage : ContentPage
     {
+        public HomeViewModel VM => (HomeViewModel)BindingContext;
         public HomePage()
         {
             InitializeComponent();
 
-            var vm = BindingContext as HomeViewModel;
-            vm.Navigation = Navigation;
+            VM.OpenLoginPage += async delegate
+            {
+                await Navigation.PushModalAsync(new LoginPage());
+            };
+
+            VM.OpenProfilePage += delegate
+            {
+
+            };
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -44,18 +52,6 @@ namespace SmartPillow.Pages
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
-        }
-
-        private async void Profile_Clicked(object sender, EventArgs e)
-        {
-            IsEnabled = false;
-
-            if (App.IsUserLogged == false)
-                await this.Navigation.PushModalAsync(new LoginPage(), true);
-
-            //else
-
-            IsEnabled = true;
         }
     }
 }
