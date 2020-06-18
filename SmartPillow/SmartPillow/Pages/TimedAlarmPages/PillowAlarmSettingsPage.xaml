@@ -2,14 +2,78 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.TimedAlarmPages.PillowAlarmSettingsPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+
+    <ContentPage.BindingContext>
+        <vm:PillowAlarmSettingsVM/>
+    </ContentPage.BindingContext>
+    
+    <Grid>
+
+        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+
+        <Frame Style="{StaticResource RoundedTranslucentFrame}">
+            <StackLayout Orientation="Horizontal">
+                <Label Style="{StaticResource PropertyLabel}" Text="Off">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding IsPillowOn}" Value="True">
+                            <Setter Property="Text" Value="On"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Switch IsToggled="{Binding IsPillowOn}"/>
+            </StackLayout>
+        </Frame>
+
+
+        <Frame Style="{StaticResource RoundedTranslucentFrame}">
+            <StackLayout>
+                <!-- Brightness -->
+                <Grid Style="{StaticResource PropertyGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.4*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prop Title -->
+                    <Label Style="{StaticResource PropertyLabel}" Text="Pillow"/>
+                    <!-- Prop Value Text -->
+                    <Label Style="{StaticResource PropValueLabel}"/>
+                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                    <Switch IsToggled="{Binding NewAlarm.PillowProps.Brightness}"/>
+                    <Slider/>
+                </Grid>
+                <!-- Vibration -->
+                <Grid Style="{StaticResource PropertyGroup}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.4*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prop Title -->
+                    <Label Style="{StaticResource PropertyLabel}" Text="Phone"/>
+                    <!-- Prop Value Text -->
+                    <Label Style="{StaticResource PropValueLabel}"/>
+                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.Vibration}"/>
+                    <Slider/>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </Grid>
+
 </ContentPage>

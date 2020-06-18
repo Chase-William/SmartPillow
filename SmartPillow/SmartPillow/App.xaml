@@ -9,9 +9,68 @@
         <ResourceDictionary>
             <Color x:Key="GradientBlue">#215C77</Color>
             <Color x:Key="GradientPurp">#593573</Color>
-            <!-- Used alot in the TimedAlarmPages for the value of the given property -->
-            <Color x:Key="PropertyValueTxtColor">#00C2FF</Color>
+            <!-- Used alot in the TimedAlarmPages for the value of the given property -->          
             <Color x:Key="BackgroundColor">#1D1D1D</Color>
+
+            <!-- Font Colors -->
+            <Color x:Key="LightFont">#F3F3F3</Color>
+            <Color x:Key="GrayedFont">#CCCCCC</Color>
+            <Color x:Key="VibrateBlueFont">#00C2FF</Color>
+
+
+            <!--
+            
+                Styles for:
+                
+                1. Switch
+                2. Labels
+                3. Grid
+                4. Slider
+                5. Btn
+                6. Frame
+            -->
+            <!-- Aligns all switch controls -->
+            <Style TargetType="Switch">
+                <Setter Property="Grid.RowSpan" Value="2"/>
+                <Setter Property="Grid.Column" Value="1"/>
+                <Setter Property="OnColor" Value="{StaticResource GradientPurp}"/>
+                <Setter Property="ThumbColor" Value="{StaticResource LightFont}"/>
+            </Style>
+            <!-- Property text style -->
+            <Style x:Key="PropertyLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="TextColor" Value="{StaticResource LightFont}"/>
+            </Style>
+            <!-- Value of a given property text style -->
+            <Style x:Key="PropValueLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextColor" Value="{StaticResource VibrateBlueFont}"/>
+                <Setter Property="Grid.Row" Value="1"/>
+            </Style>
+            <!-- Grids that are the layout for a property -->
+            <Style x:Key="PropertyGroup" TargetType="Grid">
+                <Setter Property="Padding" Value="0,5"/>
+                <Setter Property="HeightRequest" Value="80"/>
+            </Style>
+            <!-- Property Slider -->
+            <Style TargetType="Slider">
+                <Setter Property="Grid.Row" Value="2"/>
+                <Setter Property="Grid.ColumnSpan" Value="2"/>
+                <Setter Property="ThumbColor" Value="{StaticResource LightFont}"/>
+            </Style>
+            <!-- Save / Cancel Btn Style -->
+            <Style x:Key="MinimalisticBtn" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="TextColor" Value="{StaticResource VibrateBlueFont}"/>
+            </Style>
+            <!-- Default Frame Style -->
+            <Style x:Key="RoundedTranslucentFrame" TargetType="Frame">
+                <Setter Property="Margin" Value="20"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Opacity" Value="0.60"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}"/>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

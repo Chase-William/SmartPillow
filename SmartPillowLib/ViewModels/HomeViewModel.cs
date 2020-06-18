@@ -7,7 +7,7 @@ using SmartPillowLib.Models;
 
 namespace SmartPillowLib.ViewModels
 {
-    public class HomeViewModel : INotifyPropertyChanged
+    public class HomeViewModel : NotifyClass
     {
         private string profileImage;
         private User user;
@@ -64,12 +64,6 @@ namespace SmartPillowLib.ViewModels
                 User.Image = value;
                 NotifyPropertyChanged();
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

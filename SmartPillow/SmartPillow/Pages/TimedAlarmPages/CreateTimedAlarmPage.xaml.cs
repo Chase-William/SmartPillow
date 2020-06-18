@@ -21,12 +21,13 @@ namespace SmartPillow.Pages.TimedAlarmPages
         public CreateTimedAlarmPage()
         {
             InitializeComponent();
+            VM.AdjustPillowSettings += delegate
+            {
+                Navigation.PushAsync(new PillowAlarmSettingsPage());
+            };
         }
 
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            
-        }
+        private void OnCancel_BtnClicked(object sender, EventArgs e) => Navigation.PopAsync();
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
@@ -48,6 +49,6 @@ namespace SmartPillow.Pages.TimedAlarmPages
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, paint);
             }
-        }
+        }       
     }
 }
