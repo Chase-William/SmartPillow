@@ -15,7 +15,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
+        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid>
