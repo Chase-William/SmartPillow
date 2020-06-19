@@ -7,17 +7,7 @@ namespace SmartPillowLib
 {
     public class UserInformation
     {
-        public static bool IsUserLogged { get; set; }
-        public User User { get; set; }
-        public UserInformation()
-        {
-            //testing user
-            var user = new User()
-            {
-                Image = "Zack.png",
-            };
-
-            User = user;
-        }
+        public static bool IsUserLogged { get; set; } = false;
+        public static User User { get; set; }
     }
 }

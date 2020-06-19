@@ -1,6 +1,7 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
+using SmartPillowLib;
 using SmartPillowLib.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -17,26 +18,27 @@ namespace SmartPillow.Pages
     [DesignTimeVisible(false)]
     public partial class HomePage : ContentPage
     {
+        public HomeViewModel VM => (HomeViewModel)BindingContext;
         public HomePage()
         {
             InitializeComponent();
 
-            var vm = BindingContext as HomeViewModel;
-            vm.Navigation = Navigation;
+            VM.OpenLoginPage += async delegate
+            {
+                await Navigation.PushModalAsync(new LoginPage());
+            };
+
+            VM.OpenProfilePage += delegate
+            {
+
+            };
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
 
-        private async void Profile_Clicked(object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            IsEnabled = false;
-
-            if (App.IsUserLogged == false)
-                await this.Navigation.PushModalAsync(new LoginPage(), true);
-
-            //else
-
-            IsEnabled = true;
+            rightIcon.IconImageSource = UserInformation.User.Image;
         }
     }
 }

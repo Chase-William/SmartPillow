@@ -13,10 +13,9 @@
     <ContentPage.BindingContext>
         <viewModel:HomeViewModel/>
     </ContentPage.BindingContext>
-    
+
     <ContentPage.ToolbarItems>
-        <!--Command="{Binding UserCommand}"-->
-        <ToolbarItem IconImageSource="{Binding ProfileImage}" Clicked="Profile_Clicked"/>
+        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid>
