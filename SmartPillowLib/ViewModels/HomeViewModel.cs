@@ -36,14 +36,11 @@ namespace SmartPillowLib.ViewModels
         public HomeViewModel()
         {
             //testing to see if image is displayed sucessfully
-
-            var mark = new User() { Image = "Zack.png" };
-
             if (IsUserLogged == false)
                 User = UserInformation.Guest;
 
             else
-                User = mark;
+                User = UserInformation.User;
         }
 
         public User User
