@@ -137,13 +137,13 @@
                     
                     <StackLayout Grid.Row="1" Orientation="Vertical" HorizontalOptions="Center">
                         <!-- Twitter Button -->
-                        <ImageButton Source="TwitterButton.png" />
+                        <ImageButton Source="TwitterButton.png" Command="{Binding TwitterCommand}"/>
 
                         <!-- Google Button -->
-                        <ImageButton Source="GoogleButton.png" />
+                        <ImageButton Source="GoogleButton.png" Command="{Binding GoogleCommand}"/>
 
                         <!-- Facebook Button -->
-                        <ImageButton Source="FacebookButton.png" />
+                        <ImageButton Source="FacebookButton.png" Command="{Binding FacebookCommand}"/>
                     </StackLayout>
                     
                 </Grid>
