@@ -18,34 +18,36 @@
         <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <Grid>
 
-        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+    <AbsoluteLayout>
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 
-        <Image Source="bedBackground.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
+            <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Image Source="bedBackground.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
 
-            <Grid.Resources>
-                <ResourceDictionary>
-                    <Style TargetType="pancake:PancakeView">
-                        <Setter Property="CornerRadius" Value="14.5"/>
-                        <Setter Property="BackgroundColor" Value="Black"/>
-                        <Setter Property="Opacity" Value=".76"/>
-                    </Style>
-                </ResourceDictionary>
-            </Grid.Resources>
-            
-            <pancake:PancakeView Margin="15,80,15,0"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>
-            
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="pancake:PancakeView">
+                            <Setter Property="CornerRadius" Value="14.5"/>
+                            <Setter Property="BackgroundColor" Value="Black"/>
+                            <Setter Property="Opacity" Value=".76"/>
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
+
+                <pancake:PancakeView Margin="15,80,15,0"/>
+
+                <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>
+
+            </Grid>
+
         </Grid>
-        
-    </Grid>
-
+    </AbsoluteLayout>
 </ContentPage>
