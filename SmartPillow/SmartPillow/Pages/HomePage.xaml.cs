@@ -1,9 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
-<<<<<<< HEAD
 using SmartPillow.Util;
-=======
->>>>>>> origin
 using SmartPillowLib;
 using SmartPillowLib.ViewModels;
 using System;
@@ -30,8 +27,6 @@ namespace SmartPillow.Pages
             {
                 await Navigation.PushModalAsync(new LoginPage());
             };
-<<<<<<< HEAD
-=======
 
             VM.OpenProfilePage += delegate
             {
@@ -45,7 +40,6 @@ namespace SmartPillow.Pages
             var canvas = surface.Canvas;
 
             canvas.Clear();
->>>>>>> origin
 
             VM.OpenProfilePage += delegate
             {
@@ -53,11 +47,8 @@ namespace SmartPillow.Pages
             };
         }
 
-<<<<<<< HEAD
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
-
-=======
->>>>>>> origin
+        
         protected override void OnAppearing()
         {
             rightIcon.IconImageSource = UserInformation.User.Image;
