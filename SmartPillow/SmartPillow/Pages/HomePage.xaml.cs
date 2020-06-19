@@ -34,19 +34,6 @@ namespace SmartPillow.Pages
             };
         }
 
-        private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
-        {
-            var surface = e.Surface;
-            var canvas = surface.Canvas;
-
-            canvas.Clear();
-
-            VM.OpenProfilePage += delegate
-            {
-
-            };
-        }
-
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
         
         protected override void OnAppearing()
