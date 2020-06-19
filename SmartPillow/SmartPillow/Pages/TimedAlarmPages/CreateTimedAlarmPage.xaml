@@ -15,14 +15,18 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Line Seperator -->
-            <Style TargetType="BoxView">
-                <Setter Property="HeightRequest" Value="20"/>
-                <Setter Property="Color" Value="Blue"/>
-            </Style>
             <!-- TextEntry styles -->
             <Style TargetType="Entry">
                 <Setter Property="TextColor" Value="White"/>
+            </Style>
+            <!-- Horizontal break fitted to the grids used in this page -->
+            <Style TargetType="BoxView" BasedOn="{StaticResource HorizontalBreak}">
+                <Setter Property="Grid.Row" Value="3"/>
+                <Setter Property="Grid.ColumnSpan" Value="2"/>
+            </Style>
+            <!-- Adjusting the base PropertyGroup Grid Style -->
+            <Style TargetType="Grid">
+                <Setter Property="HeightRequest" Value="90"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -38,27 +42,29 @@
     <Grid>
 
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
-
+        <Image Style="{StaticResource CloudyBG}"/>
         <Frame Style="{StaticResource RoundedTranslucentFrame}">
             <ScrollView>
-                <StackLayout>
+
+                <StackLayout Style="{StaticResource NestedWithinFrame}">
                 <Label Text="Time" FontSize="20" TextColor="{StaticResource GrayedFont}"/>
                 <TimePicker Format="T" TextColor="{StaticResource LightFont}"/>
                 <Entry Placeholder="Alarm name..." PlaceholderColor="{StaticResource GrayedFont}" TextColor="{StaticResource LightFont}"/>
 
+
+                <!-- Pillow -->
                 <ContentView>
                     <ContentView.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
                     </ContentView.GestureRecognizers>
 
                     <ContentView.Content>
-                        <!-- Pillow -->
-                        <Grid Style="{StaticResource PropertyGroup}">
+                        <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1.4*"/>
+                                <RowDefinition Height="1.7*"/>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="0.5*"/>
-                            </Grid.RowDefinitions>
+                                <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5*"/>
                                 <ColumnDefinition Width="*"/>
@@ -71,77 +77,103 @@
                             <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
                             <Switch IsToggled="{Binding NewAlarm.PillowProps.IsEnabled}"/>
 
-                            <Slider/>
+                            <BoxView/>
                         </Grid>
                     </ContentView.Content>
                 </ContentView>
                  
                 <!-- Phone -->
-                <Grid Style="{StaticResource PropertyGroup}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1.4*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <ContentView>
+                    <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                    </ContentView.GestureRecognizers>
 
-                        <!-- Prop Title -->
-                    <Label Style="{StaticResource PropertyLabel}" Text="Phone"/>
-                    <!-- Prop Value Text -->
-                    <Label Style="{StaticResource PropValueLabel}"/>
-                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                    <ContentView.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1.7*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="0.1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                    <Slider/>
-                </Grid>
+                                <!-- Prop Title -->
+                            <Label Style="{StaticResource PropertyLabel}" Text="Phone"/>
+                            <!-- Prop Value Text -->
+                            <Label Style="{StaticResource PropValueLabel}"/>
+                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+
+                            <BoxView/>
+                        </Grid>
+                    </ContentView.Content>
+                </ContentView>
+                                        
                 <!-- Snooze -->
-                <Grid Style="{StaticResource PropertyGroup}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1.4*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <ContentView>
+                    <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                    </ContentView.GestureRecognizers>
 
-                        <!-- Prop Title -->
-                    <Label Style="{StaticResource PropertyLabel}" Text="Snooze"/>
-                    <!-- Prop Value Text -->
-                    <Label Style="{StaticResource PropValueLabel}"/>
-                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                    <ContentView.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1.7*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="0.1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                    <Slider/>
-                </Grid>
+                                <!-- Prop Title -->
+                            <Label Style="{StaticResource PropertyLabel}" Text="Snooze"/>
+                            <!-- Prop Value Text -->
+                            <Label Style="{StaticResource PropValueLabel}"/>
+                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+
+                            <BoxView/>
+                        </Grid>
+                    </ContentView.Content>
+                </ContentView>
+                    
                 <!-- Fade -->
-                <Grid Style="{StaticResource PropertyGroup}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1.4*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="0.5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <ContentView>
+                    <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                    </ContentView.GestureRecognizers>
 
-                        <!-- Prop Title -->
-                    <Label Style="{StaticResource PropertyLabel}" Text="Fade"/>
-                    <!-- Prop Value Text -->
-                    <Label Style="{StaticResource PropValueLabel}"/>
-                    <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                    <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                    <ContentView.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1.7*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="0.1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                    <Slider/>
-                </Grid>
-
+                                <!-- Prop Title -->
+                            <Label Style="{StaticResource PropertyLabel}" Text="Fade"/>
+                            <!-- Prop Value Text -->
+                            <Label Style="{StaticResource PropValueLabel}"/>
+                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                        </Grid>
+                    </ContentView.Content>
+                </ContentView>
+                    
+                <!-- Alarm Notes -->
                 <Entry Placeholder="Notes..." TextColor="{StaticResource LightFont}" PlaceholderColor="{StaticResource GrayedFont}"/>
 
+                <!-- Cancel / Save Layout -->
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -151,8 +183,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="Cancel" Clicked="OnCancel_BtnClicked"/>
-                    <Button Text="Save" Grid.Column="2" Command="{Binding SaveAlarmCMD}"/>
+                    <Button Style="{StaticResource MinimalisticBtn}" Text="Cancel" Clicked="OnCancel_BtnClicked"/>
+                    <Button Style="{StaticResource MinimalisticBtn}" Text="Save" Grid.Column="2" Command="{Binding SaveAlarmCMD}"/>
                 </Grid>
             </StackLayout>
             </ScrollView>

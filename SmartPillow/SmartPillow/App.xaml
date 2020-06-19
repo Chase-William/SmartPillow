@@ -2,11 +2,16 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converters="clr-namespace:SmartPillowLib.Converters"
              mc:Ignorable="d"
              x:Class="SmartPillow.App">
     <Application.Resources>
         <ResourceDictionary>
+            
+            <!-- Converters -->
+            <converters:BoolToOffOnTextConverter x:Key="BoolToOffOnTextConverter"/>
+
             <Color x:Key="GradientBlue">#215C77</Color>
             <Color x:Key="GradientPurp">#593573</Color>
             <!-- Used alot in the TimedAlarmPages for the value of the given property -->          
@@ -43,23 +48,21 @@
             </Style>
             <!-- Value of a given property text style -->
             <Style x:Key="PropValueLabel" TargetType="Label">
-                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontSize" Value="15"/>
                 <Setter Property="TextColor" Value="{StaticResource VibrateBlueFont}"/>
                 <Setter Property="Grid.Row" Value="1"/>
             </Style>
-            <!-- Grids that are the layout for a property -->
-            <Style x:Key="PropertyGroup" TargetType="Grid">
-                <Setter Property="Padding" Value="0,5"/>
-                <Setter Property="HeightRequest" Value="80"/>
-            </Style>
             <!-- Property Slider -->
-            <Style TargetType="Slider">
+            <Style x:Key="DevicePropsSlider" TargetType="Slider">
                 <Setter Property="Grid.Row" Value="2"/>
                 <Setter Property="Grid.ColumnSpan" Value="2"/>
+                <Setter Property="Maximum" Value="100"/>
+                <Setter Property="Minimum" Value="0"/>
                 <Setter Property="ThumbColor" Value="{StaticResource LightFont}"/>
             </Style>
             <!-- Save / Cancel Btn Style -->
             <Style x:Key="MinimalisticBtn" TargetType="Button">
+                <Setter Property="FontSize" Value="20"/>
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="TextColor" Value="{StaticResource VibrateBlueFont}"/>
             </Style>
@@ -68,9 +71,32 @@
                 <Setter Property="Margin" Value="20"/>
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="Opacity" Value="0.60"/>
+                <Setter Property="Padding" Value="0"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}"/>
             </Style>
+            <!-- 
+                StackLayout specifically for stacklayouts nested within a frame like above with 0 padding.
+                Using the interal layouts padding instead allows for for example a switch's animation when clicked to 
+                not be clipped.
+            -->
+            <Style x:Key="NestedWithinFrame" TargetType="StackLayout">
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+            <!-- Line Break Style -->
+            <Style x:Key="HorizontalBreak" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="2"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource GrayedFont}"/>
+                <Setter Property="Opacity" Value="0.5"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
 
+            <!-- Cloud BG Image Style -->
+            <Style x:Key="CloudyBG" TargetType="Image">
+                <Setter Property="Source" Value="cloudPageBackground"/>
+                <Setter Property="Aspect" Value="Fill"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
