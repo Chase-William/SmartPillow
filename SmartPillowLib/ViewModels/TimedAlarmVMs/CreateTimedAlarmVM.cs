@@ -12,7 +12,17 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         /// <summary>
         ///     New alarm instance.
         /// </summary>
-        public Alarm NewAlarm { get; set; } = new Alarm();    
+        public Alarm NewAlarm { get; set; } = new Alarm
+        {
+            PillowProps = new DeviceProps
+            {
+                IsBrightnessEnabled = true,
+                IsVibrationEnabled = true,
+                IsEnabled = true,
+                Brightness = 50,
+                Vibration = 50
+            }
+        };
 
         /// <summary>
         ///     Saves an alarm to the device after validiation.
@@ -22,14 +32,11 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             
         });
 
-        public ICommand AdjustPillowSettingsCMD { get; set; }
-
-        public CreateTimedAlarmVM()
+        public ICommand AdjustPillowSettingsCMD => new Command(() =>
         {
-            AdjustPillowSettingsCMD = new Command(() =>
-            {
-                AdjustPillowSettings?.Invoke();
-            });
-        }
+            AdjustPillowSettings?.Invoke();
+        });
+
+        public CreateTimedAlarmVM() { }
     }
 }

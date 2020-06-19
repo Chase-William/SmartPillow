@@ -1,19 +1,12 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-namespace SmartPillow.Pages.TimedAlarmPages
+namespace SmartPillow.Util
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PhoneAlarmSettingsPage : ContentPage
+    public static class Painter
     {
-        public PhoneAlarmSettingsPage()
-        {
-            InitializeComponent();
-        }
-
-        private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
+        public static void PaintGradientBG(SKPaintSurfaceEventArgs e)
         {
             var surface = e.Surface;
             var canvas = surface.Canvas;

@@ -37,53 +37,54 @@ namespace SmartPillowLib.Models
         /// <summary>
         ///     Contains properties for customizing the user's desire snooze duration and interval.
         /// </summary>
-        public Snooze SnoozeProps { get; set; } = new Snooze();
+        public Snooze SnoozeProps { get; set; }
 
         #region Device Properties
         /// <summary>
         ///     Contains the properties for this alarm related to the pillow.
         /// </summary>
-        public DeviceProps PillowProps { get; set; } = new DeviceProps();
+        public DeviceProps PillowProps { get; set; }
         /// <summary>
         ///     Contains the properties for this alarm relate to the phone.
         /// </summary>
-        public DeviceProps PhoneProps { get; set; } = new DeviceProps();
-        #endregion
+        public DeviceProps PhoneProps { get; set; }
+        #endregion       
+    }
+
+    /// <summary>
+    ///     Class that defines the common properties for both the Smart Pillow and the Phone.
+    /// </summary>
+    public class DeviceProps
+    {
+        /// <summary>
+        ///     Value for vibration 0 to 100.
+        /// </summary>
+        public byte Vibration { get; set; }
+        /// <summary>
+        ///     Bool indicating whether vibration is enabled reguardless of Vibration's value.
+        /// </summary>
+        public bool IsVibrationEnabled { get; set; }
+        /// <summary>
+        ///     Value for vibration 0 to 100.
+        /// </summary>
+        public byte Brightness { get; set; }
+        /// <summary>
+        ///     Bool indicating whether brightness is enabled regaurdless of Brightness's value.
+        /// </summary>
+        public bool IsBrightnessEnabled { get; set; }
 
         /// <summary>
-        ///     Class that defines the common properties for both the Smart Pillow and the Phone.
+        ///     Indicates whether this device is enabled or disabled.
         /// </summary>
-        public class DeviceProps
-        {
-            /// <summary>
-            ///     Value for vibration 0 to 100.
-            /// </summary>
-            public byte Vibration { get; set; }
-            /// <summary>
-            ///     Bool indicating whether vibration is enabled reguardless of Vibration's value.
-            /// </summary>
-            public bool IsVibrationEnabled { get; set; }
-            /// <summary>
-            ///     Value for vibration 0 to 100.
-            /// </summary>
-            public byte Brightness { get; set; }
-            /// <summary>
-            ///     Bool indicating whether brightness is enabled regaurdless of Brightness's value.
-            /// </summary>
-            public bool IsBrightnessEnabled { get; set; }
-            /// <summary>
-            ///     Indicates whether this device is enabled or disabled.
-            /// </summary>
-            public bool IsEnabled { get; set; }
-        }
+        public bool IsEnabled { get; set; }
+    }
 
-        /// <summary>
-        ///     Class used to represent the snooze mechanic for alarms.
-        /// </summary>
-        public class Snooze
-        {
-            public byte Minutes, Interval;
-            bool IsEnabled;
-        }
+    /// <summary>
+    ///     Class used to represent the snooze mechanic for alarms.
+    /// </summary>
+    public class Snooze
+    {
+        public byte Minutes, Interval;
+        bool IsEnabled;
     }
 }

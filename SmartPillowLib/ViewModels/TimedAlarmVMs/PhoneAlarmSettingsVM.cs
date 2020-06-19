@@ -1,7 +1,7 @@
 ﻿namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {
-    public class TimedAlarmsPageVM
+    public class PhoneAlarmSettingsVM
     {
-        
+
     }
 }
