@@ -37,11 +37,10 @@ namespace SmartPillowLib.ViewModels
         {
             //testing to see if image is displayed sucessfully
 
-            var guest = new User() { Image = "Guest.png" };
             var mark = new User() { Image = "Zack.png" };
 
             if (IsUserLogged == false)
-                User = guest;
+                User = UserInformation.Guest;
 
             else
                 User = mark;
