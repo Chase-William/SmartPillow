@@ -2,8 +2,9 @@
 using SmartPillow.Pages.Nav;
 
 /// <summary>
-///     We use Roboto font as our primary font. 
-/// </summary>
+///     We use Custom fonts for our app theme
+/// </summary
+[assembly: ExportFont("Ubuntu-Medium.ttf", Alias = "Ubuntu")] 
 [assembly: ExportFont("Bahnschrift.ttf", Alias = "Bahnschrift")] 
 [assembly: ExportFont("Roboto-Medium.ttf", Alias = "Roboto")] 
 namespace SmartPillow
