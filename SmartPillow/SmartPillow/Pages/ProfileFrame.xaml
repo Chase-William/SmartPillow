@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+    <!-- Profile overlay on the HomePage -->
 <Frame xmlns="http://xamarin.com/schemas/2014/forms"
        x:Name="sizeFrame"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -7,7 +8,7 @@
         xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
         xmlns:viewModel="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
         mc:Ignorable="d"
-        CornerRadius="25"
+        CornerRadius="28"
         BackgroundColor="Black"
         Opacity=".8"
         TranslationY="220"
@@ -48,17 +49,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            
             <Grid>
-                <Image Source="Zack.png" HeightRequest="200" Margin="0,0,0,10" VerticalOptions="End" HorizontalOptions="Center"/>
+                <Image Source="{Binding Image}" HeightRequest="200" Margin="0,0,0,10" VerticalOptions="End" HorizontalOptions="Center"/>
             </Grid>
+            
             <Grid Grid.Row="1">
                 <StackLayout>
-                    <Label Text="Mark Z." HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="40" Margin="0,0,0,15"/>
-                    <Label Text="Email@gmail.com" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="30" Margin="0,0,0,15"/>
-                    <Label Text="585-585-5858" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="30" Margin="0,0,0,15"/>
+                    <Label Text="{Binding Name}" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="40" Margin="0,0,0,15"/>
+                    <Label Text="{Binding Email}" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="30" Margin="0,0,0,15"/>
+                    <Label Text="{Binding PhoneNumber}" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="30" Margin="0,0,0,15"/>
                 </StackLayout>
             </Grid>
-            <!--<Grid Grid.Row="2"></Grid>-->
+
             <ImageButton Source="logout.png" VerticalOptions="Start" 
                      HorizontalOptions="End" HeightRequest="25" Margin="20" 
                      Command="{Binding LogoutCommand}" BackgroundColor="Transparent"/>
