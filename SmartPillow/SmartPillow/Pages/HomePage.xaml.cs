@@ -28,9 +28,9 @@ namespace SmartPillow.Pages
                 await Navigation.PushModalAsync(new LoginPage());
             };
 
-            VM.OpenProfilePage += delegate
+            VM.OpenProfilePage += async delegate
             {
-
+                await Navigation.PushModalAsync(new ProfilePage());
             };
         }
 
