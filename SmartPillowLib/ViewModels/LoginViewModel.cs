@@ -24,9 +24,10 @@ namespace SmartPillowLib.ViewModels
 
         public ICommand LoginCommand => new Command(() =>
         {
-            IsBusy = false;
             // !!! I need to code this deeper for login function
+            IsBusy = false;
 
+            // For testing purpose
             var user = new User()
             {
                 FirstName = "Mark",
@@ -34,6 +35,75 @@ namespace SmartPillowLib.ViewModels
                 Image = "Zack.png",
                 Email = "Email@gmail.com",
                 PhoneNumber = "585-585-5858"
+            };
+
+            UserInformation.User = user;
+            UserInformation.IsUserLogged = true;
+
+            PopAsyncPage?.Invoke();
+
+            IsBusy = true;
+        });
+
+        public ICommand TwitterCommand => new Command(() =>
+        {
+            // !!! I need to code this deeper for login function
+            IsBusy = false;
+
+            // For testing purpose
+            var user = new User()
+            {
+                FirstName = "Twitter",
+                LastName = "",
+                Image = "Twitter.png",
+                Email = "Twitter@gmail.com",
+                PhoneNumber = "111-111-1111"
+            };
+
+            UserInformation.User = user;
+            UserInformation.IsUserLogged = true;
+
+            PopAsyncPage?.Invoke();
+
+            IsBusy = true;
+        });
+
+        public ICommand GoogleCommand => new Command(() =>
+        {
+            // !!! I need to code this deeper for login function
+            IsBusy = false;
+
+            // For testing purpose
+            var user = new User()
+            {
+                FirstName = "Google",
+                LastName = "",
+                Image = "Google.png",
+                Email = "Google@gmail.com",
+                PhoneNumber = "222-222-2222"
+            };
+
+            UserInformation.User = user;
+            UserInformation.IsUserLogged = true;
+
+            PopAsyncPage?.Invoke();
+
+            IsBusy = true;
+        });
+
+        public ICommand FacebookCommand => new Command(() =>
+        {
+            // !!! I need to code this deeper for login function
+            IsBusy = false;
+
+            // For testing purpose
+            var user = new User()
+            {
+                FirstName = "Facebook Inc",
+                LastName = "",
+                Image = "Facebook.png",
+                Email = "Facebook@gmail.com",
+                PhoneNumber = "333-333-3333"
             };
 
             UserInformation.User = user;
