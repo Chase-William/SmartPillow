@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       x:Name="sizeFrame"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+        xmlns:viewModel="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
+        mc:Ignorable="d"
+        CornerRadius="25"
+        BackgroundColor="Black"
+        Opacity=".8"
+        TranslationY="220"
+        Padding="0"
+        x:Class="SmartPillow.Pages.ProfileFrame">
+
+    <Frame.BindingContext>
+        <viewModel:ProfileViewModel/>
+    </Frame.BindingContext>
+
+    <Frame.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="22" />
+                <Setter Property="TextColor"
+                        Value="White" />
+            </Style>
+            <Style TargetType="Span"
+                   x:Key="BoldSpan">
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="FontSize"
+                        Value="22" />
+            </Style>
+        </ResourceDictionary>
+    </Frame.Resources>
+    <Grid x:Name="VisualBackground">
+
+        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+
+        <Image Source="cloudPageBackground.png" VerticalOptions="StartAndExpand"/>
+
+        <Grid HeightRequest="100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Image Source="Zack.png" HeightRequest="200" Margin="0,0,0,10" VerticalOptions="End" HorizontalOptions="Center"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackLayout>
+                    <Label Text="Mark Z." HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="40" Margin="0,0,0,15"/>
+                    <Label Text="Email@gmail.com" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="30" Margin="0,0,0,15"/>
+                    <Label Text="585-585-5858" HorizontalOptions="Center" FontFamily="Ubuntu" FontSize="30" Margin="0,0,0,15"/>
+                </StackLayout>
+            </Grid>
+            <!--<Grid Grid.Row="2"></Grid>-->
+            <ImageButton Source="logout.png" VerticalOptions="Start" 
+                     HorizontalOptions="End" HeightRequest="25" Margin="20" 
+                     Command="{Binding LogoutCommand}" BackgroundColor="Transparent"/>
+        </Grid>
+    </Grid>
+</Frame>
