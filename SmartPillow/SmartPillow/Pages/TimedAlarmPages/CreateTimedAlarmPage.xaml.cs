@@ -29,7 +29,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
                         Navigation.PushAsync(new PhoneAlarmSettingsPage(VM.NewAlarm.PhoneProps)); 
                         break;
                     case "snooze": 
-                        Navigation.PushAsync(new SnoozeSettingsPage()); 
+                        Navigation.PushAsync(new SnoozeSettingsPage(VM.NewAlarm.SnoozeProps)); 
                         break;
                 }                
             };

@@ -33,24 +33,24 @@ namespace SmartPillowLib.Models
         /// <summary>
         ///     Contains properties for customizing the user's desire snooze duration and interval.
         /// </summary>
-        public Snooze SnoozeProps { get; set; }
+        public SnoozeProperties SnoozeProps { get; set; }
 
         #region Device Properties
         /// <summary>
         ///     Contains the properties for this alarm related to the pillow.
         /// </summary>
-        public DeviceProps PillowProps { get; set; }
+        public DeviceProperties PillowProps { get; set; }
         /// <summary>
         ///     Contains the properties for this alarm relate to the phone.
         /// </summary>
-        public DeviceProps PhoneProps { get; set; }
+        public DeviceProperties PhoneProps { get; set; }
         #endregion       
     }
 
     /// <summary>
     ///     Class that defines the common properties for both the Smart Pillow and the Phone.
     /// </summary>
-    public class DeviceProps
+    public class DeviceProperties
     {
         /// <summary>
         ///     Value for vibration 0 to 100.
@@ -78,7 +78,7 @@ namespace SmartPillowLib.Models
     /// <summary>
     ///     Class used to represent the snooze mechanic for alarms.
     /// </summary>
-    public class Snooze
+    public class SnoozeProperties
     {
         public byte Minutes { get; set; }
         public byte Interval { get; set; }

@@ -14,7 +14,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         /// </summary>
         public Alarm NewAlarm { get; set; } = new Alarm
         {
-            PillowProps = new DeviceProps
+            PillowProps = new DeviceProperties
             {
                 IsBrightnessEnabled = true,
                 IsVibrationEnabled = true,
@@ -22,7 +22,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 Brightness = 50,
                 Vibration = 50
             },
-            PhoneProps = new DeviceProps
+            PhoneProps = new DeviceProperties
             {
                 IsBrightnessEnabled = true,
                 IsVibrationEnabled = true,
@@ -30,9 +30,11 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 Brightness = 50,
                 Vibration = 50
             },
-            SnoozeProps = new Snooze
+            SnoozeProps = new SnoozeProperties
             {                
-                IsEnabled = true
+                IsEnabled = true,
+                Interval = 10,
+                Minutes = 3
             }
         };
 

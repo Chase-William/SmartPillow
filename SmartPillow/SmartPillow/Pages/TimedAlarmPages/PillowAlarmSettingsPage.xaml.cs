@@ -13,7 +13,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
     {
         PillowAlarmSettingsVM VM => (PillowAlarmSettingsVM)BindingContext;
 
-        public PillowAlarmSettingsPage(DeviceProps pillowProps)
+        public PillowAlarmSettingsPage(DeviceProperties pillowProps)
         {
             InitializeComponent();
             BindingContext = new PillowAlarmSettingsVM(pillowProps);

@@ -22,6 +22,8 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
+        public bool IsDisappearing { get; set; }
+
         public ICommand LoginCommand => new Command(() =>
         {
             // !!! I need to code this deeper for login function
@@ -116,7 +118,7 @@ namespace SmartPillowLib.ViewModels
 
         public LoginViewModel()
         {
-            IsBusy = true;
+            IsBusy = true;            
         }
     }
 }

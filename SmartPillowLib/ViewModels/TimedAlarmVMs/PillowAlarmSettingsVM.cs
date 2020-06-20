@@ -7,6 +7,6 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
     /// </summary>
     public class PillowAlarmSettingsVM : DeviceSettingsBase
     {
-        public PillowAlarmSettingsVM(DeviceProps _pillowProps) : base(_pillowProps) { }
+        public PillowAlarmSettingsVM(DeviceProperties _pillowProps) : base(_pillowProps) { }
     }
 }

@@ -26,36 +26,15 @@
                 <Setter Property="FontSize" Value="22"/>
                 <Setter Property="TextColor" Value="{StaticResource LightFont}"/>
             </Style>
-           
-            <Style TargetType="controls:CustomRadioBtn">
+
+            <Style TargetType="RadioButton">
                 <Setter Property="TextColor" Value="White"/>
-                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontSize" Value="20"/>
             </Style>
 
-            <!--<Style TargetType="RadioButton">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor"
-                                        Value="Red" />
-                                    <Setter Property="Opacity"
-                                        Value="0.5" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="IsChecked">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor"
-                                        Value="Green" />
-                                    <Setter Property="Opacity"
-                                        Value="1" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>-->
+            <Style TargetType="Frame" BasedOn="{StaticResource RoundedTranslucentFrame}">
+                <Setter Property="Margin" Value="20,0"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -76,40 +55,36 @@
 
             <Label Style="{StaticResource ExternalLabelHeader}" Text="Interval"/>
             <!-- Interval -->
-            <Frame Style="{StaticResource RoundedTranslucentFrame}">
+            <Frame>
                 <StackLayout Style="{StaticResource NestedWithinFrame}">
-                    <StackLayout>
-                                               
-                        <ContentView>
-                            <ContentView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TappedCMD}"/>
-                            </ContentView.GestureRecognizers>
-                            <ContentView.Content>
-                                <Image Source="CloudButtonUnChecked"/>
-                            </ContentView.Content>
-                        </ContentView>
-                        <BoxView/>
-                    </StackLayout>
-                    <!--<StackLayout>
-                        <Label Text="What's your favorite color?" />
-                        <RadioButton Text="Red"
-                         TextColor="Red"
-                         GroupName="colors" />
-                                    <RadioButton Text="Green"
-                         TextColor="Green"
-                         GroupName="colors" />
-                                    <RadioButton Text="Blue"
-                         TextColor="Blue"
-                         GroupName="colors" />
-                                    <RadioButton Text="Other"
-                         GroupName="colors" />
 
-                        <label text="what's your favorite mode of transport?" />
-                        <radiobutton text="car" />
-                        <radiobutton text="bike" />
-                        <radiobutton text="train" />
-                        <radiobutton text="walking" />
-                    </StackLayout>-->
+                    <!--<RadioButton Text="5 minutes" IsChecked="{Binding IntervalRadioBtnOption1}" x:Name="IntervalRadioBtnOption1"/>
+                    <BoxView/>
+                    <RadioButton Text="10 minutes" IsChecked="{Binding IntervalRadioBtnOption2}" x:Name="IntervalRadioBtnOption2"/>
+                    <BoxView/>
+                    <RadioButton Text="20 minutes" IsChecked="{Binding IntervalRadioBtnOption3}" x:Name="IntervalRadioBtnOption3"/>
+                    <BoxView/>
+                    <RadioButton Text="30 minutes" IsChecked="{Binding IntervalRadioBtnOption4}" x:Name="IntervalRadioBtnOption4"/>-->
+
+                    <controls:CloudRadioBtn/>
+                    <controls:CloudRadioBtn/>
+                    <controls:CloudRadioBtn/>
+                    <controls:CloudRadioBtn/>
+
+                </StackLayout>
+            </Frame>
+
+            <Label Style="{StaticResource ExternalLabelHeader}" Text="Repeat"/>
+            <!-- Repeat -->
+            <Frame>
+                <StackLayout Style="{StaticResource NestedWithinFrame}">
+
+                    <!--<RadioButton Text="3 times"/>
+                    <BoxView/>
+                    <RadioButton Text="5 times"/>
+                    <BoxView/>
+                    <RadioButton Text="Continuously"/>-->
+
                 </StackLayout>
             </Frame>
         </StackLayout>

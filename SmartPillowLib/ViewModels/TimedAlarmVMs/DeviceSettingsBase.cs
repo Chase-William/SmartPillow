@@ -10,7 +10,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
     /// </summary>
     public class DeviceSettingsBase : NotifyClass
     {        
-        private DeviceProps deviceProps;
+        private readonly DeviceProperties deviceProps;
 
         #region Intermediate Binding Properties
         public byte Vibration
@@ -70,7 +70,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         }
         #endregion
 
-        protected DeviceSettingsBase(DeviceProps _deviceProps)
+        protected DeviceSettingsBase(DeviceProperties _deviceProps)
         {
             deviceProps = _deviceProps;
 

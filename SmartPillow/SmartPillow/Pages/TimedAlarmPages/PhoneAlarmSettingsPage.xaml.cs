@@ -11,7 +11,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PhoneAlarmSettingsPage : ContentPage
     {        
-        public PhoneAlarmSettingsPage(DeviceProps phoneProps)
+        public PhoneAlarmSettingsPage(DeviceProperties phoneProps)
         {
             InitializeComponent();
             BindingContext = new PhoneAlarmSettingsVM(phoneProps);
