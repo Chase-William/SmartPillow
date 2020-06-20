@@ -42,7 +42,9 @@
                     </ResourceDictionary>
                 </Grid.Resources>
 
-                <pancake:PancakeView Margin="15,80,15,0"/>
+                <pancake:PancakeView Margin="15,80,15,0">
+                    <!--Inserting a specific pillow ID-->
+                </pancake:PancakeView>
 
                 <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>
 
