@@ -62,5 +62,12 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged();
             }
         }
+
+        public void OnAppearing()
+        {
+            NotifyPropertiesChanged(nameof(IsUserLogged),
+                                    nameof(User),
+                                    nameof(ProfileImage));
+        }
     }
 }

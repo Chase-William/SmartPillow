@@ -11,23 +11,9 @@ namespace SmartPillowLib.ViewModels
     {
         public event Action PopAsyncPage;
 
-        private bool isBusy;
-
-        public bool IsBusy
-        {
-            get { return isBusy; }
-            set {
-                isBusy = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public bool IsDisappearing { get; set; }
-
         public ICommand LoginCommand => new Command(() =>
         {
             // !!! I need to code this deeper for login function
-            IsBusy = false;
 
             // For testing purpose
             var user = new User()
@@ -43,14 +29,11 @@ namespace SmartPillowLib.ViewModels
             UserInformation.IsUserLogged = true;
 
             PopAsyncPage?.Invoke();
-
-            IsBusy = true;
         });
 
         public ICommand TwitterCommand => new Command(() =>
         {
             // !!! I need to code this deeper for login function
-            IsBusy = false;
 
             // For testing purpose
             var user = new User()
@@ -66,14 +49,11 @@ namespace SmartPillowLib.ViewModels
             UserInformation.IsUserLogged = true;
 
             PopAsyncPage?.Invoke();
-
-            IsBusy = true;
         });
 
         public ICommand GoogleCommand => new Command(() =>
         {
             // !!! I need to code this deeper for login function
-            IsBusy = false;
 
             // For testing purpose
             var user = new User()
@@ -89,14 +69,11 @@ namespace SmartPillowLib.ViewModels
             UserInformation.IsUserLogged = true;
 
             PopAsyncPage?.Invoke();
-
-            IsBusy = true;
         });
 
         public ICommand FacebookCommand => new Command(() =>
         {
             // !!! I need to code this deeper for login function
-            IsBusy = false;
 
             // For testing purpose
             var user = new User()
@@ -112,13 +89,11 @@ namespace SmartPillowLib.ViewModels
             UserInformation.IsUserLogged = true;
 
             PopAsyncPage?.Invoke();
-
-            IsBusy = true;
         });
 
         public LoginViewModel()
         {
-            IsBusy = true;            
+          
         }
     }
 }

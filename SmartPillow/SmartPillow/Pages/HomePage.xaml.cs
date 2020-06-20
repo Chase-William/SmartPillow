@@ -25,16 +25,12 @@ namespace SmartPillow.Pages
 
             VM.OpenLoginPage += async delegate
             {
-                rightIcon.IsEnabled = false;
                 await Navigation.PushModalAsync(new LoginPage());
-                rightIcon.IsEnabled = true;
             };
 
             VM.OpenProfilePage += async delegate
             {
-                rightIcon.IsEnabled = false;
                 await Navigation.PushModalAsync(new ProfilePage());
-                rightIcon.IsEnabled = true;
             };
         }
 
@@ -42,7 +38,15 @@ namespace SmartPillow.Pages
         
         protected override void OnAppearing()
         {
-            rightIcon.IconImageSource = UserInformation.User.Image;
+            VM.OnAppearing();
+            base.OnAppearing();
+            rightIcon.IsEnabled = true;
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            rightIcon.IsEnabled = false;
         }
     }
 }

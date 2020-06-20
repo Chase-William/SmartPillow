@@ -21,8 +21,7 @@ namespace SmartPillow.Pages
             VM.PopAsyncPage += async delegate
             {
                 /// <summary>
-                ///     This code is what I can do to avoid clicking often that will crash the app
-                ///     I tried to bind IsEnable with viewModel but it doesn't work. Do you know how to bind it properly in order to get it work?
+                ///     This page will be popped off to return to HomePage
                 /// </summary>
                 await Navigation.PopModalAsync();
             };            
