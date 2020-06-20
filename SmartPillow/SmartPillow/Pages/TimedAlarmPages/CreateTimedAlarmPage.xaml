@@ -4,13 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib"
-             xmlns:alarm_prop="clr-namespace:SmartPillow.Pages.TimedAlarmPages" xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"             
              x:Class="SmartPillow.Pages.TimedAlarmPages.CreateTimedAlarmPage"
              Title="New Alarm">
 
     <ContentPage.BindingContext>
-        <vm:CreateTimedAlarmVM x:Name="viewModel"/>
+        <vm:CreateTimedAlarmVM/>
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
@@ -55,7 +55,7 @@
                 <!-- Pillow -->
                 <ContentView>
                     <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                        <TapGestureRecognizer Command="{Binding AdjustSettingsCMD}" CommandParameter="pillow"/>
                     </ContentView.GestureRecognizers>
 
                     <ContentView.Content>
@@ -70,12 +70,12 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Prop Title -->
+                             <!--Prop Title--> 
                             <Label Style="{StaticResource PropertyLabel}" Text="Pillow"/>
-                            <!-- Prop Value Text -->
+                             <!--Prop Value Text--> 
                             <Label Style="{StaticResource PropValueLabel}" Text="Vibration Only"/>
-                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                            <Switch IsToggled="{Binding NewAlarm.PillowProps.IsEnabled}"/>
+                             <!--Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable--> 
+                            <Switch IsToggled="{Binding IsPillowEnabled}"/>
 
                             <BoxView/>
                         </Grid>
@@ -85,7 +85,7 @@
                 <!-- Phone -->
                 <ContentView>
                     <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                            <TapGestureRecognizer Command="{Binding AdjustSettingsCMD}" CommandParameter="phone"/>
                     </ContentView.GestureRecognizers>
 
                     <ContentView.Content>
@@ -100,12 +100,9 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                                <!-- Prop Title -->
                             <Label Style="{StaticResource PropertyLabel}" Text="Phone"/>
-                            <!-- Prop Value Text -->
                             <Label Style="{StaticResource PropValueLabel}"/>
-                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                            <Switch IsToggled="{Binding IsPhoneEnabled}"/>
 
                             <BoxView/>
                         </Grid>
@@ -115,7 +112,7 @@
                 <!-- Snooze -->
                 <ContentView>
                     <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                            <TapGestureRecognizer Command="{Binding AdjustSettingsCMD}" CommandParameter="snooze"/>
                     </ContentView.GestureRecognizers>
 
                     <ContentView.Content>
@@ -130,12 +127,9 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                                <!-- Prop Title -->
                             <Label Style="{StaticResource PropertyLabel}" Text="Snooze"/>
-                            <!-- Prop Value Text -->
                             <Label Style="{StaticResource PropValueLabel}"/>
-                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                            <Switch IsToggled="{Binding IsSnoozeEnabled}"/>
 
                             <BoxView/>
                         </Grid>
@@ -145,7 +139,7 @@
                 <!-- Fade -->
                 <ContentView>
                     <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AdjustPillowSettingsCMD}"/>
+                            <TapGestureRecognizer Command="{Binding AdjustSettingsCMD}" CommandParameter="fade"/>
                     </ContentView.GestureRecognizers>
 
                     <ContentView.Content>
@@ -160,12 +154,9 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                                <!-- Prop Title -->
                             <Label Style="{StaticResource PropertyLabel}" Text="Fade"/>
-                            <!-- Prop Value Text -->
                             <Label Style="{StaticResource PropValueLabel}"/>
-                            <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
+                            <Switch IsToggled="{Binding IsFadeEnabled}"/>
                         </Grid>
                     </ContentView.Content>
                 </ContentView>
