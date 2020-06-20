@@ -25,12 +25,16 @@ namespace SmartPillow.Pages
 
             VM.OpenLoginPage += async delegate
             {
+                rightIcon.IsEnabled = false;
                 await Navigation.PushModalAsync(new LoginPage());
+                rightIcon.IsEnabled = true;
             };
 
             VM.OpenProfilePage += async delegate
             {
+                rightIcon.IsEnabled = false;
                 await Navigation.PushModalAsync(new ProfilePage());
+                rightIcon.IsEnabled = true;
             };
         }
 

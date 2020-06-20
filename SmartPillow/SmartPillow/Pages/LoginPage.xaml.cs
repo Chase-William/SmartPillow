@@ -20,7 +20,19 @@ namespace SmartPillow.Pages
             InitializeComponent();
             VM.PopAsyncPage += async delegate
             {
+                /// <summary>
+                ///     This code is what I can do to avoid clicking often that will crash the app
+                ///     I tried to bind IsEnable with viewModel but it doesn't work. Do you know how to bind it properly in order to get it work?
+                /// </summary>
+                TwitterBtn.IsEnabled = false;
+                GoogleBtn.IsEnabled = false;
+                FacebookBtn.IsEnabled = false;
+                LoginBtn.IsEnabled = false;
                 await this.Navigation.PopModalAsync();
+                TwitterBtn.IsEnabled = false;
+                GoogleBtn.IsEnabled = false;
+                FacebookBtn.IsEnabled = false;
+                LoginBtn.IsEnabled = true;
             };
         }
 

@@ -17,6 +17,7 @@ namespace SmartPillow.Pages
     public partial class ProfileFrame
     {
         public bool GoUp;
+
         public ProfileViewModel VM => (ProfileViewModel)BindingContext;
 
         public static event Action PopProfile;
@@ -56,14 +57,21 @@ namespace SmartPillow.Pages
             {
                 // Move frame up or down
                 case GestureStatus.Running:
-                    if (TranslationY >= 220)
+
+                    if (TranslationY > 219)
                         TranslationY = (Device.RuntimePlatform == Device.Android ? TranslationY : 0) + e.TotalY;
 
-                    if (Math.Round((screenCoordinates.Y + TranslationY / 1) - 300, 1) > e.TotalY)
+                    if (e.TotalY > 3)
                         GoUp = false;
 
-                    else
+                    if (e.TotalY <= 4)
                         GoUp = true;
+
+                    //if (Math.Round((screenCoordinates.Y + TranslationY / 1) - 300, 1) > e.TotalY)
+                    //    GoUp = false;
+
+                    //else
+                    //    GoUp = true;
 
                     break;
                 case GestureStatus.Completed:
@@ -76,7 +84,6 @@ namespace SmartPillow.Pages
                         await this.TranslateTo(TranslationX, DeviceDisplay.MainDisplayInfo.Height / 2 - 170, 300);
                         PopProfile?.Invoke();
                     }
-
                     break;
 
                 case GestureStatus.Canceled:
