@@ -10875,10 +10875,10 @@ namespace SmartPillow.Droid
 			public const int check_mark = 2131165277;
 			
 			// aapt resource value: 0x7F07005E
-			public const int CloudButtonChecked = 2131165278;
+			public const int CloudBtnInner = 2131165278;
 			
 			// aapt resource value: 0x7F07005F
-			public const int CloudButtonUnChecked = 2131165279;
+			public const int CloudBtnOuter = 2131165279;
 			
 			// aapt resource value: 0x7F070060
 			public const int cloudDrawerBackground = 2131165280;

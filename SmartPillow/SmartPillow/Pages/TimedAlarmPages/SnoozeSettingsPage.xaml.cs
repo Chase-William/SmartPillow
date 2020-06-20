@@ -16,17 +16,6 @@ namespace SmartPillow.Pages.TimedAlarmPages
         {
             InitializeComponent();
             BindingContext = new SnoozeSettingsVM(snoozeProps);
-
-            //if (VM.IntervalRadioBtnOption1)
-            //    IntervalRadioBtnOption1.IsChecked = true;
-            //else if (VM.IntervalRadioBtnOption2)
-            //    IntervalRadioBtnOption2.IsChecked = true;
-            //else if (VM.IntervalRadioBtnOption3)
-            //    IntervalRadioBtnOption3.IsChecked = true;
-            //else if (VM.IntervalRadioBtnOption4)
-            //    IntervalRadioBtnOption4.IsChecked = true;
-
-
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);

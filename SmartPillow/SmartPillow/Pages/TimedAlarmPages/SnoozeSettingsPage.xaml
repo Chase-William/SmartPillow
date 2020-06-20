@@ -58,18 +58,13 @@
             <Frame>
                 <StackLayout Style="{StaticResource NestedWithinFrame}">
 
-                    <!--<RadioButton Text="5 minutes" IsChecked="{Binding IntervalRadioBtnOption1}" x:Name="IntervalRadioBtnOption1"/>
+                    <controls:CloudRadioBtn IsChecked="True" Text="5 minutes"/>
                     <BoxView/>
-                    <RadioButton Text="10 minutes" IsChecked="{Binding IntervalRadioBtnOption2}" x:Name="IntervalRadioBtnOption2"/>
+                    <controls:CloudRadioBtn Text="10 minutes"/>
                     <BoxView/>
-                    <RadioButton Text="20 minutes" IsChecked="{Binding IntervalRadioBtnOption3}" x:Name="IntervalRadioBtnOption3"/>
+                    <controls:CloudRadioBtn Text="20 minutes"/>
                     <BoxView/>
-                    <RadioButton Text="30 minutes" IsChecked="{Binding IntervalRadioBtnOption4}" x:Name="IntervalRadioBtnOption4"/>-->
-
-                    <controls:CloudRadioBtn/>
-                    <controls:CloudRadioBtn/>
-                    <controls:CloudRadioBtn/>
-                    <controls:CloudRadioBtn/>
+                    <controls:CloudRadioBtn IsChecked="True" Text="30 minutes"/>
 
                 </StackLayout>
             </Frame>
