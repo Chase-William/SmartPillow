@@ -60,9 +60,7 @@ namespace SmartPillow.Pages
 
                     if (TranslationY > 219)
                         TranslationY = (Device.RuntimePlatform == Device.Android ? TranslationY : 0) + e.TotalY;
-
-                    Console.WriteLine();
-
+                    
                     // if we are moving downwards (downwards is positive) then dont go up.
                     if (e.TotalY > 0)
                         GoUp = false;
@@ -74,7 +72,7 @@ namespace SmartPillow.Pages
                     break;
                 case GestureStatus.Completed:
                     
-                    // if the frame should move tranlate it to go up
+                    // if the frame should go up tranlate it to go up
                     if (GoUp)
                         await this.TranslateTo(TranslationX, 220, 100);
 
