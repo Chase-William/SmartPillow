@@ -4,8 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SmartPillow.Controls.CloudRadioBtn" 
-             WidthRequest="70" HeightRequest="70">
+             x:Class="SmartPillow.Controls.SmartPillowRadioBtn">
 
     <ContentView.GestureRecognizers>
         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>

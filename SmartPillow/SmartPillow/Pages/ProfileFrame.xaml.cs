@@ -61,27 +61,27 @@ namespace SmartPillow.Pages
                     if (TranslationY > 219)
                         TranslationY = (Device.RuntimePlatform == Device.Android ? TranslationY : 0) + e.TotalY;
 
-                    if (e.TotalY > 3)
+                    Console.WriteLine();
+
+                    // if we are moving downwards (downwards is positive) then dont go up.
+                    if (e.TotalY > 0)
                         GoUp = false;
 
-                    if (e.TotalY <= 4)
+                    // if we are moving upwards (upwards is negative) then go up.
+                    if (e.TotalY < 0)
                         GoUp = true;
-
-                    //if (Math.Round((screenCoordinates.Y + TranslationY / 1) - 300, 1) > e.TotalY)
-                    //    GoUp = false;
-
-                    //else
-                    //    GoUp = true;
 
                     break;
                 case GestureStatus.Completed:
-
+                    
+                    // if the frame should move tranlate it to go up
                     if (GoUp)
-                        await this.TranslateTo(TranslationX, 220, 200);
+                        await this.TranslateTo(TranslationX, 220, 100);
 
+                    // if the frame should go down translate it to go down
                     if (!GoUp)
                     {
-                        await this.TranslateTo(TranslationX, DeviceDisplay.MainDisplayInfo.Height / 2 - 170, 300);
+                        await this.TranslateTo(TranslationX, DeviceDisplay.MainDisplayInfo.Height / 2 - 170, 100);
                         PopProfile?.Invoke();
                     }
                     break;
@@ -90,8 +90,6 @@ namespace SmartPillow.Pages
                     break;
                 case GestureStatus.Started:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }

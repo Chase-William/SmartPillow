@@ -34,7 +34,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             {                
                 IsEnabled = true,
                 Interval = 10,
-                Minutes = 3
+                Repeat = 3
             }
         };
 
