@@ -6,7 +6,8 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
              xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
-             x:Class="SmartPillow.Pages.TimedAlarmPages.SnoozeSettingsPage">
+             x:Class="SmartPillow.Pages.TimedAlarmPages.SnoozeSettingsPage"
+             Title="Snooze Settings">
     <!-- Radiobtn doc https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/radiobutton -->
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -16,7 +17,8 @@
             </Style>
             <!-- Horizontal break fitted to the grids used in this page -->
             <Style TargetType="BoxView" BasedOn="{StaticResource HorizontalBreak}">
-                <Setter Property="WidthRequest" Value="317"/>
+                <Setter Property="WidthRequest" Value="295"/>
+                <Setter Property="Opacity" Value="0.2"/>
                 <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
             </Style>
 
@@ -35,54 +37,62 @@
             <Style TargetType="Frame" BasedOn="{StaticResource RoundedTranslucentFrame}">
                 <Setter Property="Margin" Value="20,0"/>
             </Style>
+
+            <Style TargetType="controls:CustomRadioBtn">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Grid>
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
         <Image Style="{StaticResource CloudyBG}"/>
-        
-        <StackLayout>
-            <!-- On / Off Controls -->
-            <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="15">
-                <StackLayout Style="{StaticResource NestedWithinFrame}" Orientation="Horizontal">
-                    <Label Style="{StaticResource PropertyLabel}" 
+                
+        <ScrollView Padding="0,0,0,20">
+            <StackLayout>
+                <!-- On / Off Controls -->
+                <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="15">
+                    <StackLayout Style="{StaticResource NestedWithinFrame}" Orientation="Horizontal">
+                        <Label Style="{StaticResource PropertyLabel}" 
                            Text="{Binding IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
                            FontSize="20"/>
-                    <Switch IsToggled="{Binding IsEnabled}" HorizontalOptions="EndAndExpand"/>
-                </StackLayout>
-            </Frame>
+                        <Switch IsToggled="{Binding IsEnabled}" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </Frame>
 
-            <Label Style="{StaticResource ExternalLabelHeader}" Text="Interval"/>
-            <!-- Interval -->
-            <Frame>
-                <StackLayout Style="{StaticResource NestedWithinFrame}">
+                <Label Style="{StaticResource ExternalLabelHeader}" Text="Interval"/>
+                <!-- Interval -->
+                <Frame>
+                    <StackLayout Style="{StaticResource NestedWithinFrame}">
 
-                    <controls:CloudRadioBtn IsChecked="True" Text="5 minutes"/>
-                    <BoxView/>
-                    <controls:CloudRadioBtn Text="10 minutes"/>
-                    <BoxView/>
-                    <controls:CloudRadioBtn Text="20 minutes"/>
-                    <BoxView/>
-                    <controls:CloudRadioBtn IsChecked="True" Text="30 minutes"/>
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption1}" Text="5 minutes" GroupName="interval"/>
+                        <BoxView/>
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption2}" Text="10 minutes" GroupName="interval"/>
+                        <BoxView/>
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption3}" Text="20 minutes" GroupName="interval"/>
+                        <BoxView/>
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption4}" Text="30 minutes" GroupName="interval"/>
 
-                </StackLayout>
-            </Frame>
+                    </StackLayout>
+                </Frame>
 
-            <Label Style="{StaticResource ExternalLabelHeader}" Text="Repeat"/>
-            <!-- Repeat -->
-            <Frame>
-                <StackLayout Style="{StaticResource NestedWithinFrame}">
+                <Label Style="{StaticResource ExternalLabelHeader}" Text="Repeat"/>
+                <!-- Repeat -->
+                <Frame>
+                    <StackLayout Style="{StaticResource NestedWithinFrame}">
 
-                    <!--<RadioButton Text="3 times"/>
-                    <BoxView/>
-                    <RadioButton Text="5 times"/>
-                    <BoxView/>
-                    <RadioButton Text="Continuously"/>-->
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding RepeatRadioBtnOption1}" Text="3 times" GroupName="repeat"/>
+                        <BoxView/>
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding RepeatRadioBtnOption2}" Text="5 times" GroupName="repeat"/>
+                        <BoxView/>
+                        <controls:SmartPillowRadioBtn IsChecked="{Binding RepeatRadioBtnOption3}" Text="Continuously" GroupName="repeat"/>
 
-                </StackLayout>
-            </Frame>
-        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+        
     </Grid>
 
 </ContentPage>

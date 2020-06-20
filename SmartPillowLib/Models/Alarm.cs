@@ -80,7 +80,7 @@ namespace SmartPillowLib.Models
     /// </summary>
     public class SnoozeProperties
     {
-        public byte Minutes { get; set; }
+        public byte Repeat { get; set; }
         public byte Interval { get; set; }
         public bool IsEnabled { get; set; }
     }

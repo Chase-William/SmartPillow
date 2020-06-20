@@ -14,12 +14,18 @@ namespace SmartPillow.Pages.TimedAlarmPages
     {
         public CreateTimedAlarmVM VM => (CreateTimedAlarmVM)BindingContext;
 
+        bool IsCreatingNewPage = false;
+
         public CreateTimedAlarmPage()
         {
             InitializeComponent();
             // Depending on which ContentView is pressed a parameter is passed determining the proper page to be pushed on the view stack.
             VM.AdjustSettings += (discriminator) =>
             {
+                // Preventing multiple instances of pages from being created.
+                if (IsCreatingNewPage) return;
+
+                IsCreatingNewPage = true;
                 switch (discriminator)
                 {
                     case "pillow": 
@@ -38,6 +44,8 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
         protected override void OnAppearing()
         {
+            // Reseting
+            IsCreatingNewPage = false;
             VM.OnAppearing();
             base.OnAppearing();
         }
