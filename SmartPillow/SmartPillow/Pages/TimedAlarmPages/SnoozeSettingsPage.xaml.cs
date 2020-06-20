@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using SkiaSharp.Views.Forms;
+using SmartPillow.Util;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace SmartPillow.Pages.TimedAlarmPages
@@ -10,5 +12,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
         {
             InitializeComponent();
         }
+
+        private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
     }
 }

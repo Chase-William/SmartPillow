@@ -22,10 +22,6 @@ namespace SmartPillowLib.Models
         /// </summary>
         public bool IsFadeEnabled { get; set; }
         /// <summary>
-        ///     Bool indicating whether the alarm should snooze.
-        /// </summary>
-        public string IsSnoozeEnabled { get; set; }
-        /// <summary>
         ///     Bool indicates whether this alarm is enabled.
         /// </summary>
         public bool IsAlarmEnabled { get; set; }
@@ -84,7 +80,8 @@ namespace SmartPillowLib.Models
     /// </summary>
     public class Snooze
     {
-        public byte Minutes, Interval;
-        bool IsEnabled;
+        public byte Minutes { get; set; }
+        public byte Interval { get; set; }
+        public bool IsEnabled { get; set; }
     }
 }

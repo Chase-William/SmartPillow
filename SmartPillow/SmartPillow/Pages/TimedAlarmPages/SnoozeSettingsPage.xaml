@@ -2,10 +2,117 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.TimedAlarmPages.SnoozeSettingsPage">
-    
-    
-    
+    <!-- Radiobtn doc https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/radiobutton -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- TextEntry styles -->
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+            <!-- Horizontal break fitted to the grids used in this page -->
+            <Style TargetType="BoxView" BasedOn="{StaticResource HorizontalBreak}">
+                <Setter Property="WidthRequest" Value="317"/>
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+            </Style>
+
+            <!-- For labels outside the frames which act as headers -->
+            <Style x:Key="ExternalLabelHeader" TargetType="Label">
+                <Setter Property="Margin" Value="20,0,0,0"/>
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="TextColor" Value="{StaticResource LightFont}"/>
+            </Style>
+           
+            <Style TargetType="controls:CustomRadioBtn">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="22"/>
+            </Style>
+
+            <!--<Style TargetType="RadioButton">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                        Value="Red" />
+                                    <Setter Property="Opacity"
+                                        Value="0.5" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="IsChecked">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                        Value="Green" />
+                                    <Setter Property="Opacity"
+                                        Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+        <Image Style="{StaticResource CloudyBG}"/>
+        
+        <StackLayout>
+            <!-- On / Off Controls -->
+            <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="15">
+                <StackLayout Style="{StaticResource NestedWithinFrame}" Orientation="Horizontal">
+                    <Label Style="{StaticResource PropertyLabel}" 
+                           Text="{Binding IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
+                           FontSize="20"/>
+                    <Switch IsToggled="{Binding IsEnabled}" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Style="{StaticResource ExternalLabelHeader}" Text="Interval"/>
+            <!-- Interval -->
+            <Frame Style="{StaticResource RoundedTranslucentFrame}">
+                <StackLayout Style="{StaticResource NestedWithinFrame}">
+                    <StackLayout>
+                                               
+                        <ContentView>
+                            <ContentView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TappedCMD}"/>
+                            </ContentView.GestureRecognizers>
+                            <ContentView.Content>
+                                <Image Source="CloudButtonUnChecked"/>
+                            </ContentView.Content>
+                        </ContentView>
+                        <BoxView/>
+                    </StackLayout>
+                    <!--<StackLayout>
+                        <Label Text="What's your favorite color?" />
+                        <RadioButton Text="Red"
+                         TextColor="Red"
+                         GroupName="colors" />
+                                    <RadioButton Text="Green"
+                         TextColor="Green"
+                         GroupName="colors" />
+                                    <RadioButton Text="Blue"
+                         TextColor="Blue"
+                         GroupName="colors" />
+                                    <RadioButton Text="Other"
+                         GroupName="colors" />
+
+                        <label text="what's your favorite mode of transport?" />
+                        <radiobutton text="car" />
+                        <radiobutton text="bike" />
+                        <radiobutton text="train" />
+                        <radiobutton text="walking" />
+                    </StackLayout>-->
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Grid>
+
 </ContentPage>

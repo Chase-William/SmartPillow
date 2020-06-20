@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {    
-    public class CreateTimedAlarmVM
+    public class CreateTimedAlarmVM : NotifyClass
     {        
-        public event Action AdjustPillowSettings;
+        public event Action<string> AdjustSettings;        
 
         /// <summary>
         ///     New alarm instance.
@@ -21,8 +21,67 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 IsEnabled = true,
                 Brightness = 50,
                 Vibration = 50
+            },
+            PhoneProps = new DeviceProps
+            {
+                IsBrightnessEnabled = true,
+                IsVibrationEnabled = true,
+                IsEnabled = true,
+                Brightness = 50,
+                Vibration = 50
+            },
+            SnoozeProps = new Snooze
+            {                
+                IsEnabled = true
             }
         };
+
+        #region Intermediate Binding Props
+        public bool IsPillowEnabled
+        {
+            get => NewAlarm.PillowProps.IsEnabled;
+            set
+            {
+                if (IsPillowEnabled == value) return;
+
+                NewAlarm.PillowProps.IsEnabled = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsPhoneEnabled
+        {
+            get => NewAlarm.PhoneProps.IsEnabled;
+            set
+            {
+                if (IsPhoneEnabled == value) return;
+
+                NewAlarm.PhoneProps.IsEnabled = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsSnoozeEnabled
+        {
+            get => NewAlarm.SnoozeProps.IsEnabled;
+            set
+            {
+                if (IsSnoozeEnabled == value) return;
+
+                NewAlarm.SnoozeProps.IsEnabled = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsFadeEnabled
+        {
+            get => NewAlarm.IsFadeEnabled;
+            set
+            {
+                if (IsFadeEnabled == value) return;
+
+                NewAlarm.IsFadeEnabled = value;
+                NotifyPropertyChanged();
+            }
+        }
+        #endregion
 
         /// <summary>
         ///     Saves an alarm to the device after validiation.
@@ -32,11 +91,20 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             
         });
 
-        public ICommand AdjustPillowSettingsCMD => new Command(() =>
+        public ICommand AdjustSettingsCMD => new Command((object discriminator) =>
         {
-            AdjustPillowSettings?.Invoke();
+            AdjustSettings?.Invoke((string)discriminator);
         });
 
-        public CreateTimedAlarmVM() { }
+        /// <summary>
+        ///     Called when this page is appearing to make sure the current values are in sync with the UI.
+        /// </summary>
+        public void OnAppearing()
+        {
+            NotifyPropertiesChanged(nameof(IsPillowEnabled), 
+                                    nameof(IsPhoneEnabled), 
+                                    nameof(IsSnoozeEnabled), 
+                                    nameof(IsFadeEnabled));
+        }
     }
 }

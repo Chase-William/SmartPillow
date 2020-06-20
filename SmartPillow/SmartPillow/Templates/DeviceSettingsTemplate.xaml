@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             mc:Ignorable="d"
+             x:Class="SmartPillow.Templates.DeviceSettingsTemplate">
+
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!-- TextEntry styles -->
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+            <!-- Horizontal break fitted to the grids used in this page -->
+            <Style TargetType="BoxView" BasedOn="{StaticResource HorizontalBreak}">
+                <Setter Property="Grid.Row" Value="2"/>
+                <Setter Property="Grid.ColumnSpan" Value="2"/>
+            </Style>
+            <!-- Adjusting the base PropertyGroup Grid Style -->
+            <Style TargetType="Grid">
+                <Setter Property="HeightRequest" Value="90"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid>
+        <StackLayout>
+            <!-- On / Off Controls -->
+            <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="15">
+                <StackLayout Style="{StaticResource NestedWithinFrame}" Orientation="Horizontal">
+                    <Label Style="{StaticResource PropertyLabel}" 
+                           Text="{Binding IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
+                           FontSize="20"/>
+                    <Switch IsToggled="{Binding IsEnabled}" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Main Controls -->
+            <Frame Style="{StaticResource RoundedTranslucentFrame}">
+                <StackLayout Style="{StaticResource NestedWithinFrame}">
+                    <!-- Brightness -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.7*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="1.4*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Prop Title -->
+                        <Label Style="{StaticResource PropertyLabel}" Text="Brightness"/>
+                        <!-- Prop Value Text -->
+                        <Label Style="{StaticResource PropValueLabel}" 
+                               Text="{Binding IsBrightnessEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
+                        <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                        <Switch IsToggled="{Binding IsBrightnessEnabled}"/>
+                        <Slider Style="{StaticResource DevicePropsSlider}" Value="{Binding Brightness}"/>
+                    </Grid>
+                    <!-- Vibration -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.7*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="1.4*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Prop Title -->
+                        <Label Style="{StaticResource PropertyLabel}" Text="Vibration"/>
+                        <!-- Prop Value Text -->
+                        <Label Style="{StaticResource PropValueLabel}"
+                               Text="{Binding IsVibrationEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
+                        <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
+                        <Switch IsToggled="{Binding IsVibrationEnabled}"/>
+                        <Slider Style="{StaticResource DevicePropsSlider}" Value="{Binding Vibration}"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Grid>
+</ContentView>

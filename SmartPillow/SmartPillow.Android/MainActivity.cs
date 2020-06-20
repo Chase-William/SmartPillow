@@ -19,6 +19,9 @@ namespace SmartPillow.Droid
 
             base.OnCreate(savedInstanceState);
 
+            // Declaring that we are going to be using radiobtns which are experimental.
+            Xamarin.Forms.Forms.SetFlags("RadioButton_Experimental");
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());      
