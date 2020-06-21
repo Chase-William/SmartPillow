@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib"
+             mc:Ignorable="d"
+             x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage">
+
+    <ContentPage.BindingContext>
+        <vm:NormalAlarmsPageVM/>
+    </ContentPage.BindingContext>
+    
+    <Grid>
+
+        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+
+        <StackLayout>
+            <SearchBar/>
+
+            <!-- Contains a collection of timed alarms -->
+            <ListView ItemsSource="{Binding Alarms}" HasUnevenRows="True" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="7" Padding="5" Margin="30,10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="AlarmClockSmall" WidthRequest="50"/>
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}" TextColor="White"/>
+                                        <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeString}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="New (Test)" Clicked="OnNewAlarm_BtnClicked"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

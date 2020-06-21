@@ -8,9 +8,9 @@ using Xamarin.Forms.Xaml;
 namespace SmartPillow.Pages.TimedAlarmPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TimedAlarmsPage : ContentPage
+    public partial class NormalAlarmsPage : ContentPage
     {
-        public TimedAlarmsPage()
+        public NormalAlarmsPage()
         {
             InitializeComponent();
         }

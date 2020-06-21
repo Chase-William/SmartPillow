@@ -22,7 +22,6 @@
             <Color x:Key="GrayedFont">#CCCCCC</Color>
             <Color x:Key="VibrateBlueFont">#00C2FF</Color>
 
-
             <!--
             
                 Styles for:

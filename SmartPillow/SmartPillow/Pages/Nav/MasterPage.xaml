@@ -50,7 +50,7 @@
                     <x:Array Type="{x:Type nav_items:MasterPageImgItem}">
                         <nav_items:MasterPageImgItem Title="Home" TargetType="{x:Type pages:HomePage}"/>
                         <nav_items:MasterPageImgItem Title="Alarms" TargetType="{x:Type pages:AlarmsPage}"/>
-                        <nav_items:MasterPageImgItem Title="Normal Alarms" TargetType="{x:Type timed_alarm_pages:TimedAlarmsPage}"/>
+                        <nav_items:MasterPageImgItem Title="Normal Alarms" TargetType="{x:Type timed_alarm_pages:NormalAlarmsPage}"/>
                     </x:Array>
                 </ListView.ItemsSource>
 

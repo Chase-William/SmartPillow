@@ -45,6 +45,8 @@ namespace SmartPillowLib.Models
         /// </summary>
         public DeviceProperties PhoneProps { get; set; }
         #endregion       
+
+        public string SnoozeString => string.Format($"{SnoozeProps.Interval} minutes, {SnoozeProps.Repeat} times");
     }
 
     /// <summary>
