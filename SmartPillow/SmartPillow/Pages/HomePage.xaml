@@ -6,6 +6,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
              xmlns:viewModel="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
+             xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
              Title="Home"
              x:Class="SmartPillow.Pages.HomePage">
@@ -43,20 +44,85 @@
                     </ResourceDictionary>
                 </Grid.Resources>
 
-                <pancake:PancakeView Margin="15,80,15,0">
-                    <!--Inserting a specific pillow ID-->
-                    <Grid>
-                        <Grid BackgroundColor="AliceBlue"/>
-                        <Grid Grid.Row="1" BackgroundColor="DarkBlue"/>
-                        <Grid Grid.Row="2" BackgroundColor="Aquamarine"/>
-                        <Grid Grid.Row="3" BackgroundColor="Yellow"/>
+                <Grid>
+
+                    <Grid Margin="15,80,15,0" Grid.RowSpan="4">
+                        <pancake:PancakeView/>
+
+                        <Grid VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,30" HeightRequest="50">
+
+                            <!--need to bind percentage-->
+                            <controls:GradientProgressBar
+                            BarBackgroundColor="#5E5E5E"
+                            CornerRadius="6"
+                            HeightRequest="12"
+                            AlternativeTextColor="Transparent"
+                            TextColor="Transparent"
+                            WidthRequest="290"
+                            GradientStartColor="#7AC0DF"
+                            GradientEndColor="#D765FF"
+                            Percentage=".75"
+                            HorizontalOptions="Start" VerticalOptions="End"/>
+
+                        </Grid>
+
+                        <Grid HorizontalOptions="Start" VerticalOptions="Start" Margin="14"
+                              HeightRequest="35"
+                              WidthRequest="220">
+                            <Grid.GestureRecognizers>
+                                <!--need to bind command for opening pop up view-->
+                                <TapGestureRecognizer Command="{Binding UserCommand}"/>
+                            </Grid.GestureRecognizers>
+
+                            <pancake:PancakeView
+                                             CornerRadius="75"
+                                             Opacity=".3"
+                                             BackgroundGradientStartColor="#AAAAAA" 
+                                             BackgroundGradientEndColor="#545454"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="pillow.png" HeightRequest="20" VerticalOptions="Center" Margin="7,8,0,7"/>
+
+                                <!--need to bind text-->
+                                <Label Grid.Column="1" Text="SP123-19B" TextColor="White" FontFamily="Ubuntu"
+                                       FontAttributes="Bold" VerticalOptions="Center" FontSize="15"/>
+
+                                <!--need to bind text and textColor-->
+                                <Label Grid.Column="2" Text="Connected" TextColor="#53FF6F" FontSize="10" FontAttributes="Bold" FontFamily="Ubuntu"
+                                       VerticalOptions="Center" HorizontalTextAlignment="Center" Margin="-35,0,0,0"/>
+
+                            </Grid>
+                        </Grid>
+
+                        <Grid HorizontalOptions="End" VerticalOptions="Start" Margin="14,17,14,14"
+                              HeightRequest="30" WidthRequest="80">
+
+                            <Grid.GestureRecognizers>
+                                <!--need to bind command for opening detail page or popup view (undecided) -->
+                                <TapGestureRecognizer Command="{Binding UserCommand}"/>
+                            </Grid.GestureRecognizers>
+
+                            <pancake:PancakeView
+                                             CornerRadius="75"
+                                             Opacity=".3"
+                                             BackgroundGradientStartColor="#AAAAAA" 
+                                             BackgroundGradientEndColor="#545454"/>
+
+                            <Label Text="Detail" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Grid>
                     </Grid>
-                </pancake:PancakeView>
+
+                    <pancake:PancakeView Grid.Row="4" Margin="15,10,15,0" Grid.RowSpan="2"/>
+                </Grid>
 
                 <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>
 
             </Grid>
-
         </Grid>
     </AbsoluteLayout>
 </ContentPage>
