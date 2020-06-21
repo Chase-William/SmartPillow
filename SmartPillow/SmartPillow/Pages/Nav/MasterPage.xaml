@@ -36,8 +36,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Image is in the header area - Will insert an image later -->
-            <Image Source="SPlogo.png" VerticalOptions="Center" HeightRequest="100" Margin="0,45,0,0"/>
+            <Image Source="BugleLogoDrawer.png" VerticalOptions="Center" HeightRequest="100" Margin="0,45,0,0"/>
             
             <ListView x:Name="MasterPageNavListView"
                   x:FieldModifier="public"

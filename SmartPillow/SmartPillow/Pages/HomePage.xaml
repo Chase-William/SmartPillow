@@ -15,7 +15,8 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
+        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}">
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
 
@@ -44,6 +45,12 @@
 
                 <pancake:PancakeView Margin="15,80,15,0">
                     <!--Inserting a specific pillow ID-->
+                    <Grid>
+                        <Grid BackgroundColor="AliceBlue"/>
+                        <Grid Grid.Row="1" BackgroundColor="DarkBlue"/>
+                        <Grid Grid.Row="2" BackgroundColor="Aquamarine"/>
+                        <Grid Grid.Row="3" BackgroundColor="Yellow"/>
+                    </Grid>
                 </pancake:PancakeView>
 
                 <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>

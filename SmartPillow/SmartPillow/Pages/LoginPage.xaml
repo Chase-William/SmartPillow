@@ -28,7 +28,7 @@
             </Grid.RowDefinitions>
 
             <Grid>
-                <Image Source="SPlogo2.png" VerticalOptions="Center" HeightRequest="160" Margin="0,40,0,0"/>
+                <Image Source="BugleLogo.png" VerticalOptions="Center" HeightRequest="160" Margin="0,40,0,0"/>
             </Grid>
 
             <Grid Grid.Row="1">

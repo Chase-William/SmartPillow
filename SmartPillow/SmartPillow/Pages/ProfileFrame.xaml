@@ -9,7 +9,7 @@
         xmlns:viewModel="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
         mc:Ignorable="d"
         CornerRadius="28"
-        BackgroundColor="Black"
+        BackgroundColor="#533973"
         Opacity=".8"
         TranslationY="220"
         Padding="0"
