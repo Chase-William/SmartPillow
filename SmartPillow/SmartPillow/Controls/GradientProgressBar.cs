@@ -3,10 +3,14 @@ using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SmartPillow.Controls
 {
+    /// <summary>
+    ///     this control contains bindable properties created to be able to draw a progress bar with gradient
+    /// </summary>
     public class GradientProgressBar : SKCanvasView
     {
         public static BindableProperty PercentageProperty = BindableProperty.Create(nameof(Percentage), typeof(float),
@@ -50,6 +54,33 @@ namespace SmartPillow.Controls
         {
             get => (float)GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
+        }
+
+        /// <summary>
+        ///     Still working on the animation to be a bindable property for XAML
+        /// </summary>
+
+        //public static BindableProperty AnimateToProperty =
+        //    BindableProperty.CreateAttached("Animation",
+        //    typeof(double),
+        //    typeof(GradientProgressBar),
+        //    0.0d,
+        //    BindingMode.OneWay,
+        //    validateValue: (_, value) => value != null && (float)value >= 0,
+        //    propertyChanged: (b, o, n) =>
+        //    Try((GradientProgressBar)b, (double)n));
+
+        //public static void Try(GradientProgressBar progressBar, double progress)
+        //{
+        //    progressBar.AnimateTo((double)progress, 800, Easing.Linear);
+        //}
+
+        public Task<bool> AnimateTo(double value, uint length, Easing easing)
+        {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            this.Animate("Progress", (Action<double>)(d => this.Percentage = (float)d), Convert.ToDouble(Percentage),
+                value, 16U, length, easing, (Action<double, bool>)((d, finished) => tcs.SetResult(finished)), (Func<bool>)null);
+            return tcs.Task;
         }
 
         public static BindableProperty GradientStartColorProperty = BindableProperty.Create(nameof(GradientStartColor), typeof(Color),

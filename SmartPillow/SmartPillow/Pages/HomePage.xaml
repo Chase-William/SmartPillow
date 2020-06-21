@@ -16,8 +16,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}">
-        </ToolbarItem>
+        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
     </ContentPage.ToolbarItems>
 
 
@@ -53,7 +52,8 @@
 
                             <!--need to bind percentage-->
                             <controls:GradientProgressBar
-                            BarBackgroundColor="#5E5E5E"
+                            x:Name="progf"
+                            BarBackgroundColor="#5E5E5E" 
                             CornerRadius="6"
                             HeightRequest="12"
                             AlternativeTextColor="Transparent"
@@ -61,7 +61,7 @@
                             WidthRequest="290"
                             GradientStartColor="#7AC0DF"
                             GradientEndColor="#D765FF"
-                            Percentage=".75"
+                            Percentage="0"
                             HorizontalOptions="Start" VerticalOptions="End"/>
 
                         </Grid>

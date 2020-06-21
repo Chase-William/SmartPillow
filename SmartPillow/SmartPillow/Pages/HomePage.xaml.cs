@@ -38,6 +38,9 @@ namespace SmartPillow.Pages
         
         protected override void OnAppearing()
         {
+            ViewExtensions.CancelAnimations(progf);
+            progf.AnimateTo(0.75, 2000, Easing.BounceOut);
+
             VM.OnAppearing();
             base.OnAppearing();
             rightIcon.IsEnabled = true;
@@ -45,6 +48,8 @@ namespace SmartPillow.Pages
 
         protected override void OnDisappearing()
         {
+            progf.Percentage = 0;
+
             base.OnDisappearing();
             rightIcon.IsEnabled = false;
         }
