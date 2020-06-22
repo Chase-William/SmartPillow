@@ -196,6 +196,21 @@ namespace SmartPillow.Controls
             var yText = info.Height / 2 - textBounds.MidY;
 
             canvas.DrawText(str, xText, yText, textPaint);
+
+            var leftCircle = new SKRoundRect(new SKRect(0, 0, height, height), cornerRadius, cornerRadius);
+            var leftPaint = new SKPaint { Color = Color.White.ToSKColor(), IsAntialias = true };
+
+            //canvas.DrawRoundRect(leftCircle, leftPaint);
+
+            //var rightCircle = new SKRoundRect(new SKRect(height * 2, 0, height, height), cornerRadius, cornerRadius);
+
+            //var moveToRight = new SKMatrix(0,0,0,0,0,(float)info.Width,0,0,0);
+
+            //rightCircle.Transform(moveToRight);
+            //var rightPaint = new SKPaint { Color = Color.White.ToSKColor(), IsAntialias = true };
+
+            //canvas.DrawCircle(info.Width, info.Height / 2, cornerRadius, leftPaint);
+            //canvas.DrawCircle(0, info.Height / 2, cornerRadius, leftPaint);
         }
     }
 }
