@@ -34,7 +34,7 @@ namespace SmartPillow.Pages.Nav
                     //otherwise, it uses NavigationPage
                     else
                         Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
-
+                   
                     CurrentIndex = e.ItemIndex;
                     masterPage.MasterPageNavListView.SelectedItem = null;
                     IsPresented = false;

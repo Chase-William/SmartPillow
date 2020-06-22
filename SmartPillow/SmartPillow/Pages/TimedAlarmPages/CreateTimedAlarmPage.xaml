@@ -9,10 +9,6 @@
              x:Class="SmartPillow.Pages.TimedAlarmPages.CreateTimedAlarmPage"
              Title="New Alarm">
 
-    <ContentPage.BindingContext>
-        <vm:CreateTimedAlarmVM/>
-    </ContentPage.BindingContext>
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <!-- TextEntry styles -->
@@ -174,7 +170,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Style="{StaticResource MinimalisticBtn}" Text="Cancel" Clicked="OnCancel_BtnClicked"/>
+                    <Button Style="{StaticResource MinimalisticBtn}" Text="Cancel" Command="{Binding CancelCMD}"/>
                     <Button Style="{StaticResource MinimalisticBtn}" Text="Save" Grid.Column="2" Command="{Binding SaveAlarmCMD}"/>
                 </Grid>
             </StackLayout>

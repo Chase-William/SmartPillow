@@ -9,7 +9,7 @@
              x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage">
 
     <ContentPage.BindingContext>
-        <vm:NormalAlarmsPageVM/>
+        <vm:NormalAlarmsVM/>
     </ContentPage.BindingContext>
     
     <Grid>
@@ -20,7 +20,11 @@
             <SearchBar/>
 
             <!-- Contains a collection of timed alarms -->
-            <ListView ItemsSource="{Binding Alarms}" HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView ItemsSource="{Binding Alarms}" 
+                      HasUnevenRows="True" 
+                      SeparatorVisibility="None"
+                      SelectedItem="{Binding SelectedItem}"
+                      ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -37,9 +41,15 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <Button Text="New (Test)" Clicked="OnNewAlarm_BtnClicked"/>
         </StackLayout>
+
+        <ImageButton Source="AddClockBtn" 
+                     HorizontalOptions="EndAndExpand" 
+                     VerticalOptions="EndAndExpand" 
+                     WidthRequest="60" 
+                     BackgroundColor="Transparent" 
+                     Margin="10"
+                     Command="{Binding CreateNewAlarmCMD}"/>
     </Grid>
 
 </ContentPage>

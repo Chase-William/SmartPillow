@@ -1,7 +1,6 @@
-﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
-using System;
+using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,19 +9,31 @@ namespace SmartPillow.Pages.TimedAlarmPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NormalAlarmsPage : ContentPage
     {
+        NormalAlarmsVM VM => (NormalAlarmsVM)BindingContext;
+
         public NormalAlarmsPage()
         {
             InitializeComponent();
-        }
+            VM.CreateNewAlarm += delegate
+            {
+                Navigation.PushAsync(new CreateTimedAlarmPage());
+            };
+            VM.AlarmSelected += (alarm) =>
+            {
+                Navigation.PushAsync(new CreateTimedAlarmPage(alarm));
+            };
+        }        
 
-        /// <summary>
-        ///     Pushes a CreateTimedAlarmPage page onto the stack nav.
-        /// </summary>
-        private void OnNewAlarm_BtnClicked(object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            this.Navigation.PushAsync(new CreateTimedAlarmPage());
+            base.OnAppearing();
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            ((ListView)sender).SelectedItem = null;
+        }
     }
 }

@@ -26,5 +26,7 @@
 	  <item name="android:windowTranslucentStatus">true</item>
 	   <!-- move this spinner item into MainTheme.Base -->
 	  <item name="android:timePickerStyle">@style/MyTimePicker</item>
+    <!-- Sets the background of the listview to transparent instead of the default orange -->
+    <item name="android:colorActivatedHighlight">@android:color/transparent</item>
   </style>
 </resources>

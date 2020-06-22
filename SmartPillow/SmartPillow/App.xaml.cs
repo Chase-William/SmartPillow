@@ -1,5 +1,7 @@
 ﻿using Xamarin.Forms;
 using SmartPillow.Pages.Nav;
+using System.Threading.Tasks;
+using System;
 
 /// <summary>
 ///     We use Custom fonts for our app theme
@@ -11,6 +13,13 @@ namespace SmartPillow
 {
     public partial class App : Application
     {
+        /// <summary>
+        ///     Handler for a backbtn being pressed.
+        ///     This event Func is invoked from the native xamarin proj.
+        /// </summary>
+        public static Func<bool> OnHWBackBtnPressed;
+
+
         // Check if user is logged - setting to false for testing
         public static bool IsUserLogged = false;
         public App()

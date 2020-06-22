@@ -1,11 +1,13 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
+using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
+
 
 namespace SmartPillow.Pages.TimedAlarmPages
 {
@@ -16,9 +18,31 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
         bool IsCreatingNewPage = false;
 
+        /// <summary>
+        ///     Constructor with no parameter means we are creating a new instance of an alarm.
+        /// </summary>
         public CreateTimedAlarmPage()
         {
             InitializeComponent();
+            BindingContext = new CreateTimedAlarmVM();
+            BindPageVMHandlers();            
+        }
+
+        /// <summary>
+        ///     Constructor with an alarm parameter means we intend to modify and existing alarm.
+        /// </summary>
+        public CreateTimedAlarmPage(Alarm alarm)
+        {
+            InitializeComponent();
+            BindingContext = new CreateTimedAlarmVM(alarm);
+            BindPageVMHandlers();
+        }
+
+        /// <summary>
+        ///     Creates new pages and pushes them onto the stack nav.
+        /// </summary>
+        private void BindPageVMHandlers()
+        {
             // Depending on which ContentView is pressed a parameter is passed determining the proper page to be pushed on the view stack.
             VM.AdjustSettings += (discriminator) =>
             {
@@ -28,18 +52,29 @@ namespace SmartPillow.Pages.TimedAlarmPages
                 IsCreatingNewPage = true;
                 switch (discriminator)
                 {
-                    case "pillow": 
+                    case "pillow":
                         Navigation.PushAsync(new PillowAlarmSettingsPage(VM.NewAlarm.PillowProps));
                         break;
-                    case "phone": 
-                        Navigation.PushAsync(new PhoneAlarmSettingsPage(VM.NewAlarm.PhoneProps)); 
+                    case "phone":
+                        Navigation.PushAsync(new PhoneAlarmSettingsPage(VM.NewAlarm.PhoneProps));
                         break;
-                    case "snooze": 
-                        Navigation.PushAsync(new SnoozeSettingsPage(VM.NewAlarm.SnoozeProps)); 
+                    case "snooze":
+                        Navigation.PushAsync(new SnoozeSettingsPage(VM.NewAlarm.SnoozeProps));
                         break;
-                }                
+                }
             };
-            
+
+            VM.FinishedAdjustingSettings += delegate
+            {
+                Navigation.PopAsync();
+            };
+
+            // Pushing back to the previous page
+            App.OnHWBackBtnPressed += delegate
+            {
+                Navigation.PopAsync();
+                return true;
+            };
         }
 
         protected override void OnAppearing()
@@ -49,9 +84,9 @@ namespace SmartPillow.Pages.TimedAlarmPages
             VM.OnAppearing();
             base.OnAppearing();
         }
-
-        private void OnCancel_BtnClicked(object sender, EventArgs e) => Navigation.PopAsync();
-
+        
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+
+            
     }
 }
