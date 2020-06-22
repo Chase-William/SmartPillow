@@ -26,7 +26,5 @@ namespace SmartPillow.Pages
                 await this.Navigation.PopModalAsync();
             };
         }
-
-        //private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
     }
 }

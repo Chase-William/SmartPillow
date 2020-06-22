@@ -7,6 +7,7 @@
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
              xmlns:viewModel="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
              xmlns:controls="clr-namespace:SmartPillow.Controls"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
              Title="Home"
              x:Class="SmartPillow.Pages.HomePage">
@@ -64,6 +65,8 @@
                             Percentage="0"
                             HorizontalOptions="Start" VerticalOptions="End"/>
 
+                            <microcharts:ChartView x:Name="dotChart" HorizontalOptions="Start" VerticalOptions="End" WidthRequest="290"/>
+
                         </Grid>
 
                         <Grid HorizontalOptions="Start" VerticalOptions="Start" Margin="14"
@@ -117,11 +120,27 @@
                         </Grid>
                     </Grid>
 
-                    <pancake:PancakeView Grid.Row="4" Margin="15,10,15,0" Grid.RowSpan="2"/>
+                    <Grid Grid.Row="4" Margin="15,10,15,0" Grid.RowSpan="2">
+                        <pancake:PancakeView/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <microcharts:ChartView x:Name="chartOne" Grid.Column="0"/>
+                            <microcharts:ChartView x:Name="chartTwo" Grid.Column="0"/>
+                            <!--need to bind text-->
+                            <Label Text="75%" TextColor="White" 
+                                   HorizontalOptions="Center" VerticalOptions="Center" FontSize="22" FontAttributes="Bold"/>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
-                <pancake:PancakeView Margin="15,10,15,15" Grid.Row="1"/>
-
+                <Grid Margin="15,10,15,15" Grid.Row="1">
+                    <pancake:PancakeView/>
+                    <microcharts:ChartView x:Name="lineXAML"/>
+                </Grid>
             </Grid>
         </Grid>
     </AbsoluteLayout>

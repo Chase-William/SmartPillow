@@ -3,11 +3,13 @@ using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
 using SmartPillowLib;
 using SmartPillowLib.ViewModels;
+//using Microcharts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Microcharts;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -19,9 +21,131 @@ namespace SmartPillow.Pages
     public partial class HomePage : ContentPage
     {
         public HomeViewModel VM => (HomeViewModel)BindingContext;
+        public RadialGaugeChart gaugeOne;
+        public RadialGaugeChart gaugeTwo;
+        public LineChart lineChart;
+        public Microcharts.Entry[] data;
         public HomePage()
         {
             InitializeComponent();
+
+            //testing purpose
+            gaugeOne = new RadialGaugeChart()
+            {
+                // creating data to Entries property
+                Entries = new[]
+                {
+                    new Microcharts.Entry((float)1)
+                    {
+                        // transparent color 
+                        Color = SKColor.Parse("#0a00000c"),
+                    },
+                    new Microcharts.Entry((float)1)
+                    {
+                        // gray color
+                        Color = SKColor.Parse("#707070")
+                    },
+                },
+                BackgroundColor = SKColors.Transparent,
+                StartAngle = 0,
+                LineAreaAlpha = 10,
+                MaxValue = 1,
+            };
+
+            //testing purpose
+            gaugeTwo = new RadialGaugeChart()
+            {
+                Entries = new[]
+                {
+                    // data for radial gauge chart
+                    new Microcharts.Entry((float)1)
+                    {
+                        // transparent color 
+                        Color = SKColor.Parse("#0a00000c"),
+                    },
+                    new Microcharts.Entry((float).75)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#7AC0DF")
+                    },
+                },
+                BackgroundColor = SKColors.Transparent,
+                StartAngle = 0,
+                LineAreaAlpha = 15,
+                MaxValue = 1
+            };
+
+            //testing purpose
+            lineChart = new LineChart()
+            {
+                Entries = new[]
+                {
+                    // data for radial gauge chart
+                    new Microcharts.Entry((float).40)
+                    {
+                        // light pink
+                        Color = SKColor.Parse("#D06BFC"),
+                    },
+                    new Microcharts.Entry((float).50)
+                    {
+                        // light pink
+                        Color = SKColor.Parse("#BC7FF5"),
+                    },
+                    new Microcharts.Entry((float).25)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#A794EE")
+                    },
+                    new Microcharts.Entry((float).65)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#92A9E7")
+                    },
+                    new Microcharts.Entry((float).35)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#7AC0DF")
+                    },
+                },
+                BackgroundColor = SKColors.Transparent,
+                LineAreaAlpha = 15,
+                MaxValue = 1,
+                PointAreaAlpha = 255,
+                LineMode = LineMode.Spline,
+                PointMode = PointMode.Circle,
+            };
+
+            //testing purpose
+            var entries = new[]
+                {
+                    // data for radial gauge chart
+                    new Microcharts.Entry((float).30)
+                    {
+                        // light pink
+                        Color = SKColor.Parse("#7AC0DF")
+                    },
+                    new Microcharts.Entry((float).80)
+                    {
+                        // light pink
+                        Color = SKColor.Parse("#92A9E7")
+                    },
+                    new Microcharts.Entry((float).45)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#A794EE")
+                    },
+                    new Microcharts.Entry((float)1)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#BC7FF5")
+                    },
+                    new Microcharts.Entry((float).35)
+                    {
+                        // light blue color 
+                        Color = SKColor.Parse("#D06BFC")
+                    },
+                };
+            data = entries;
 
             VM.OpenLoginPage += async delegate
             {
@@ -40,15 +164,25 @@ namespace SmartPillow.Pages
         {
             ViewExtensions.CancelAnimations(progf);
             progf.AnimateTo(0.75, 2000, Easing.BounceOut);
+            IsEnabled = true;
 
             VM.OnAppearing();
             base.OnAppearing();
+
             rightIcon.IsEnabled = true;
+
+            //testing purpose
+            dotChart.Chart = new PointChart() { Entries = data, MaxValue = 1, BackgroundColor = SKColors.Transparent };
+            chartOne.Chart = gaugeOne;
+            chartTwo.Chart = gaugeTwo;
+            lineXAML.Chart = lineChart;
+
         }
 
         protected override void OnDisappearing()
         {
             progf.Percentage = 0;
+            IsEnabled = false;
 
             base.OnDisappearing();
             rightIcon.IsEnabled = false;
