@@ -14,9 +14,21 @@ namespace SmartPillowLib.ViewModels
 
         public event Action OpenProfilePage;
 
+        private bool isScanPillowPopupVisible;
+
+        public bool IsScanPillowPopupVisible
+        {
+            get => isScanPillowPopupVisible;
+            set 
+            {
+                isScanPillowPopupVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public bool IsUserLogged
         {
-            get { return UserInformation.IsUserLogged; }
+            get => UserInformation.IsUserLogged;
             set 
             { 
                 UserInformation.IsUserLogged = value;
@@ -33,8 +45,14 @@ namespace SmartPillowLib.ViewModels
                 OpenProfilePage?.Invoke();
         });
 
+        public ICommand OpenScanPillowCommand => new Command(() => IsScanPillowPopupVisible = true);
+
+        public ICommand CloseScanPillowCommand => new Command(() => IsScanPillowPopupVisible = false);
+
         public HomeViewModel()
         {
+            //IsPopupVisible = false;
+
             //testing to see if image is displayed sucessfully
             if (IsUserLogged == false)
                 User = UserInformation.Guest;
@@ -45,7 +63,7 @@ namespace SmartPillowLib.ViewModels
 
         public User User
         {
-            get { return UserInformation.User; }
+            get => UserInformation.User;
             set
             {
                 UserInformation.User = value;
@@ -55,7 +73,7 @@ namespace SmartPillowLib.ViewModels
 
         public string ProfileImage
         {
-            get { return User.Image; }
+            get => User.Image;
             set
             {
                 User.Image = value;
@@ -67,6 +85,7 @@ namespace SmartPillowLib.ViewModels
         {
             NotifyPropertiesChanged(nameof(IsUserLogged),
                                     nameof(User),
+                                    nameof(IsScanPillowPopupVisible),
                                     nameof(ProfileImage));
         }
     }

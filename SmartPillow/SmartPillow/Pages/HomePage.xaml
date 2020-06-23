@@ -74,7 +74,7 @@
                               WidthRequest="220">
                             <Grid.GestureRecognizers>
                                 <!--need to bind command for opening pop up view-->
-                                <TapGestureRecognizer Command="{Binding UserCommand}"/>
+                                <TapGestureRecognizer Command="{Binding OpenScanPillowCommand}"/>
                             </Grid.GestureRecognizers>
 
                             <pancake:PancakeView
@@ -133,15 +133,139 @@
                             <!--need to bind text-->
                             <Label Text="75%" TextColor="White" 
                                    HorizontalOptions="Center" VerticalOptions="Center" FontSize="22" FontAttributes="Bold"/>
+
+                            <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="-28,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="Label">
+                                            <Setter Property="FontFamily" Value="Ubuntu"/>
+                                            <Setter Property="FontSize" Value="10"/>
+                                            <Setter Property="VerticalOptions" Value="End"/>
+                                            <Setter Property="HorizontalOptions" Value="Center"/>
+                                            <Setter Property="Margin" Value="0,0,0,15"/>
+                                            <Setter Property="TextColor" Value="#B2B2B2"/>
+                                        </Style>
+                                    </ResourceDictionary>
+                                </Grid.Resources>
+
+                                <microcharts:ChartView x:Name="chartThree"/>
+                                <microcharts:ChartView x:Name="chartFour"/>
+                                <!--need to bind text-->
+                                <Label Text="75%" Margin="0"
+                                   VerticalOptions="Center" FontAttributes="Bold"/>
+                                <Label Text="Awake"/>
+
+                                <microcharts:ChartView x:Name="chartFive" Grid.Column="1"/>
+                                <microcharts:ChartView x:Name="chartSix" Grid.Column="1"/>
+                                <!--need to bind text-->
+                                <Label Text="75%" Margin="0" Grid.Column="1"
+                                   VerticalOptions="Center" FontAttributes="Bold"/>
+
+                                <Label Text="Sleep" Grid.Column="1"/>
+
+                                <microcharts:ChartView x:Name="chartSeven" Grid.Column="2"/>
+                                <microcharts:ChartView x:Name="chartEight" Grid.Column="2"/>
+                                <!--need to bind text-->
+                                <Label Text="75%" Margin="0" Grid.Column="2"
+                                   VerticalOptions="Center" FontAttributes="Bold"/>
+
+                                <Label Text="Deep" Grid.Column="2"/>
+
+                                <microcharts:ChartView x:Name="chartNine" Grid.Column="3"/>
+                                <microcharts:ChartView x:Name="chartTen" Grid.Column="3"/>
+                                <!--need to bind text-->
+                                <Label Text="75%" Margin="0" Grid.Column="3"
+                                   VerticalOptions="Center" FontAttributes="Bold"/>
+
+                                <Label Text="REM" Grid.Column="3"/>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
 
                 <Grid Margin="15,10,15,15" Grid.Row="1">
                     <pancake:PancakeView/>
-                    <microcharts:ChartView x:Name="lineXAML"/>
+                    <microcharts:ChartView x:Name="lineXAML" Margin="20,0,0,0" VerticalOptions="Center" HeightRequest="250"/>
                 </Grid>
             </Grid>
         </Grid>
+        
+        <!--scan pillow popup view-->
+        <ContentView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" 
+                     BackgroundColor="#BF000000" IsVisible="{Binding IsPopupVisible}">
+            
+            <Grid VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="380" WidthRequest="300">
+                <pancake:PancakeView CornerRadius="22.25">
+                    <skia:SKCanvasView x:Name="SKCanvasPopup" PaintSurface="SKCanvasPopup_PaintSurface"/>
+                </pancake:PancakeView>
+                <Image Source="cloudPopup.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
+
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                        <Image Source="pillow.png" HeightRequest="100"/>
+                        <!--need to bind text-->
+                        <Label Text="SP123-19B" FontSize="25" TextColor="White" FontFamily="Ubuntu" HorizontalOptions="Center"/>
+                        <Label Text="Is this your pillow?" FontSize="12" FontFamily="Ubuntu" TextColor="#A5A5A5" HorizontalOptions="Center" VerticalOptions="Start"/>
+                    </StackLayout>
+
+                    <Grid Grid.Row="1">
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="Label">
+                                    <Setter Property="TextColor" Value="#A5A5A5"/>
+                                    <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                                    <Setter Property="HorizontalOptions" Value="Center"/>
+                                    <Setter Property="WidthRequest" Value="120"/>
+                                    <Setter Property="Margin" Value="0,0,0,15"/>
+                                    <Setter Property="FontFamily" Value="Ubuntu"/>
+                                    <Setter Property="FontSize" Value="11"/>
+                                </Style>
+
+                                <Style TargetType="Image">
+                                    <Setter Property="VerticalOptions" Value="Center"/>
+                                    <Setter Property="HeightRequest" Value="90"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Grid>
+                            <StackLayout>
+                                <Label Text="No, let's connect my pillow"/>
+                                <Image Source="pillowScan.png">
+                                    <Image.GestureRecognizers>
+                                        <!--need to bind command-->
+                                        <TapGestureRecognizer Command="{Binding .}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackLayout>
+                                <Label Text="Yes, do not need to scan"/>
+                                <Image Source="customCancel.png">
+                                    <Image.GestureRecognizers>
+                                        <!--To close the scan pillow popup-->
+                                        <TapGestureRecognizer Command="{Binding CloseScanPillowCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                    
+                </Grid>
+            </Grid>
+        </ContentView>
+        
     </AbsoluteLayout>
 </ContentPage>

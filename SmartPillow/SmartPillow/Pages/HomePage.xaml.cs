@@ -1,16 +1,9 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
-using SmartPillowLib;
 using SmartPillowLib.ViewModels;
-//using Microcharts;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using Microcharts;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SmartPillow.Pages
@@ -80,13 +73,13 @@ namespace SmartPillow.Pages
             {
                 Entries = new[]
                 {
-                    // data for radial gauge chart
+                    // data for line chart
                     new Microcharts.Entry((float).40)
                     {
                         // light pink
                         Color = SKColor.Parse("#D06BFC"),
                     },
-                    new Microcharts.Entry((float).50)
+                    new Microcharts.Entry((float)1)
                     {
                         // light pink
                         Color = SKColor.Parse("#BC7FF5"),
@@ -119,7 +112,7 @@ namespace SmartPillow.Pages
             var entries = new[]
                 {
                     // data for radial gauge chart
-                    new Microcharts.Entry((float).30)
+                    new Microcharts.Entry((float)0)
                     {
                         // light pink
                         Color = SKColor.Parse("#7AC0DF")
@@ -159,7 +152,9 @@ namespace SmartPillow.Pages
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
-        
+
+        private void SKCanvasPopup_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+
         protected override void OnAppearing()
         {
             ViewExtensions.CancelAnimations(progf);
@@ -175,6 +170,19 @@ namespace SmartPillow.Pages
             dotChart.Chart = new PointChart() { Entries = data, MaxValue = 1, BackgroundColor = SKColors.Transparent };
             chartOne.Chart = gaugeOne;
             chartTwo.Chart = gaugeTwo;
+
+            chartThree.Chart = gaugeOne;
+            chartFour.Chart = gaugeTwo;
+
+            chartFive.Chart = gaugeOne;
+            chartSix.Chart = gaugeTwo;
+
+            chartSeven.Chart = gaugeOne;
+            chartEight.Chart = gaugeTwo;
+
+            chartNine.Chart = gaugeOne;
+            chartTen.Chart = gaugeTwo;
+
             lineXAML.Chart = lineChart;
 
         }
