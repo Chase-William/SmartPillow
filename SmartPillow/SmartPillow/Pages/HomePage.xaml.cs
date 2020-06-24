@@ -5,6 +5,7 @@ using SmartPillowLib.ViewModels;
 using System.ComponentModel;
 using Microcharts;
 using Xamarin.Forms;
+using SmartPillowLib;
 
 namespace SmartPillow.Pages
 {
@@ -21,29 +22,6 @@ namespace SmartPillow.Pages
         public HomePage()
         {
             InitializeComponent();
-
-            //testing purpose
-            gaugeOne = new RadialGaugeChart()
-            {
-                // creating data to Entries property
-                Entries = new[]
-                {
-                    new Microcharts.Entry((float)1)
-                    {
-                        // transparent color 
-                        Color = SKColor.Parse("#0a00000c"),
-                    },
-                    new Microcharts.Entry((float)1)
-                    {
-                        // gray color
-                        Color = SKColor.Parse("#707070")
-                    },
-                },
-                BackgroundColor = SKColors.Transparent,
-                StartAngle = 0,
-                LineAreaAlpha = 10,
-                MaxValue = 1,
-            };
 
             //testing purpose
             gaugeTwo = new RadialGaugeChart()
@@ -168,23 +146,18 @@ namespace SmartPillow.Pages
 
             //testing purpose
             dotChart.Chart = new PointChart() { Entries = data, MaxValue = 1, BackgroundColor = SKColors.Transparent };
-            chartOne.Chart = gaugeOne;
-            chartTwo.Chart = gaugeTwo;
-
-            chartThree.Chart = gaugeOne;
-            chartFour.Chart = gaugeTwo;
-
-            chartFive.Chart = gaugeOne;
-            chartSix.Chart = gaugeTwo;
-
-            chartSeven.Chart = gaugeOne;
-            chartEight.Chart = gaugeTwo;
-
-            chartNine.Chart = gaugeOne;
-            chartTen.Chart = gaugeTwo;
+            
+            gaugeQuality.Chart = gaugeTwo;
+            
+            gaugeAwake.Chart = gaugeTwo;
+            
+            gaugeSleep.Chart = gaugeTwo;
+            
+            gaugeDeep.Chart = gaugeTwo;
+            
+            gaugeRem.Chart = gaugeTwo;
 
             lineXAML.Chart = lineChart;
-
         }
 
         protected override void OnDisappearing()
@@ -194,6 +167,12 @@ namespace SmartPillow.Pages
 
             base.OnDisappearing();
             rightIcon.IsEnabled = false;
+        }
+
+        private async void ScanPillowPopup_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var viewModel = (ContentView)sender;
+            _ = viewModel.IsVisible ? await ScanPillowPopup.FadeTo(1, 250) : await ScanPillowPopup.FadeTo(0, 500);
         }
     }
 }

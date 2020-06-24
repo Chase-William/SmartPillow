@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using SmartPillowLib.Models;
 using System.Windows.Input;
+using Microcharts;
+using System.Net.Http.Headers;
 
 namespace SmartPillowLib.ViewModels
 {
@@ -14,7 +13,13 @@ namespace SmartPillowLib.ViewModels
 
         public event Action OpenProfilePage;
 
-        private bool isScanPillowPopupVisible;
+        public RadialGaugeChart BackgroundGray
+        {
+            get => BackgroundGauge.Gray;
+            set => BackgroundGauge.Gray = value;
+        }
+
+        private bool isScanPillowPopupVisible = false;
 
         public bool IsScanPillowPopupVisible
         {
@@ -51,14 +56,7 @@ namespace SmartPillowLib.ViewModels
 
         public HomeViewModel()
         {
-            //IsPopupVisible = false;
-
-            //testing to see if image is displayed sucessfully
-            if (IsUserLogged == false)
-                User = UserInformation.Guest;
-
-            else
-                User = UserInformation.User;
+            User = (IsUserLogged == false) ? UserInformation.Guest : UserInformation.User;
         }
 
         public User User

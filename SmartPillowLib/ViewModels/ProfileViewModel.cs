@@ -11,12 +11,7 @@ namespace SmartPillowLib.ViewModels
     {
         public event Action CloseFrame;
 
-        public ICommand LogoutCommand => new Command(() =>
-        {
-            CloseFrame?.Invoke();
-        });
-
-        private User user;
+        public ICommand LogoutCommand => new Command(() => CloseFrame?.Invoke());
 
         public User User
         {

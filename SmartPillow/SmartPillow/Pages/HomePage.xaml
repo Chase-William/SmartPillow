@@ -128,8 +128,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <microcharts:ChartView x:Name="chartOne" Grid.Column="0"/>
-                            <microcharts:ChartView x:Name="chartTwo" Grid.Column="0"/>
+                            <microcharts:ChartView x:Name="backgroundQuality" Chart="{Binding BackgroundGray}" Grid.Column="0"/>
+                            <microcharts:ChartView x:Name="gaugeQuality" Grid.Column="0"/>
                             <!--need to bind text-->
                             <Label Text="75%" TextColor="White" 
                                    HorizontalOptions="Center" VerticalOptions="Center" FontSize="22" FontAttributes="Bold"/>
@@ -155,31 +155,31 @@
                                     </ResourceDictionary>
                                 </Grid.Resources>
 
-                                <microcharts:ChartView x:Name="chartThree"/>
-                                <microcharts:ChartView x:Name="chartFour"/>
+                                <microcharts:ChartView x:Name="backgroundAwake" Chart="{Binding BackgroundGray}"/>
+                                <microcharts:ChartView x:Name="gaugeAwake"/>
                                 <!--need to bind text-->
                                 <Label Text="75%" Margin="0"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
                                 <Label Text="Awake"/>
 
-                                <microcharts:ChartView x:Name="chartFive" Grid.Column="1"/>
-                                <microcharts:ChartView x:Name="chartSix" Grid.Column="1"/>
+                                <microcharts:ChartView x:Name="backgroundSleep" Chart="{Binding BackgroundGray}" Grid.Column="1"/>
+                                <microcharts:ChartView x:Name="gaugeSleep" Grid.Column="1"/>
                                 <!--need to bind text-->
                                 <Label Text="75%" Margin="0" Grid.Column="1"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
 
                                 <Label Text="Sleep" Grid.Column="1"/>
 
-                                <microcharts:ChartView x:Name="chartSeven" Grid.Column="2"/>
-                                <microcharts:ChartView x:Name="chartEight" Grid.Column="2"/>
+                                <microcharts:ChartView x:Name="backgroundDeep" Chart="{Binding BackgroundGray}" Grid.Column="2"/>
+                                <microcharts:ChartView x:Name="gaugeDeep" Grid.Column="2"/>
                                 <!--need to bind text-->
                                 <Label Text="75%" Margin="0" Grid.Column="2"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
 
                                 <Label Text="Deep" Grid.Column="2"/>
 
-                                <microcharts:ChartView x:Name="chartNine" Grid.Column="3"/>
-                                <microcharts:ChartView x:Name="chartTen" Grid.Column="3"/>
+                                <microcharts:ChartView x:Name="backgroundRem" Chart="{Binding BackgroundGray}" Grid.Column="3"/>
+                                <microcharts:ChartView x:Name="gaugeRem" Grid.Column="3"/>
                                 <!--need to bind text-->
                                 <Label Text="75%" Margin="0" Grid.Column="3"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
@@ -198,8 +198,8 @@
         </Grid>
         
         <!--scan pillow popup view-->
-        <ContentView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" 
-                     BackgroundColor="#BF000000" IsVisible="{Binding IsPopupVisible}">
+        <ContentView x:Name="ScanPillowPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" 
+                     BackgroundColor="#BF000000" Opacity="0" IsVisible="{Binding IsScanPillowPopupVisible}" PropertyChanged="ScanPillowPopup_PropertyChanged">
             
             <Grid VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="380" WidthRequest="300">
                 <pancake:PancakeView CornerRadius="22.25">
