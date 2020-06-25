@@ -19,7 +19,7 @@ namespace SmartPillow.Util
                 paint.Shader = SKShader.CreateLinearGradient(
                                     new SKPoint(0, 0),
                                     new SKPoint(e.Info.Width, e.Info.Height),
-                                    new SKColor[] { ((Color)App.Current.Resources[App.Keys.GradientBlueKey]).ToSKColor(), ((Color)App.Current.Resources[App.Keys.GradientPurpKey]).ToSKColor() },
+                                    new SKColor[] { ((Color)App.Current.Resources[App.ResourceKeys.GRADIENT_BLUE]).ToSKColor(), ((Color)App.Current.Resources[App.ResourceKeys.GRADIENT_PURP]).ToSKColor() },
                                     null,
                                     SKShaderTileMode.Repeat);
 

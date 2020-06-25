@@ -1,4 +1,5 @@
 ﻿using SmartPillow.Util;
+using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,14 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {    
     public class CreateTimedAlarmVM : NotifyClass
     {        
+        /// <summary>
+        ///     Signals that the user wants to adjust the settings of a device.
+        ///     The device is determined by a string key.
+        /// </summary>
         public event Action<string> AdjustSettings;
+        /// <summary>
+        ///     Signals that the user has finished adjusting the settings.
+        /// </summary>
         public event Action FinishedAdjustingSettings;
 
         /// <summary>
@@ -69,13 +77,12 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             // Create new alarm
             SaveAlarmCMD = new Command(() =>
             {
-                // Save to device
-
-                // Just a little way to make sure the Ids are different for now
-                // Once a local db is implemented will use the key created there
-                NewAlarm.Id = alarms.Last().Id++;
+                // Saves alarm to the local database
+                // Assigns the Id of the Alarm the id that was created by the database context
+                LocalServiceContext.Provider.InsertAlarm(NewAlarm);
+                // Updating collection with the alarm
                 alarms.Add(NewAlarm);
-
+                
                 FinishedAdjustingSettings?.Invoke();
             });
         }
@@ -97,6 +104,8 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 alarm.PillowProps = NewAlarm.PillowProps;
                 alarm.PhoneProps = NewAlarm.PhoneProps;
                 alarm.SnoozeProps = NewAlarm.SnoozeProps;
+
+
                 // alarm = NewAlarm;
                 //alarm.PillowProps.Brightness = NewAlarm.PillowProps.Brightness;
                 

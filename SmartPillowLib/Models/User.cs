@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Xamarin.Essentials;
 
 namespace SmartPillowLib.Models
 {
@@ -13,7 +11,17 @@ namespace SmartPillowLib.Models
         public string LastName { get; set; }
         public string Image { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber
+        {
+            get
+            {
+                return SecureStorage.GetAsync(nameof(PhoneNumber)).Result; 
+            }
+            set
+            {
+                SecureStorage.SetAsync(nameof(PhoneNumber), value);
+            }
+        }
 
         /// <summary>
         ///     ID of smart pillow device registered to user.

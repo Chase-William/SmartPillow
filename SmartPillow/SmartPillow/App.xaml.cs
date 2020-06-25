@@ -22,16 +22,19 @@ namespace SmartPillow
 
         // Check if user is logged - setting to false for testing
         public static bool IsUserLogged = false;
-        public App()
+        public App(string dbPath)
         {
             InitializeComponent();
+
+            // Passing this path to our LocalService Provider to make our calls in the application simplier since we will only have one local db right now.
+            SmartPillowLib.Data.Local.LocalServiceContext.DatabasePath = dbPath;
 
             // Initializing our MasterDetailPage which contains our drawer and action bar.
             MainPage = new MainMasterPage();
         }
 
         protected override void OnStart()
-        {
+        {            
         }
 
         protected override void OnSleep()
@@ -45,10 +48,24 @@ namespace SmartPillow
         /// <summary>
         ///     Contains keys for App.xaml resourceDictionary.
         /// </summary>
-        public readonly struct Keys
+        public readonly struct ResourceKeys
         {      
-            public const string GradientBlueKey = "GradientBlue";
-            public const string GradientPurpKey = "GradientPurp";
+            public const string GRADIENT_BLUE = "GradientBlue";
+            public const string GRADIENT_PURP = "GradientPurp";
+        }
+        
+        /// <summary>
+        ///     Contains keys and important information related to the local database.
+        /// </summary>
+        public readonly struct DatabaseKeys
+        {
+            public const string DATABASE_NAME = "alarms";
+            public readonly string Database_Path;          
+
+            public DatabaseKeys(string dbPAth)
+            {
+                Database_Path = dbPAth;
+            }
         }
     }
 }

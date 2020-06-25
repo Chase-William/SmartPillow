@@ -22,7 +22,7 @@
             </Frame>
 
             <!-- Contains a collection of timed alarms -->
-            <ListView ItemsSource="{Binding Alarms}" 
+            <ListView ItemsSource="{Binding QueryResults}" 
                       HasUnevenRows="True" 
                       SeparatorVisibility="None"
                       SelectedItem="{Binding SelectedItem}"
@@ -30,15 +30,17 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="7" Padding="5" Margin="30,10">
-                                <StackLayout Orientation="Horizontal">
+                            <!-- Non-Wrapping Frame -->
+                            <Grid>
+                                <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="7" Padding="5" Margin="30,10"/>
+                                <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
                                     <Image Source="AlarmClockSmall" WidthRequest="50"/>
                                     <StackLayout>
                                         <Label Text="{Binding Name}" TextColor="White"/>
                                         <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>
                                     </StackLayout>
                                 </StackLayout>
-                            </Frame>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

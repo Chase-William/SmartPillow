@@ -14,7 +14,7 @@ namespace SmartPillowLib.Models
         /// <summary>
         ///     The unique identifier for all alarms.
         /// </summary>
-        public uint Id { get; set; }
+        public int Id { get; set; }
 
         private string name;
         /// <summary>

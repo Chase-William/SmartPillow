@@ -5,34 +5,30 @@ using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using SmartPillowLib.Data.Local;
 
 namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {
     public class NormalAlarmsVM : NotifyClass
     {
+        /// <summary>
+        ///     Signals that the user wants to create a new alarm and this should be handled.
+        /// </summary>
         public event Action CreateNewAlarm;
+        /// <summary>
+        ///     Signals that an alarm has been selected and it should be handled.
+        /// </summary>
         public event Action<Alarm> AlarmSelected;
 
         // Collection Source (readonly)
-        public ObservableCollection<Alarm> Alarms { get; set; }
+        public readonly ObservableCollection<Alarm> Alarms;
 
         /// <summary>
         ///     Query results
         /// </summary>
-        public ObservableCollection<Alarm> QueryResults
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(queryText))
-                {
-                    return new ObservableCollection<Alarm>(Alarms.Where(x => x.Name.Contains(queryText)).ToList());
-                }
-                else
-                {
-                    return Alarms;
-                }
-            }
-        }
+        public ObservableCollection<Alarm> QueryResults => !string.IsNullOrWhiteSpace(queryText)
+                    ? new ObservableCollection<Alarm>(Alarms.Where(x => x.Name.Contains(queryText)).ToList())
+                    : Alarms;
 
         private string queryText;
         /// <summary>
@@ -51,26 +47,18 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             }
         }
 
-        private Alarm selectedRobot;
+        private Alarm selectedAlarm;
         /// <summary>
         ///     ListView item is selected prop.
         /// </summary>
         public Alarm SelectedItem
         {
-            get => selectedRobot;
+            get => selectedAlarm;
             set
             {
-                selectedRobot = value;
-                if (selectedRobot != null)
-                    foreach (var a in Alarms)
-                    {
-                        if (a.Id == value.Id)
-                        {                            
-                            AlarmSelected?.Invoke(a);
-                            return;
-                        }
-                    }
-                    //AlarmSelected?.Invoke(Alarms.Single(x => x.Id == value.Id));
+                selectedAlarm = value;
+                if (selectedAlarm != null)                 
+                    AlarmSelected?.Invoke(selectedAlarm);
             }
         }
 
@@ -81,14 +69,12 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
         public NormalAlarmsVM()
         {
-            Alarms = new ObservableCollection<Alarm>(TESTNormalAlarms.Alarms);
+            Alarms = new ObservableCollection<Alarm>(LocalServiceContext.Provider.GetAlarms());
             Alarms.CollectionChanged += (sender, args) =>
             {
                 if (args.NewItems != null)
-                    NotifyPropertyChanged();
+                    NotifyPropertyChanged(nameof(QueryResults));
             };
-
-            NotifyPropertyChanged(nameof(Alarms));
         }
     }
 }
