@@ -22,7 +22,8 @@ namespace SmartPillowLib.ViewModels
                 LastName = "Zuckerberg",
                 Image = "Zack.png",
                 Email = "Email@gmail.com",
-                PhoneNumber = "585-585-5858"
+                PhoneNumber = "585-585-5858",
+                SmartPillowDeviceID = "ZZ987-19C"
             };
 
             UserInformation.User = user;
@@ -42,7 +43,8 @@ namespace SmartPillowLib.ViewModels
                 LastName = "",
                 Image = "Twitter.png",
                 Email = "Twitter@gmail.com",
-                PhoneNumber = "111-111-1111"
+                PhoneNumber = "111-111-1111",
+                SmartPillowDeviceID = "SP123-19B"
             };
 
             UserInformation.User = user;
@@ -62,7 +64,8 @@ namespace SmartPillowLib.ViewModels
                 LastName = "",
                 Image = "Google.png",
                 Email = "Google@gmail.com",
-                PhoneNumber = "222-222-2222"
+                PhoneNumber = "222-222-2222",
+                SmartPillowDeviceID = "YW455-19D"
             };
 
             UserInformation.User = user;
@@ -82,7 +85,8 @@ namespace SmartPillowLib.ViewModels
                 LastName = "",
                 Image = "Facebook.png",
                 Email = "Facebook@gmail.com",
-                PhoneNumber = "333-333-3333"
+                PhoneNumber = "333-333-3333",
+                SmartPillowDeviceID = "WQW31-25X"
             };
 
             UserInformation.User = user;

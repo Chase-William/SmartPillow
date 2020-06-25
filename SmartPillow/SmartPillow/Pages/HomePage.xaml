@@ -73,7 +73,6 @@
                               HeightRequest="35"
                               WidthRequest="220">
                             <Grid.GestureRecognizers>
-                                <!--need to bind command for opening pop up view-->
                                 <TapGestureRecognizer Command="{Binding OpenScanPillowCommand}"/>
                             </Grid.GestureRecognizers>
 
@@ -91,12 +90,11 @@
 
                                 <Image Source="pillow.png" HeightRequest="20" VerticalOptions="Center" Margin="7,8,0,7"/>
 
-                                <!--need to bind text-->
-                                <Label Grid.Column="1" Text="SP123-19B" TextColor="White" FontFamily="Ubuntu"
+                                <Label Grid.Column="1" Text="{Binding PillowID}" TextColor="White" FontFamily="Ubuntu"
                                        FontAttributes="Bold" VerticalOptions="Center" FontSize="15"/>
 
-                                <!--need to bind text and textColor-->
-                                <Label Grid.Column="2" Text="Connected" TextColor="#53FF6F" FontSize="10" FontAttributes="Bold" FontFamily="Ubuntu"
+                                <!--need to bind text -->
+                                <Label Grid.Column="2" Text="{Binding Status}" TextColor="{Binding PillowStatusColor}" FontSize="10" FontAttributes="Bold" FontFamily="Ubuntu"
                                        VerticalOptions="Center" HorizontalTextAlignment="Center" Margin="-35,0,0,0"/>
 
                             </Grid>
@@ -215,8 +213,7 @@
 
                     <StackLayout Orientation="Vertical" VerticalOptions="Center">
                         <Image Source="pillow.png" HeightRequest="100"/>
-                        <!--need to bind text-->
-                        <Label Text="SP123-19B" FontSize="25" TextColor="White" FontFamily="Ubuntu" HorizontalOptions="Center"/>
+                        <Label Text="{Binding PillowID}" FontSize="25" TextColor="White" FontFamily="Ubuntu" HorizontalOptions="Center"/>
                         <Label Text="Is this your pillow?" FontSize="12" FontFamily="Ubuntu" TextColor="#A5A5A5" HorizontalOptions="Center" VerticalOptions="Start"/>
                     </StackLayout>
 

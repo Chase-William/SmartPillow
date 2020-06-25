@@ -15,8 +15,8 @@ namespace SmartPillowLib.ViewModels
 
         public User User
         {
-            get { return UserInformation.User; }
-            set { UserInformation.User = value; }
+            get => UserInformation.User;
+            set => UserInformation.User = value;
         }
 
         public string Image
