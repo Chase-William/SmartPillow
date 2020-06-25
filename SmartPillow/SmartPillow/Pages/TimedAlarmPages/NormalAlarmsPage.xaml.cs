@@ -1,6 +1,8 @@
 ﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
+using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +18,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
             InitializeComponent();
             VM.CreateNewAlarm += delegate
             {
-                Navigation.PushAsync(new CreateTimedAlarmPage());
+                Navigation.PushAsync(new CreateTimedAlarmPage(VM.Alarms));
             };
             VM.AlarmSelected += (alarm) =>
             {

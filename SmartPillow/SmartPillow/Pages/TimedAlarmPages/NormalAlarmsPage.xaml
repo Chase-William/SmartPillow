@@ -17,7 +17,9 @@
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
 
         <StackLayout>
-            <SearchBar/>
+            <Frame BackgroundColor="White" CornerRadius="10" Margin="10" Padding="3">
+                <SearchBar Text="{Binding QueryText}"/>
+            </Frame>
 
             <!-- Contains a collection of timed alarms -->
             <ListView ItemsSource="{Binding Alarms}" 
@@ -33,7 +35,7 @@
                                     <Image Source="AlarmClockSmall" WidthRequest="50"/>
                                     <StackLayout>
                                         <Label Text="{Binding Name}" TextColor="White"/>
-                                        <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeString}"/>
+                                        <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>

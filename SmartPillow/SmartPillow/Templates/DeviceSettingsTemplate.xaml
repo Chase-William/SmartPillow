@@ -21,7 +21,7 @@
             </Style>
             <!-- Adjusting the base PropertyGroup Grid Style -->
             <Style TargetType="Grid">
-                <Setter Property="HeightRequest" Value="90"/>
+                <Setter Property="HeightRequest" Value="110"/>
             </Style>
         </ResourceDictionary>
     </ContentView.Resources>
@@ -32,9 +32,9 @@
             <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="15">
                 <StackLayout Style="{StaticResource NestedWithinFrame}" Orientation="Horizontal">
                     <Label Style="{StaticResource PropertyLabel}" 
-                           Text="{Binding IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
+                           Text="{Binding DeviceProps.IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
                            FontSize="20"/>
-                    <Switch IsToggled="{Binding IsEnabled}" HorizontalOptions="EndAndExpand"/>
+                    <Switch IsToggled="{Binding DeviceProps.IsEnabled}" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
             </Frame>
 
@@ -57,10 +57,10 @@
                         <Label Style="{StaticResource PropertyLabel}" Text="Brightness"/>
                         <!-- Prop Value Text -->
                         <Label Style="{StaticResource PropValueLabel}" 
-                               Text="{Binding IsBrightnessEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
+                               Text="{Binding DeviceProps.IsBrightnessEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
                         <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                        <Switch IsToggled="{Binding IsBrightnessEnabled}"/>
-                        <Slider Style="{StaticResource DevicePropsSlider}" Value="{Binding Brightness}"/>
+                        <Switch IsToggled="{Binding DeviceProps.IsBrightnessEnabled}"/>
+                        <Slider Style="{StaticResource DevicePropsSlider}" Value="{Binding DeviceProps.Brightness}"/>
                     </Grid>
                     <!-- Vibration -->
                     <Grid>
@@ -78,10 +78,10 @@
                         <Label Style="{StaticResource PropertyLabel}" Text="Vibration"/>
                         <!-- Prop Value Text -->
                         <Label Style="{StaticResource PropValueLabel}"
-                               Text="{Binding IsVibrationEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
+                               Text="{Binding DeviceProps.IsVibrationEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
                         <!-- Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable -->
-                        <Switch IsToggled="{Binding IsVibrationEnabled}"/>
-                        <Slider Style="{StaticResource DevicePropsSlider}" Value="{Binding Vibration}"/>
+                        <Switch IsToggled="{Binding DeviceProps.IsVibrationEnabled}"/>
+                        <Slider Style="{StaticResource DevicePropsSlider}" Value="{Binding DeviceProps.Vibration}"/>
                     </Grid>
                 </StackLayout>
             </Frame>

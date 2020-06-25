@@ -45,9 +45,10 @@ namespace SmartPillowLib
                         Interval = 10,
                         Repeat = 3
                     },
-                    Name = "My Favorite Alarm"
+                    Id = (uint)i,
+                    Name = i.ToString() + " My Favorite Alarm"
                 });
-            }            
+            }        
         }
     }
 }

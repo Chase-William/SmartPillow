@@ -3,75 +3,70 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {
     public class SnoozeSettingsVM : NotifyClass
     {
-        private readonly SnoozeProperties snoozeProps;
+        public SnoozeProperties SnoozeProps { get; set; }
 
         #region Interval Const
-        private const byte RADIO_OPTION_1_IN_MINUTES = 5;
-        private const byte RADIO_OPTION_2_IN_MINUTES = 10;
-        private const byte RADIO_OPTION_3_IN_MINUTES = 20;
-        private const byte RADIO_OPTION_4_IN_MINUTES = 30;
+        public const byte RADIO_OPTION_1_IN_MINUTES = 5;
+        public const byte RADIO_OPTION_2_IN_MINUTES = 10;
+        public const byte RADIO_OPTION_3_IN_MINUTES = 20;
+        public const byte RADIO_OPTION_4_IN_MINUTES = 30;
         #endregion
 
         #region Repeat Const
-        private const byte RADIO_OPTION_1_REPEAT = 3;
-        private const byte RADIO_OPTION_2_REPEAT = 5;
-        private const byte RADIO_OPTION_3_REPEAT = byte.MaxValue;
+        public const byte RADIO_OPTION_1_REPEAT = 3;
+        public const byte RADIO_OPTION_2_REPEAT = 5;
+        public const byte RADIO_OPTION_3_REPEAT = byte.MaxValue;
         #endregion
 
-        #region Interval Intermediate Props
-        public bool IsEnabled
-        {
-            get => snoozeProps.IsEnabled;
-            set
-            {
-                if (IsEnabled == value) return;
+        /// <summary>
+        /// 
+        ///     Note:
+        ///     
+        ///     All Intermediate properties could be removed if the SnoozeProperties class was couples to the UI.
+        ///     I did not want to do that so instead they remain seperated like this.
+        /// 
+        /// </summary>
 
-                snoozeProps.IsEnabled = value;
-                NotifyPropertyChanged();
-            }
-        }
+        #region Interval Intermediate Props
+       
         public bool IntervalRadioBtnOption1
         {
-            get => snoozeProps.Interval == RADIO_OPTION_1_IN_MINUTES;
+            get => SnoozeProps.Interval == RADIO_OPTION_1_IN_MINUTES;
             set
             {
                 if (IntervalRadioBtnOption1 == value) return;
 
-                snoozeProps.Interval = RADIO_OPTION_1_IN_MINUTES;
-                NotifyPropertyChanged();
+                SnoozeProps.Interval = RADIO_OPTION_1_IN_MINUTES;
             }
         }
         public bool IntervalRadioBtnOption2
         {
-            get => snoozeProps.Interval == RADIO_OPTION_2_IN_MINUTES;
+            get => SnoozeProps.Interval == RADIO_OPTION_2_IN_MINUTES;
             set
             {
                 if (IntervalRadioBtnOption2 == value) return;
 
-                snoozeProps.Interval = RADIO_OPTION_2_IN_MINUTES;
-                NotifyPropertyChanged();
+                SnoozeProps.Interval = RADIO_OPTION_2_IN_MINUTES;
             }
         }
         public bool IntervalRadioBtnOption3
         {
-            get => snoozeProps.Interval == RADIO_OPTION_3_IN_MINUTES;
+            get => SnoozeProps.Interval == RADIO_OPTION_3_IN_MINUTES;
             set
             {
                 if (IntervalRadioBtnOption3 == value) return;
 
-                snoozeProps.Interval = RADIO_OPTION_3_IN_MINUTES;
-                NotifyPropertyChanged();
+                SnoozeProps.Interval = RADIO_OPTION_3_IN_MINUTES;
             }
         }
         public bool IntervalRadioBtnOption4
         {
-            get => snoozeProps.Interval == RADIO_OPTION_4_IN_MINUTES;
+            get => SnoozeProps.Interval == RADIO_OPTION_4_IN_MINUTES;
             set
             {
                 if (IntervalRadioBtnOption4 == value) return;
 
-                snoozeProps.Interval = RADIO_OPTION_4_IN_MINUTES;
-                NotifyPropertyChanged();
+                SnoozeProps.Interval = RADIO_OPTION_4_IN_MINUTES;
             }
         }
         #endregion
@@ -79,44 +74,41 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         #region Repeat Intermediate Props
         public bool RepeatRadioBtnOption1
         {
-            get => snoozeProps.Repeat == RADIO_OPTION_1_REPEAT;
+            get => SnoozeProps.Repeat == RADIO_OPTION_1_REPEAT;
             set
             {
                 if (RepeatRadioBtnOption1 == value) return;
 
-                snoozeProps.Repeat = RADIO_OPTION_1_REPEAT;
-                NotifyPropertyChanged();
+                SnoozeProps.Repeat = RADIO_OPTION_1_REPEAT;
             }
         }
         public bool RepeatRadioBtnOption2
         {
-            get => snoozeProps.Repeat == RADIO_OPTION_2_REPEAT;
+            get => SnoozeProps.Repeat == RADIO_OPTION_2_REPEAT;
             set
             {
                 if (RepeatRadioBtnOption2 == value) return;
 
-                snoozeProps.Repeat = RADIO_OPTION_2_REPEAT;
-                NotifyPropertyChanged();
+                SnoozeProps.Repeat = RADIO_OPTION_2_REPEAT;
             }
         }
         public bool RepeatRadioBtnOption3
         {
-            get => snoozeProps.Repeat == RADIO_OPTION_3_REPEAT;
+            get => SnoozeProps.Repeat == RADIO_OPTION_3_REPEAT;
             set
             {
                 if (RepeatRadioBtnOption3 == value) return;
 
-                snoozeProps.Repeat = RADIO_OPTION_3_REPEAT;
-                NotifyPropertyChanged();
+                SnoozeProps.Repeat = RADIO_OPTION_3_REPEAT;
             }
         }
         #endregion
 
         public SnoozeSettingsVM(SnoozeProperties _snoozeProps)
         {
-            snoozeProps = _snoozeProps;
+            SnoozeProps = _snoozeProps;
 
-            NotifyPropertiesChanged(nameof(IsEnabled),
+            NotifyPropertiesChanged(nameof(SnoozeProps.IsEnabled),
                                     nameof(IntervalRadioBtnOption1),
                                     nameof(IntervalRadioBtnOption2),
                                     nameof(IntervalRadioBtnOption3),

@@ -55,9 +55,9 @@
                 <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="15">
                     <StackLayout Style="{StaticResource NestedWithinFrame}" Orientation="Horizontal">
                         <Label Style="{StaticResource PropertyLabel}" 
-                           Text="{Binding IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
+                           Text="{Binding SnoozeProps.IsEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"
                            FontSize="20"/>
-                        <Switch IsToggled="{Binding IsEnabled}" HorizontalOptions="EndAndExpand"/>
+                        <Switch IsToggled="{Binding SnoozeProps.IsEnabled}" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                 </Frame>
 

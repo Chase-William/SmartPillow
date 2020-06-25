@@ -44,8 +44,8 @@
 
                 <StackLayout Style="{StaticResource NestedWithinFrame}">
                 <Label Text="Time" FontSize="20" TextColor="{StaticResource GrayedFont}"/>
-                <TimePicker Format="T" TextColor="{StaticResource LightFont}"/>
-                <Entry Placeholder="Alarm name..." PlaceholderColor="{StaticResource GrayedFont}" TextColor="{StaticResource LightFont}"/>
+                <TimePicker Format="T" TextColor="{StaticResource LightFont}" Time="{Binding }"/>
+                <Entry Placeholder="Alarm name..." Text="{Binding NewAlarm.Name}" PlaceholderColor="{StaticResource GrayedFont}" TextColor="{StaticResource LightFont}"/>
 
 
                 <!-- Pillow -->
@@ -68,10 +68,10 @@
 
                              <!--Prop Title--> 
                             <Label Style="{StaticResource PropertyLabel}" Text="Pillow"/>
-                             <!--Prop Value Text--> 
-                            <Label Style="{StaticResource PropValueLabel}" Text="Vibration Only"/>
-                             <!--Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable--> 
-                            <Switch IsToggled="{Binding IsPillowEnabled}"/>
+                             <!--Prop Value Text-->
+                            <Label Style="{StaticResource PropValueLabel}" Text="{Binding NewAlarm.PillowProps.GetDeviceSettingsStr}"/>
+                             <!--Prop Modifier, Will need to be iterated when saving because bindings dont support parameters for path variable-->
+                            <Switch IsToggled="{Binding NewAlarm.PillowProps.IsEnabled}"/>
 
                             <BoxView/>
                         </Grid>
@@ -97,8 +97,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Style="{StaticResource PropertyLabel}" Text="Phone"/>
-                            <Label Style="{StaticResource PropValueLabel}"/>
-                            <Switch IsToggled="{Binding IsPhoneEnabled}"/>
+                            <Label Style="{StaticResource PropValueLabel}" Text="{Binding NewAlarm.PhoneProps.GetDeviceSettingsStr}"/>
+                            <Switch IsToggled="{Binding NewAlarm.PhoneProps.IsEnabled}"/>
 
                             <BoxView/>
                         </Grid>
@@ -124,8 +124,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Style="{StaticResource PropertyLabel}" Text="Snooze"/>
-                            <Label Style="{StaticResource PropValueLabel}"/>
-                            <Switch IsToggled="{Binding IsSnoozeEnabled}"/>
+                            <Label Style="{StaticResource PropValueLabel}" Text="{Binding NewAlarm.SnoozeProps.GetSnoozeSettingsStr}"/>
+                            <Switch IsToggled="{Binding NewAlarm.SnoozeProps.IsEnabled}"/>
 
                             <BoxView/>
                         </Grid>
@@ -151,8 +151,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Style="{StaticResource PropertyLabel}" Text="Fade"/>
-                            <Label Style="{StaticResource PropValueLabel}"/>
-                            <Switch IsToggled="{Binding IsFadeEnabled}"/>
+                            <Label Style="{StaticResource PropValueLabel}" Text="{Binding NewAlarm.IsFadeEnabled, Converter={StaticResource BoolToOffOnTextConverter}}"/>
+                            <Switch IsToggled="{Binding NewAlarm.IsFadeEnabled}"/>
                         </Grid>
                     </ContentView.Content>
                 </ContentView>

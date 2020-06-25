@@ -4,8 +4,9 @@ using SmartPillow.Util;
 using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
 
@@ -21,10 +22,10 @@ namespace SmartPillow.Pages.TimedAlarmPages
         /// <summary>
         ///     Constructor with no parameter means we are creating a new instance of an alarm.
         /// </summary>
-        public CreateTimedAlarmPage()
+        public CreateTimedAlarmPage(ObservableCollection<Alarm> alarms)
         {
             InitializeComponent();
-            BindingContext = new CreateTimedAlarmVM();
+            BindingContext = new CreateTimedAlarmVM(alarms);
             BindPageVMHandlers();            
         }
 
@@ -85,8 +86,6 @@ namespace SmartPillow.Pages.TimedAlarmPages
             base.OnAppearing();
         }
         
-        private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
-
-            
+        private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);            
     }
 }

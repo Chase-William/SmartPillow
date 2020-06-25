@@ -1,6 +1,9 @@
 ﻿using SmartPillow.Util;
 using SmartPillowLib.Models;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -16,53 +19,6 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         ///     New alarm instance.
         /// </summary>
         public Alarm NewAlarm { get; set; }
-
-        #region Intermediate Binding Props
-        public bool IsPillowEnabled
-        {
-            get => NewAlarm.PillowProps.IsEnabled;
-            set
-            {
-                if (IsPillowEnabled == value) return;
-
-                NewAlarm.PillowProps.IsEnabled = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public bool IsPhoneEnabled
-        {
-            get => NewAlarm.PhoneProps.IsEnabled;
-            set
-            {
-                if (IsPhoneEnabled == value) return;
-
-                NewAlarm.PhoneProps.IsEnabled = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public bool IsSnoozeEnabled
-        {
-            get => NewAlarm.SnoozeProps.IsEnabled;
-            set
-            {
-                if (IsSnoozeEnabled == value) return;
-
-                NewAlarm.SnoozeProps.IsEnabled = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public bool IsFadeEnabled
-        {
-            get => NewAlarm.IsFadeEnabled;
-            set
-            {
-                if (IsFadeEnabled == value) return;
-
-                NewAlarm.IsFadeEnabled = value;
-                NotifyPropertyChanged();
-            }
-        }
-        #endregion
 
         /// <summary>
         ///     Saves an alarm to the device after validiation.
@@ -82,7 +38,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         /// <summary>
         ///     Default contructor for making a new alarm.
         /// </summary>
-        public CreateTimedAlarmVM() 
+        public CreateTimedAlarmVM(ObservableCollection<Alarm> alarms) 
         {
             NewAlarm = new Alarm
             {
@@ -115,6 +71,11 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             {
                 // Save to device
 
+                // Just a little way to make sure the Ids are different for now
+                // Once a local db is implemented will use the key created there
+                NewAlarm.Id = alarms.Last().Id++;
+                alarms.Add(NewAlarm);
+
                 FinishedAdjustingSettings?.Invoke();
             });
         }
@@ -132,7 +93,12 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             SaveAlarmCMD = new Command(() =>
             {
                 // Saves changes to alarm
-                alarm = NewAlarm;
+                alarm.Name = NewAlarm.Name;
+                alarm.PillowProps = NewAlarm.PillowProps;
+                alarm.PhoneProps = NewAlarm.PhoneProps;
+                alarm.SnoozeProps = NewAlarm.SnoozeProps;
+                // alarm = NewAlarm;
+                //alarm.PillowProps.Brightness = NewAlarm.PillowProps.Brightness;
                 
                 // ------------------------------------- need to update local storage ----------------------------------
 
@@ -145,10 +111,10 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         /// </summary>
         public void OnAppearing()
         {
-            NotifyPropertiesChanged(nameof(IsPillowEnabled), 
-                                    nameof(IsPhoneEnabled), 
-                                    nameof(IsSnoozeEnabled), 
-                                    nameof(IsFadeEnabled));
+            NotifyPropertiesChanged(nameof(NewAlarm.PillowProps.IsEnabled), 
+                                    nameof(NewAlarm.PhoneProps.IsEnabled), 
+                                    nameof(NewAlarm.SnoozeProps.IsEnabled), 
+                                    nameof(NewAlarm.IsFadeEnabled));
         }
     }
 }
