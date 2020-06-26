@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Microcharts;
 using Xamarin.Forms;
 using SmartPillowLib;
+using System;
 
 namespace SmartPillow.Pages
 {

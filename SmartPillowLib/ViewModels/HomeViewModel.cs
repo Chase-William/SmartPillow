@@ -10,11 +10,9 @@ namespace SmartPillowLib.ViewModels
     public class HomeViewModel : NotifyClass
     {
         public event Action OpenLoginPage;
-
         public event Action OpenProfilePage;
         private bool isScanPillowPopupVisible = false;
         private string status;
-        private bool isConnected;
         private Color pillowStatusColor;
 
         // User's sleep statistics 
@@ -40,6 +38,7 @@ namespace SmartPillowLib.ViewModels
             set
             {
                 User.SmartPillowDeviceID = value;
+
                 NotifyPropertyChanged();
             }
         }
@@ -52,6 +51,7 @@ namespace SmartPillowLib.ViewModels
             get => status;
             set
             {
+                status = value;
                 NotifyPropertyChanged();
             }
         }
@@ -61,12 +61,10 @@ namespace SmartPillowLib.ViewModels
         /// </summary>
         public bool IsConnected
         {
-            get => isConnected;
+            get => UserInformation.IsConnected;
             set
             {
-                Status = (IsConnected) ? "Connected" : "Disconnected";
-                PillowStatusColor = (IsConnected) ? Color.FromHex("#53FF6F") : Color.FromHex("#FF5353");
-                isConnected = value;
+                UserInformation.IsConnected = value;
                 NotifyPropertyChanged();
             }
         }
@@ -79,6 +77,7 @@ namespace SmartPillowLib.ViewModels
             get => pillowStatusColor;
             set
             {
+                pillowStatusColor = value;
                 NotifyPropertyChanged();
             }
         }
@@ -92,7 +91,6 @@ namespace SmartPillowLib.ViewModels
             set
             {
                 UserInformation.User = value;
-                IsConnected = true;
                 NotifyPropertyChanged();
             }
         }
@@ -159,8 +157,10 @@ namespace SmartPillowLib.ViewModels
         /// </summary>
         public HomeViewModel()
         {
-            IsConnected = true;
             User = (IsUserLogged == false) ? UserInformation.Guest : UserInformation.User;
+
+            ProfileViewModel.CheckStatus += delegate { CheckStatus(); };
+            LoginViewModel.CheckStatus += delegate { CheckStatus(); };
         }
 
         public void OnAppearing()
@@ -173,6 +173,14 @@ namespace SmartPillowLib.ViewModels
                                     nameof(Status),
                                     nameof(IsConnected),
                                     nameof(PillowStatusColor));
+        }
+
+        public void CheckStatus()
+        {
+            Status = (IsConnected) ? "Connected" : "Disconnected";
+            if (PillowID == "No Pillow")
+                Status = "";
+            PillowStatusColor = (IsConnected) ? Color.FromHex("#53FF6F") : Color.FromHex("#FF5353");
         }
     }
 }

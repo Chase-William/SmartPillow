@@ -10,8 +10,15 @@ namespace SmartPillowLib.ViewModels
     public class ProfileViewModel : NotifyClass
     {
         public event Action CloseFrame;
+        public static event Action CheckStatus;
 
-        public ICommand LogoutCommand => new Command(() => CloseFrame?.Invoke());
+        public ICommand LogoutCommand => new Command(() =>
+        {
+            CloseFrame?.Invoke();
+            UserInformation.IsUserLogged = false;
+            User = UserInformation.Guest;
+            CheckStatus?.Invoke();
+        });
 
         public User User
         {

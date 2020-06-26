@@ -10,6 +10,7 @@ namespace SmartPillowLib.ViewModels
     public class LoginViewModel : NotifyClass
     {
         public event Action PopAsyncPage;
+        public static event Action CheckStatus;
 
         public ICommand LoginCommand => new Command(() =>
         {
@@ -28,7 +29,8 @@ namespace SmartPillowLib.ViewModels
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;
-
+            UserInformation.IsConnected = false;
+            CheckStatus?.Invoke();
             PopAsyncPage?.Invoke();
         });
 
@@ -49,7 +51,8 @@ namespace SmartPillowLib.ViewModels
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;
-
+            UserInformation.IsConnected = true;
+            CheckStatus?.Invoke();
             PopAsyncPage?.Invoke();
         });
 
@@ -70,7 +73,8 @@ namespace SmartPillowLib.ViewModels
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;
-
+            UserInformation.IsConnected = false;
+            CheckStatus?.Invoke();
             PopAsyncPage?.Invoke();
         });
 
@@ -91,7 +95,8 @@ namespace SmartPillowLib.ViewModels
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;
-
+            UserInformation.IsConnected = true;
+            CheckStatus?.Invoke();
             PopAsyncPage?.Invoke();
         });
 

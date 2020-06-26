@@ -32,8 +32,6 @@ namespace SmartPillow.Pages
             VM.CloseFrame += async delegate
             {
                 await this.TranslateTo(TranslationX, DeviceDisplay.MainDisplayInfo.Height / 2 - 170, 300);
-                UserInformation.IsUserLogged = false;
-                UserInformation.User = UserInformation.Guest;
                 PopProfile?.Invoke();
             };
 
