@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"             
              x:Class="SmartPillow.Pages.TimedAlarmPages.CreateTimedAlarmPage"
              Title="New Alarm">
@@ -44,7 +45,7 @@
 
                 <StackLayout Style="{StaticResource NestedWithinFrame}">
                 <Label Text="Time" FontSize="20" TextColor="{StaticResource GrayedFont}"/>
-                <TimePicker Format="T" TextColor="{StaticResource LightFont}" Time="{Binding }"/>
+                <TimePicker Format="T" TextColor="{StaticResource LightFont}" Time="{Binding NewAlarm.Time}"/>
                 <Entry Placeholder="Alarm name..." Text="{Binding NewAlarm.Name}" PlaceholderColor="{StaticResource GrayedFont}" TextColor="{StaticResource LightFont}"/>
 
 

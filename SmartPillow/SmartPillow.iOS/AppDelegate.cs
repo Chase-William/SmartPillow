@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
+using SmartPillow.iOS.LocalNotifications;
 using UIKit;
+using UserNotifications;
 
 namespace SmartPillow.iOS
 {
@@ -23,6 +21,9 @@ namespace SmartPillow.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            UNUserNotificationCenter.Current.Delegate = new iOSNotificationReceiver();
+
             LoadApplication(new App(null));
 
             return base.FinishedLaunching(app, options);

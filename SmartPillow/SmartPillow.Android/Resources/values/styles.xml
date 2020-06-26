@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<resources>
-
-  <style name="MyTimePicker" parent="android:Widget.Material.Light.TimePicker">
-    <item name="android:timePickerMode">spinner</item>
-  </style>
+<resources>  
 
   <!-- Base theme applied no matter what API -->
   <style name="MainTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -13,20 +9,24 @@
     <item name="windowActionBar">false</item>
     <!-- Set theme colors from https://aka.ms/material-colors -->
     <!-- colorPrimary is used for the default action bar background -->
-    <item name="colorPrimary">#fff</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
     <!-- colorPrimaryDark is used for the status bar -->
-    <item name="colorPrimaryDark">#fff</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#fff</item>
+    <item name="colorAccent">@color/colorAccent</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
 	  <!-- transparent for the status bar -->
 	  <item name="android:windowTranslucentStatus">true</item>
 	   <!-- move this spinner item into MainTheme.Base -->
-	  <item name="android:timePickerStyle">@style/MyTimePicker</item>
+	  <!--<item name="android:timePickerStyle">@style/MyTimePicker</item>-->
     <!-- Sets the background of the listview to transparent instead of the default orange -->
     <item name="android:colorActivatedHighlight">@android:color/transparent</item>
   </style>
+
+  <!--<style name="MyTimePicker" parent="android:Widget.Material.Light.TimePicker">
+    <item name="android:timePickerMode">spinner</item>
+  </style>-->
 </resources>

@@ -8,10 +8,18 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Forms;
 using System.IO;
+using Android.Content;
+using SmartPillow.LocalNotifications.Droid;
+using SmartPillowLib.LocationNotification;
 
 namespace SmartPillow.Droid
 {
-    [Activity(Label = "Smart Pillow", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Smart Pillow", 
+              Icon = "@mipmap/icon", 
+              Theme = "@style/MainTheme", 
+              MainLauncher = true, 
+              ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+              LaunchMode = LaunchMode.SingleTop)] // The SingleTop mode prevents multiple instances of an Activity from being started while the application is in the foreground 
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -29,7 +37,27 @@ namespace SmartPillow.Droid
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);    // Getting the folder path that already exist on the device and will be used to map a location to our database.   
             string completedPath = Path.Combine(folderPath, App.DatabaseKeys.DATABASE_NAME);                    // Combining the two paths to create a completed path
 
-            LoadApplication(new App(completedPath));      
+            LoadApplication(new App(completedPath));
+            CreateNotificationFromIntent(Intent);
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            CreateNotificationFromIntent(intent);
+        }
+
+        /// <summary>
+        ///     Creates a native notification.
+        /// </summary>
+        /// <param name="intent"></param>
+        void CreateNotificationFromIntent(Intent intent)
+        {
+            if (intent?.Extras != null)
+            {
+                string title = intent.Extras.GetString(AndroidNotificationManager.TitleKey);
+                string message = intent.Extras.GetString(AndroidNotificationManager.MessageKey);
+                DependencyService.Get<INotificationManager>().ReceiveNotification(title, message);
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

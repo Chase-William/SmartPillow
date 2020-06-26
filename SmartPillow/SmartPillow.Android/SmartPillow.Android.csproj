@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="LocalNotifications\AndroidNotificationManager.cs" />
+    <Compile Include="Renderers\CustomTimePickerRenderer.cs" />
     <Compile Include="Renderers\EntryNoUnderlineRenderer.cs" />
     <Compile Include="Renderers\RadioBtnRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

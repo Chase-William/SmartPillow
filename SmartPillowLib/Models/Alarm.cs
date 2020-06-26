@@ -51,6 +51,11 @@ namespace SmartPillowLib.Models
         }
 
         /// <summary>
+        ///     When the timer should be executed.
+        /// </summary>
+        public DateTimeOffset Time { get; set; }
+
+        /// <summary>
         ///     Bool indicates whether this alarm is enabled.
         /// </summary>
         /// 
