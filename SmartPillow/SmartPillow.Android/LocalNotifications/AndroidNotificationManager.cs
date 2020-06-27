@@ -4,7 +4,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Support.V4.App;
 using SmartPillow.Droid;
-using SmartPillowLib.LocationNotification;
+using SmartPillow.CustomAbstractions.LocationNotification;
 using System;
 using Xamarin.Forms;
 using AndroidApp = Android.App.Application;

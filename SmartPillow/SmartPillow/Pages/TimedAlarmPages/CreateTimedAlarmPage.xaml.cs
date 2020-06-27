@@ -1,14 +1,14 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
+using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
-using System;
-using System.Collections.Generic;
+using SmartPillow.BackgroundMsg;
+using SmartPillow.CustomAbstractions.Alarms;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 
 namespace SmartPillow.Pages.TimedAlarmPages
 {
@@ -20,12 +20,30 @@ namespace SmartPillow.Pages.TimedAlarmPages
         bool IsCreatingNewPage = false;
 
         /// <summary>
+        ///     Our alarm interface for interacting with the native apis.
+        /// </summary>
+        ISmartPillowAlarmManager alarmManager;
+
+        /// <summary>
         ///     Constructor with no parameter means we are creating a new instance of an alarm.
         /// </summary>
         public CreateTimedAlarmPage(ObservableCollection<Alarm> alarms)
         {
             InitializeComponent();
             BindingContext = new CreateTimedAlarmVM(alarms);
+
+            // Gets the platform specific alarm
+            alarmManager = DependencyService.Get<ISmartPillowAlarmManager>();
+
+
+            VM.SaveAlarm += (alarm) =>
+            {
+                // Setting a alarm for testing.
+                alarmManager.SetAlarm();
+
+                LocalServiceContext.Provider.InsertAlarm(alarm);
+            };
+
             BindPageVMHandlers();            
         }
 
@@ -36,8 +54,15 @@ namespace SmartPillow.Pages.TimedAlarmPages
         {
             InitializeComponent();
             BindingContext = new CreateTimedAlarmVM(alarm);
+
+            VM.SaveAlarm += (a) =>
+            {
+                var msg = new StartLongRunningTaskMsg();
+                MessagingCenter.Send(msg, "Updating an existing alarm.");
+            };
+
             BindPageVMHandlers();
-        }
+        }        
 
         /// <summary>
         ///     Creates new pages and pushes them onto the stack nav.
@@ -69,7 +94,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
             {
                 Navigation.PopAsync();
             };
-
+                      
             // Pushing back to the previous page
             App.OnHWBackBtnPressed += delegate
             {

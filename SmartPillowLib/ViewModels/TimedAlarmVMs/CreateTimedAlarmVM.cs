@@ -14,14 +14,20 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
     public class CreateTimedAlarmVM : NotifyClass
     {        
         /// <summary>
-        ///     Signals that the user wants to adjust the settings of a device.
+        ///     Event that signals that the user wants to adjust the settings of a device.
         ///     The device is determined by a string key.
         /// </summary>
         public event Action<string> AdjustSettings;
         /// <summary>
-        ///     Signals that the user has finished adjusting the settings.
+        ///     Event that signals that the user has finished adjusting the settings.
         /// </summary>
         public event Action FinishedAdjustingSettings;
+        /// <summary>
+        ///     Event that signals a new alarm is ready to be saved.
+        ///     Note:
+        ///         We dont need to pass in an old and new alarm because the ID of the new alarm and old are the same.       
+        /// </summary>
+        public event Action<Alarm> SaveAlarm;
 
         /// <summary>
         ///     New alarm instance.
@@ -79,7 +85,10 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             {
                 // Saves alarm to the local database
                 // Assigns the Id of the Alarm the id that was created by the database context
-                LocalServiceContext.Provider.InsertAlarm(NewAlarm);
+
+                SaveAlarm?.Invoke(NewAlarm);
+
+                //LocalServiceContext.Provider.InsertAlarm(NewAlarm);
                 // Updating collection with the alarm
                 alarms.Add(NewAlarm);
                 
@@ -105,10 +114,10 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 alarm.PhoneProps = NewAlarm.PhoneProps;
                 alarm.SnoozeProps = NewAlarm.SnoozeProps;
 
-
+                SaveAlarm?.Invoke(NewAlarm);
                 // alarm = NewAlarm;
                 //alarm.PillowProps.Brightness = NewAlarm.PillowProps.Brightness;
-                
+
                 // ------------------------------------- need to update local storage ----------------------------------
 
                 FinishedAdjustingSettings?.Invoke();

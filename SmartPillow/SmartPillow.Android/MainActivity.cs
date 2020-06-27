@@ -1,16 +1,12 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Xamarin.Forms;
 using System.IO;
 using Android.Content;
 using SmartPillow.LocalNotifications.Droid;
-using SmartPillowLib.LocationNotification;
+using SmartPillow.CustomAbstractions.LocationNotification;
 
 namespace SmartPillow.Droid
 {
@@ -38,7 +34,28 @@ namespace SmartPillow.Droid
             string completedPath = Path.Combine(folderPath, App.DatabaseKeys.DATABASE_NAME);                    // Combining the two paths to create a completed path
 
             LoadApplication(new App(completedPath));
+
             CreateNotificationFromIntent(Intent);
+
+            // Initing our LocalSmartPillowAlarm
+            LocalSmartPillowAlarm.LocalSmartPillowAlarm.Init(this);
+
+            /// Assigning our shared code callbacks for when we want to run background task/jobs/work whatever.
+
+            // @Param1 - Subscriber
+            // @Param2 - Message
+            // @Param3 - Callback func
+            //MessagingCenter.Subscribe<StartLongRunningTaskMsg>(this, nameof(StartLongRunningTaskMsg), message =>
+            //{
+            //    var intent = new Intent(this, typeof(LongRunningTaskService));
+            //    StartService(intent);
+            //});
+
+            //MessagingCenter.Subscribe<StopLongRunningTaskMsg>(this, nameof(StopLongRunningTaskMsg), message =>
+            //{
+            //    var intent = new Intent(this, typeof(LongRunningTaskService));
+            //    StopService(intent);
+            //});            
         }
 
         protected override void OnNewIntent(Intent intent)
@@ -74,4 +91,6 @@ namespace SmartPillow.Droid
             base.OnBackPressed();
         }
     }
+
+    
 }

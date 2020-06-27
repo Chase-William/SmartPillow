@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SmartPillowLib.LocationNotification
+namespace SmartPillow.CustomAbstractions.LocationNotification
 {
     /// <summary>
     ///     This interface is an abstraction that will have different implementations according to the platform.

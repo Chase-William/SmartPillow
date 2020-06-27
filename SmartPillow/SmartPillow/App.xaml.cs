@@ -43,7 +43,20 @@ namespace SmartPillow
 
         protected override void OnResume()
         {
+            //LoadPersistedValues();
         }
+
+        //void LoadPersistedValues()
+        //{
+        //    if (App.Current.Properties.ContainsKey("SleepDate"))
+        //    {
+        //        var sleepDate = (DateTime)App.Current.Properties["SleepDate"];                
+        //    }
+        //    if (App.Current.Properties.ContainsKey("AlarmName"))
+        //    {
+        //        var alarmDate = (string)App.Current.Properties["AlarmName"];
+        //    }
+        //}
 
         /// <summary>
         ///     Contains keys for App.xaml resourceDictionary.

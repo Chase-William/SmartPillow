@@ -18,17 +18,6 @@
 
         <StackLayout>
 
-            <!--<StackLayout Margin="0,35,0,0"  x:Name="stackLayout">
-                <Label Text="Click the button to create a local notification."
-           TextColor="Red"
-           HorizontalOptions="Center"
-           VerticalOptions="Start" />
-                <Button Text="Create Notification"
-            HorizontalOptions="Center"
-            VerticalOptions="Start"
-            Clicked="OnScheduleClick"/>
-            </StackLayout>-->
-
             <Frame BackgroundColor="White" CornerRadius="10" Margin="10" Padding="3">
                 <SearchBar Text="{Binding QueryText}"/>
             </Frame>

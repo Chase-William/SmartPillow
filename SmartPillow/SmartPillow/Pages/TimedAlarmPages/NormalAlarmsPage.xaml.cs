@@ -1,10 +1,6 @@
 ﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
-using SmartPillowLib.LocationNotification;
-using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
-using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -30,6 +26,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
                 Navigation.PushAsync(new CreateTimedAlarmPage(alarm));
             };
 
+            //HandleReceivedMessages();
             //notificationManager = DependencyService.Get<INotificationManager>();
             //notificationManager.NotificationReceived += (sender, eventArgs) =>
             //{
@@ -37,6 +34,33 @@ namespace SmartPillow.Pages.TimedAlarmPages
             //    ShowNotification(evtData.Title, evtData.Message);
             //};
         }
+
+        //private void Start_BtnClicked(object sender, EventArgs e)
+        //{
+        //    var msg = new StartLongRunningTaskMsg();
+        //    MessagingCenter.Send(msg, "Starting");
+        //}
+
+        //private void Stop_BtnClicked(object sender, EventArgs e)
+        //{
+        //    var msg = new StopLongRunningTaskMsg();
+        //    MessagingCenter.Send(msg, "Stopping");
+        //}
+
+        //void HandleReceivedMessages()
+        //{
+        //    MessagingCenter.Subscribe<TickedMsg>(this, "TickedMessage", message => {
+        //        Device.BeginInvokeOnMainThread(() => {
+        //            test.Text = message.Msg;
+        //        });
+        //    });
+
+        //    MessagingCenter.Subscribe<TickedMsg>(this, "CancelledMessage", message => {
+        //        Device.BeginInvokeOnMainThread(() => {
+        //            test.Text = "Cancelled";
+        //        });
+        //    });
+        //}
 
         //void OnScheduleClick(object sender, EventArgs e)
         //{
@@ -68,6 +92,6 @@ namespace SmartPillow.Pages.TimedAlarmPages
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             ((ListView)sender).SelectedItem = null;
-        }
+        }        
     }
 }

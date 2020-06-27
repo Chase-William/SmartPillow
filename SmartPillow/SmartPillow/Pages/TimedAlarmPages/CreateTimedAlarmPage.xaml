@@ -42,7 +42,6 @@
         <Image Style="{StaticResource CloudyBG}"/>
         <Frame Style="{StaticResource RoundedTranslucentFrame}">
             <ScrollView>
-
                 <StackLayout Style="{StaticResource NestedWithinFrame}">
                 <Label Text="Time" FontSize="20" TextColor="{StaticResource GrayedFont}"/>
                 <TimePicker Format="T" TextColor="{StaticResource LightFont}" Time="{Binding NewAlarm.Time}"/>

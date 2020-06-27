@@ -1,5 +1,5 @@
 ﻿using System;
-using SmartPillowLib.LocationNotification;
+using SmartPillow.CustomAbstractions.LocationNotification;
 using UserNotifications;
 using Xamarin.Forms;
 
