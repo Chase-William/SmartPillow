@@ -25,29 +25,6 @@ namespace SmartPillow.Pages
             InitializeComponent();
 
             //testing purpose
-            gaugeTwo = new RadialGaugeChart()
-            {
-                Entries = new[]
-                {
-                    // data for radial gauge chart
-                    new Microcharts.Entry((float)1)
-                    {
-                        // transparent color 
-                        Color = SKColor.Parse("#0a00000c"),
-                    },
-                    new Microcharts.Entry((float).75)
-                    {
-                        // light blue color 
-                        Color = SKColor.Parse("#7AC0DF")
-                    },
-                },
-                BackgroundColor = SKColors.Transparent,
-                StartAngle = 0,
-                LineAreaAlpha = 15,
-                MaxValue = 1
-            };
-
-            //testing purpose
             lineChart = new LineChart()
             {
                 Entries = new[]
@@ -147,16 +124,6 @@ namespace SmartPillow.Pages
 
             //testing purpose
             dotChart.Chart = new PointChart() { Entries = data, MaxValue = 1, BackgroundColor = SKColors.Transparent };
-            
-            gaugeQuality.Chart = gaugeTwo;
-            
-            gaugeAwake.Chart = gaugeTwo;
-            
-            gaugeSleep.Chart = gaugeTwo;
-            
-            gaugeDeep.Chart = gaugeTwo;
-            
-            gaugeRem.Chart = gaugeTwo;
 
             lineXAML.Chart = lineChart;
         }

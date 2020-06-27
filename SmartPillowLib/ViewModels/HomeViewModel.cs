@@ -25,6 +25,111 @@ namespace SmartPillowLib.ViewModels
             get => BackgroundGauge.Gray;
             set => BackgroundGauge.Gray = value;
         }
+
+        private string quality; 
+        public string Quality
+        {
+            get => SleepStatistic.Quality.ToString("f0") + "%";
+            set 
+            { 
+                quality = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public RadialGaugeChart QualityGauge
+        {
+            get => SleepStatistic.QualityGauge;
+            set 
+            {
+                SleepStatistic.QualityGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string awake;
+        public string AwakePercentage
+        {
+            get => SleepStatistic.AwakePercentage.ToString("f0") + "%";
+            set 
+            {
+                awake = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public RadialGaugeChart AwakeGauge
+        {
+            get => SleepStatistic.AwakeGauge;
+            set
+            {
+                SleepStatistic.AwakeGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string rem;
+        public string RemPercentage
+        {
+            get => SleepStatistic.RemPercentage.ToString("f0") + "%";
+            set 
+            {
+                rem = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public RadialGaugeChart RemGauge
+        {
+            get => SleepStatistic.RemGauge;
+            set
+            {
+                SleepStatistic.RemGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string sleep;
+        public string SleepPercentage
+        {
+            get => SleepStatistic.SleepPercentage.ToString("f0") + "%";
+            set 
+            {
+                sleep = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public RadialGaugeChart SleepGauge
+        {
+            get => SleepStatistic.SleepGauge;
+            set
+            {
+                SleepStatistic.SleepGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string deep;
+        public string DeepPercentage
+        {
+            get => SleepStatistic.DeepPercentage.ToString("f0") + "%";
+            set 
+            {
+                deep = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public RadialGaugeChart DeepGauge
+        {
+            get => SleepStatistic.DeepGauge;
+            set
+            {
+                SleepStatistic.DeepGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
         #endregion
 
         // Pillow information displaying in the top black frame

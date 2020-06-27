@@ -93,7 +93,6 @@
                                 <Label Grid.Column="1" Text="{Binding PillowID}" TextColor="White" FontFamily="Ubuntu"
                                        FontAttributes="Bold" VerticalOptions="Center" FontSize="15"/>
 
-                                <!--need to bind text -->
                                 <Label Grid.Column="2" Text="{Binding Status}" TextColor="{Binding PillowStatusColor}" FontSize="10" FontAttributes="Bold" FontFamily="Ubuntu"
                                        VerticalOptions="Center" HorizontalTextAlignment="Center" Margin="-35,0,0,0"/>
 
@@ -126,10 +125,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <microcharts:ChartView x:Name="backgroundQuality" Chart="{Binding BackgroundGray}" Grid.Column="0"/>
-                            <microcharts:ChartView x:Name="gaugeQuality" Grid.Column="0"/>
-                            <!--need to bind text-->
-                            <Label Text="75%" TextColor="White" 
+                            <microcharts:ChartView Chart="{Binding BackgroundGray}" Grid.Column="0"/>
+                            <microcharts:ChartView Chart="{Binding QualityGauge}" Grid.Column="0"/>
+
+                            <Label Text="{Binding Quality}" TextColor="White" 
                                    HorizontalOptions="Center" VerticalOptions="Center" FontSize="22" FontAttributes="Bold"/>
 
                             <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="-28,0,0,0">
@@ -153,36 +152,33 @@
                                     </ResourceDictionary>
                                 </Grid.Resources>
 
-                                <microcharts:ChartView x:Name="backgroundAwake" Chart="{Binding BackgroundGray}"/>
-                                <microcharts:ChartView x:Name="gaugeAwake"/>
-                                <!--need to bind text-->
-                                <Label Text="75%" Margin="0"
+                                <microcharts:ChartView Chart="{Binding BackgroundGray}"/>
+                                <microcharts:ChartView Chart="{Binding AwakeGauge}"/>
+
+                                <Label Text="{Binding AwakePercentage}" Margin="0"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
                                 <Label Text="Awake"/>
 
-                                <microcharts:ChartView x:Name="backgroundSleep" Chart="{Binding BackgroundGray}" Grid.Column="1"/>
-                                <microcharts:ChartView x:Name="gaugeSleep" Grid.Column="1"/>
-                                <!--need to bind text-->
-                                <Label Text="75%" Margin="0" Grid.Column="1"
+                                <microcharts:ChartView Chart="{Binding BackgroundGray}" Grid.Column="1"/>
+                                <microcharts:ChartView Chart="{Binding RemGauge}" Grid.Column="1"/>
+
+                                <Label Text="{Binding RemPercentage}" Margin="0" Grid.Column="1"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
+                                <Label Text="REM" Grid.Column="1"/>
+                                
+                                <microcharts:ChartView Chart="{Binding BackgroundGray}" Grid.Column="2"/>
+                                <microcharts:ChartView Chart="{Binding SleepGauge}"  Grid.Column="2"/>
 
-                                <Label Text="Sleep" Grid.Column="1"/>
-
-                                <microcharts:ChartView x:Name="backgroundDeep" Chart="{Binding BackgroundGray}" Grid.Column="2"/>
-                                <microcharts:ChartView x:Name="gaugeDeep" Grid.Column="2"/>
-                                <!--need to bind text-->
-                                <Label Text="75%" Margin="0" Grid.Column="2"
+                                <Label Text="{Binding SleepPercentage}" Margin="0" Grid.Column="2"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
+                                <Label Text="Sleep" Grid.Column="2"/>
 
-                                <Label Text="Deep" Grid.Column="2"/>
+                                <microcharts:ChartView Chart="{Binding BackgroundGray}" Grid.Column="3"/>
+                                <microcharts:ChartView Chart="{Binding DeepGauge}" Grid.Column="3"/>
 
-                                <microcharts:ChartView x:Name="backgroundRem" Chart="{Binding BackgroundGray}" Grid.Column="3"/>
-                                <microcharts:ChartView x:Name="gaugeRem" Grid.Column="3"/>
-                                <!--need to bind text-->
-                                <Label Text="75%" Margin="0" Grid.Column="3"
+                                <Label Text="{Binding DeepPercentage}" Margin="0" Grid.Column="3"
                                    VerticalOptions="Center" FontAttributes="Bold"/>
-
-                                <Label Text="REM" Grid.Column="3"/>
+                                <Label Text="Deep" Grid.Column="3"/>
                             </Grid>
                         </Grid>
                     </Grid>
