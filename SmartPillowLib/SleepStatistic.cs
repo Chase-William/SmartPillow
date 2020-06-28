@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using Xamarin.Forms.Shapes;
 
 namespace SmartPillowLib
 {
@@ -35,6 +36,11 @@ namespace SmartPillowLib
         public static double DeepPercentage { get; set; }
         public static RadialGaugeChart DeepGauge { get; set; }
 
+        // Charts with example values
+        public static LineChart LineChart { get; set; }
+        public static PointChart SnoozeChart { get; set; }
+        public static PointChart EventChart { get; set; }
+
         static SleepStatistic()
         {
             /// <summary>
@@ -47,6 +53,8 @@ namespace SmartPillowLib
             RemDuration = new TimeSpan(1, 32, 12);
             SleepDuration = new TimeSpan(1, 12, 12);
             DeepDuration = new TimeSpan(2, 45, 12);
+
+            ExampleValues();
 
             // Calculating for all percentages
             Quality = Math.Round((TotalSleep.TotalSeconds / GoalSleep.TotalSeconds * 100), 2);
@@ -79,6 +87,8 @@ namespace SmartPillowLib
             sw.Stop();
             if (sw.Elapsed != null)
                 TotalSleep = sw.Elapsed;
+
+            sw.Reset();
         }
 
         static RadialGaugeChart SetChartUp(double percentage)
@@ -107,6 +117,128 @@ namespace SmartPillowLib
             return chart;
         }
 
+
+        static void ExampleValues()
+        {
+            // Example values for alert events
+            EventChart = new PointChart()
+            {
+                Entries = new[]
+                {
+                    new Microcharts.Entry(0f) { Label = "12:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "12:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "12:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "1:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) {  Label = "1:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "1:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.7f) { Label = "1:30", Color = SKColor.Parse("#FFC4F7") },
+                    new Microcharts.Entry(0f) { Label = "1:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) {  Label = "2:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.7f) { Label = "3:00", Color = SKColor.Parse("#FFC4F7") },
+                    new Microcharts.Entry(0f) { Label = "3:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.7f) {  Label = "3:30", Color = SKColor.Parse("#B1FFD5") },
+                    new Microcharts.Entry(0f) { Label = "3:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) {  Label = "4:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "5:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "5:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.7f) { Label = "5:30", Color = SKColor.Parse("#FFC4F7") },
+                    new Microcharts.Entry(0f) { Label = "5:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) {  Label = "6:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "6:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "6:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.7f) { Label = "6:45", Color = SKColor.Parse("#91BDFF") },
+                    new Microcharts.Entry(0f) { Label = "7:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) {  Label = "7:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "7:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) {  Label = "7:45", Color = SKColor.Parse("#0a00000c") },
+                },
+                BackgroundColor = SKColors.Transparent,
+                LabelTextSize = 0,
+                MaxValue = 1,
+                Margin = 0,
+            };
+
+            // The big chart with spline lines
+            LineChart = new LineChart()
+            {
+                Entries = new[]
+                {
+                    new Microcharts.Entry(1f) { Label = "12", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#7AC0DF") },
+                    new Microcharts.Entry(.66f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#92A9E7") },
+                    new Microcharts.Entry(.33f) { Label = "1", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#A794EE") },
+                    new Microcharts.Entry(0f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#BC7FF5") },
+                    new Microcharts.Entry(0f) { Label = "2", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#D06BFC") },
+                    new Microcharts.Entry(.33f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#7AC0DF") },
+                    new Microcharts.Entry(.33f) { Label = "3", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#92A9E7") },
+                    new Microcharts.Entry(.66f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#A794EE") },
+                    new Microcharts.Entry(1f) { Label = "4", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#BC7FF5") },
+                    new Microcharts.Entry(1f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#D06BFC") },
+                    new Microcharts.Entry(.66f) { Label = "5", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#7AC0DF") },
+                    new Microcharts.Entry(.66f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#92A9E7") },
+                    new Microcharts.Entry(.66f) { Label = "6", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#A794EE") },
+                    new Microcharts.Entry(.33f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#BC7FF5") },
+                    new Microcharts.Entry(.33f) { Label = "7", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#D06BFC") },
+                    new Microcharts.Entry(.66f) { TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#7AC0DF") },
+                    new Microcharts.Entry(1f) { Label = "8", TextColor = SKColor.Parse("#B2B2B2"), Color = SKColor.Parse("#92A9E7") },
+                },
+                BackgroundColor = SKColors.Transparent,
+                LineAreaAlpha = 15,
+                MaxValue = 1,
+                PointAreaAlpha = 255,
+                LineMode = LineMode.Spline,
+                PointMode = PointMode.Circle,
+            };
+
+            // Snooze chart with blue dots
+            SnoozeChart = new PointChart()
+            {
+                Entries = new[]
+                {
+                    new Microcharts.Entry(0f) { Label = "12:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.35f) { Label = "12:30", Color = SKColor.Parse("#00C2FF") },
+                    new Microcharts.Entry(0f) { Label = "12:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "1:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "1:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "1:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.35f) { Label = "1:30", Color = SKColor.Parse("#00C2FF") },
+                    new Microcharts.Entry(0f) { Label = "1:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "2:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.35f) { Label = "3:00", Color = SKColor.Parse("#00C2FF") },
+                    new Microcharts.Entry(0f) { Label = "3:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.35f) { Label = "3:30", Color = SKColor.Parse("#00C2FF") },
+                    new Microcharts.Entry(0f) { Label = "3:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "4:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "5:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "5:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.35f) { Label = "5:30", Color = SKColor.Parse("#00C2FF") },
+                    new Microcharts.Entry(0f) { Label = "5:45", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "6:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "6:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "6:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(.35f) { Label = "6:45", Color = SKColor.Parse("#00C2FF") },
+                    new Microcharts.Entry(0f) { Label = "7:00", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "7:15", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "7:30", Color = SKColor.Parse("#0a00000c") },
+                    new Microcharts.Entry(0f) { Label = "7:45", Color = SKColor.Parse("#0a00000c") },
+                },
+                BackgroundColor = SKColors.Transparent,
+                LabelTextSize = 0,
+                MaxValue = 1
+            };
+        }
+
         // ------ Methods below aren't fully functioned since we don't have a smart pillow to connect ------ //
         // ------ and signal connection between the smart pillow and mobile hasn't been invested ------ //
 
@@ -120,6 +252,7 @@ namespace SmartPillowLib
         ///     phone device detects user's awake been appeared
         /// </summary>
         static void AwakeAppeared() => StartWatch(awakeWatch);
+
 
         /// <summary>
         ///     Invokes this method when smart pillow or 
