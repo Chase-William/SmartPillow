@@ -1,16 +1,24 @@
 ﻿using SmartPillowLib.ViewModels;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
+using Xamarin.Forms;
 
 namespace SmartPillowLib.Models
 {
     /// <summary>
     ///     Base class for all alarm types.
     /// </summary>
-    public class Alarm : NotifyClass
-    {        
+    public partial class Alarm : NotifyClass
+    {
+        /// <summary>
+        ///     Signals that the state of this alarm has changed.
+        ///     This means it needs to be enabled or disabled on the native platform.
+        /// </summary>
+        public static event Action<Alarm> AlarmStateChanged;
+
         /// <summary>
         ///     The unique identifier for all alarms.
         /// </summary>
@@ -55,11 +63,26 @@ namespace SmartPillowLib.Models
         /// </summary>
         public DateTimeOffset Time { get; set; }
 
+        // Protected for access when overriding the corresponding property.
+        protected bool isAlarmEnabled;
         /// <summary>
-        ///     Bool indicates whether this alarm is enabled.
+        ///     Bool indicates whether this alarm is enabled or disabled.
+        ///     Overridable because for example in a listview if you want to toggle this alarm on or off.
+        ///     You will need to use the dependency service to call the platform specific code to setup an alarm or cancel one.
         /// </summary>
-        /// 
-        public bool IsAlarmEnabled { get; set; }
+        public virtual bool IsAlarmEnabled
+        {
+            get => isAlarmEnabled;
+            set
+            {
+                if (IsAlarmEnabled == value) return;
+                
+                isAlarmEnabled = value;
+
+                AlarmStateChanged?.Invoke(this);
+                NotifyPropertyChanged();             
+            }
+        }
         /// <summary>
         ///     String which the user can put any notes about the alarm in. 
         /// </summary>        

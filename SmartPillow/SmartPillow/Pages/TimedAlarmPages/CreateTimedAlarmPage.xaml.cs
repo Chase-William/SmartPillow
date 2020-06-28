@@ -1,14 +1,13 @@
-﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
 using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
-using SmartPillow.BackgroundMsg;
 using SmartPillow.CustomAbstractions.Alarms;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System;
 
 namespace SmartPillow.Pages.TimedAlarmPages
 {
@@ -20,11 +19,6 @@ namespace SmartPillow.Pages.TimedAlarmPages
         bool IsCreatingNewPage = false;
 
         /// <summary>
-        ///     Our alarm interface for interacting with the native apis.
-        /// </summary>
-        ISmartPillowAlarmManager alarmManager;
-
-        /// <summary>
         ///     Constructor with no parameter means we are creating a new instance of an alarm.
         /// </summary>
         public CreateTimedAlarmPage(ObservableCollection<Alarm> alarms)
@@ -32,14 +26,11 @@ namespace SmartPillow.Pages.TimedAlarmPages
             InitializeComponent();
             BindingContext = new CreateTimedAlarmVM(alarms);
 
-            // Gets the platform specific alarm
-            alarmManager = DependencyService.Get<ISmartPillowAlarmManager>();
-
-
             VM.SaveAlarm += (alarm) =>
             {
-                // Setting a alarm for testing.
-                alarmManager.SetAlarm();
+                // If the alarm is enabled enabled the alarm in the background.
+                if (alarm.IsAlarmEnabled)
+                    DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(DateTime.Now, alarm.Id);
 
                 LocalServiceContext.Provider.InsertAlarm(alarm);
             };
@@ -57,8 +48,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
             VM.SaveAlarm += (a) =>
             {
-                var msg = new StartLongRunningTaskMsg();
-                MessagingCenter.Send(msg, "Updating an existing alarm.");
+                LocalServiceContext.Provider.UpdateAlarm(alarm);
             };
 
             BindPageVMHandlers();
