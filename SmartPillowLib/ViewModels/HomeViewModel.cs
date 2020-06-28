@@ -47,6 +47,21 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
+        private string awakeDuration;
+        public string AwakeDuration
+        {
+            get 
+            { 
+                return SleepStatistic.AwakeDuration.Hours + "h " +
+                    SleepStatistic.AwakeDuration.Minutes + "m"; 
+            }
+            set 
+            { 
+                awakeDuration = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private string awake;
         public string AwakePercentage
         {
@@ -64,6 +79,21 @@ namespace SmartPillowLib.ViewModels
             set
             {
                 SleepStatistic.AwakeGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string remDuration;
+        public string RemDuration
+        {
+            get
+            {
+                return SleepStatistic.RemDuration.Hours + "h " +
+                    SleepStatistic.RemDuration.Minutes + "m";
+            }
+            set
+            {
+                remDuration = value;
                 NotifyPropertyChanged();
             }
         }
@@ -89,6 +119,21 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
+        private string sleepDuration;
+        public string SleepDuration
+        {
+            get
+            {
+                return SleepStatistic.SleepDuration.Hours + "h " +
+                    SleepStatistic.SleepDuration.Minutes + "m";
+            }
+            set
+            {
+                sleepDuration = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         private string sleep;
         public string SleepPercentage
         {
@@ -106,6 +151,21 @@ namespace SmartPillowLib.ViewModels
             set
             {
                 SleepStatistic.SleepGauge = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string deepDuration;
+        public string DeepDuration
+        {
+            get
+            {
+                return SleepStatistic.DeepDuration.Hours + "h " +
+                    SleepStatistic.DeepDuration.Minutes + "m";
+            }
+            set
+            {
+                deepDuration = value;
                 NotifyPropertyChanged();
             }
         }
@@ -129,6 +189,24 @@ namespace SmartPillowLib.ViewModels
                 SleepStatistic.DeepGauge = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        public PointChart EventChart
+        {
+            get => SleepStatistic.EventChart;
+            set { SleepStatistic.EventChart = value; }
+        }
+
+        public LineChart LineChart
+        {
+            get => SleepStatistic.LineChart;
+            set { SleepStatistic.LineChart = value; }
+        }
+
+        public PointChart SnoozeChart
+        {
+            get => SleepStatistic.SnoozeChart;
+            set { SleepStatistic.SnoozeChart = value; }
         }
         #endregion
 
@@ -270,6 +348,8 @@ namespace SmartPillowLib.ViewModels
 
         public void OnAppearing()
         {
+            CheckStatus();
+
             NotifyPropertiesChanged(nameof(IsUserLogged),
                                     nameof(User),
                                     nameof(IsScanPillowPopupVisible),
