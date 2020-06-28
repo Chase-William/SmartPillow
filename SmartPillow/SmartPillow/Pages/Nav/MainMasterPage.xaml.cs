@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +17,7 @@ namespace SmartPillow.Pages.Nav
             CurrentIndex = 0;
         }
 
-        private void MasterPageNavListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async void MasterPageNavListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var item = e.Item as MasterPageImgItem;
             if (item != null)
@@ -34,7 +35,9 @@ namespace SmartPillow.Pages.Nav
                     //otherwise, it uses NavigationPage
                     else
                         Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
-                   
+
+                    // lagspike less when sliding left/right
+                    await Task.Delay(75);
                     CurrentIndex = e.ItemIndex;
                     masterPage.MasterPageNavListView.SelectedItem = null;
                     IsPresented = false;

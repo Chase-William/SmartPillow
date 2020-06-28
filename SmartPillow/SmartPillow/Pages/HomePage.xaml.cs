@@ -7,6 +7,7 @@ using Microcharts;
 using Xamarin.Forms;
 using SmartPillowLib;
 using System;
+using Xamarin.Essentials;
 
 namespace SmartPillow.Pages
 {
@@ -35,6 +36,8 @@ namespace SmartPillow.Pages
 
         private void SKCanvasPopup_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
 
+        private void SKCanvasDetail_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+
         protected override void OnAppearing()
         {
             ViewExtensions.CancelAnimations(progf);
@@ -60,6 +63,12 @@ namespace SmartPillow.Pages
         {
             var viewModel = (ContentView)sender;
             _ = viewModel.IsVisible ? await ScanPillowPopup.FadeTo(1, 250) : await ScanPillowPopup.FadeTo(0, 500);
+        }
+
+        private async void DetailPopup_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var viewModel = (ContentView)sender;
+            _ = viewModel.IsVisible ? await DetailPopup.FadeTo(1, 250) : await DetailPopup.FadeTo(0, 500);
         }
     }
 }
