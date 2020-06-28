@@ -80,5 +80,10 @@ namespace SmartPillow
                 Database_Path = dbPAth;
             }
         }
+
+        public readonly struct MessagingCenterChannels
+        {
+            public const string ALARM = "alarm";
+        }
     }
 }

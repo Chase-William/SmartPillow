@@ -5,8 +5,13 @@ using Android.OS;
 using Xamarin.Forms;
 using System.IO;
 using Android.Content;
-using SmartPillow.LocalNotifications.Droid;
+using SmartPillow.Droid.Locals.SmartPillowAlarm;
 using SmartPillow.CustomAbstractions.LocationNotification;
+using SmartPillow.Droid.Locals.Notifications;
+using SmartPillow.Pages.TimedAlarmPages;
+using SmartPillow.Backgrounding;
+using AndroidX.Work;
+using SmartPillow.Droid.Locals.Backgrounding;
 
 namespace SmartPillow.Droid
 {
@@ -36,9 +41,8 @@ namespace SmartPillow.Droid
             LoadApplication(new App(completedPath));
 
             CreateNotificationFromIntent(Intent);
-
-            // Initing our LocalSmartPillowAlarm
-            LocalSmartPillowAlarm.LocalSmartPillowAlarm.Init(this);
+           
+            AndroidSmartPillowAlarm.Init(this);
 
             /// Assigning our shared code callbacks for when we want to run background task/jobs/work whatever.
 
@@ -51,11 +55,13 @@ namespace SmartPillow.Droid
             //    StartService(intent);
             //});
 
-            //MessagingCenter.Subscribe<StopLongRunningTaskMsg>(this, nameof(StopLongRunningTaskMsg), message =>
-            //{
-            //    var intent = new Intent(this, typeof(LongRunningTaskService));
-            //    StopService(intent);
-            //});            
+            // Setting a handler for when a specific messagingcenter channel is invoked.
+            MessagingCenter.Subscribe<NormalAlarmsPage, DatabaseWorkerArgs>(this, App.MessagingCenterChannels.ALARM, (sender, args) =>
+            {
+                OneTimeWorkRequest databaseWork = OneTimeWorkRequest.Builder.From<DatabaseWorker>().Build();
+                
+                WorkManager.Instance.Enqueue(databaseWork);               
+            });
         }
 
         protected override void OnNewIntent(Intent intent)
@@ -90,6 +96,7 @@ namespace SmartPillow.Droid
             App.OnHWBackBtnPressed?.Invoke();
             base.OnBackPressed();
         }
+
     }
 
     

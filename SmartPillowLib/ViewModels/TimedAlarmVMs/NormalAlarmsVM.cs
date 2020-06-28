@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using SmartPillowLib.Data.Local;
+using System.Runtime.InteropServices;
 
 namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {
@@ -70,6 +71,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         public NormalAlarmsVM()
         {
             Alarms = new ObservableCollection<Alarm>(LocalServiceContext.Provider.GetAlarms());
+            //Alarms = new ObservableCollection<Alarm>(alarms);
             Alarms.CollectionChanged += (sender, args) =>
             {
                 if (args.NewItems != null)

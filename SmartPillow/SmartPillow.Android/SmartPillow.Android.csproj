@@ -58,13 +58,17 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xamarin.Android.Arch.Work.Runtime">
+      <Version>1.0.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LocalSmartPillowAlarm\LocalSmartPillowAlarm.cs" />
+    <Compile Include="Locals\Backgrounding\DatabaseWorker.cs" />
+    <Compile Include="Locals\SmartPillowAlarm\AndroidSmartPillowAlarm.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="LocalNotifications\AndroidNotificationManager.cs" />
+    <Compile Include="Locals\Notifications\AndroidNotificationManager.cs" />
     <Compile Include="Renderers\CustomTimePickerRenderer.cs" />
     <Compile Include="Renderers\EntryNoUnderlineRenderer.cs" />
     <Compile Include="Renderers\RadioBtnRenderer.cs" />

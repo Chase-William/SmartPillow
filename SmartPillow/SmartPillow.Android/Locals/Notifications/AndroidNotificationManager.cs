@@ -9,8 +9,8 @@ using System;
 using Xamarin.Forms;
 using AndroidApp = Android.App.Application;
 
-[assembly: Dependency(typeof(SmartPillow.LocalNotifications.Droid.AndroidNotificationManager))]
-namespace SmartPillow.LocalNotifications.Droid
+[assembly: Dependency(typeof(SmartPillow.Droid.Locals.Notifications.AndroidNotificationManager))]
+namespace SmartPillow.Droid.Locals.Notifications
 {
     public class AndroidNotificationManager : INotificationManager
     {
