@@ -1,10 +1,7 @@
 ﻿using Microcharts;
 using SkiaSharp;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using Xamarin.Forms.Shapes;
 
 namespace SmartPillowLib
 {
@@ -38,7 +35,7 @@ namespace SmartPillowLib
 
         // Charts with example values
         public static LineChart LineChart { get; set; }
-        public static PointChart SnoozeChart { get; set; }
+        public static PointChart SnoreChart { get; set; }
         public static PointChart EventChart { get; set; }
 
         static SleepStatistic()
@@ -195,8 +192,8 @@ namespace SmartPillowLib
                 PointMode = PointMode.Circle,
             };
 
-            // Snooze chart with blue dots
-            SnoozeChart = new PointChart()
+            // Snore chart with blue dots
+            SnoreChart = new PointChart()
             {
                 Entries = new[]
                 {

@@ -4,6 +4,7 @@ using SmartPillowLib.Models;
 using System.Windows.Input;
 using Microcharts;
 using System.Net.Http.Headers;
+using Xamarin.Essentials;
 
 namespace SmartPillowLib.ViewModels
 {
@@ -12,6 +13,7 @@ namespace SmartPillowLib.ViewModels
         public event Action OpenLoginPage;
         public event Action OpenProfilePage;
         private bool isScanPillowPopupVisible = false;
+        private bool isDetailPopupVisible = false;
         private string status;
         private Color pillowStatusColor;
 
@@ -203,10 +205,10 @@ namespace SmartPillowLib.ViewModels
             set { SleepStatistic.LineChart = value; }
         }
 
-        public PointChart SnoozeChart
+        public PointChart SnoreChart
         {
-            get => SleepStatistic.SnoozeChart;
-            set { SleepStatistic.SnoozeChart = value; }
+            get => SleepStatistic.SnoreChart;
+            set { SleepStatistic.SnoreChart = value; }
         }
         #endregion
 
@@ -318,6 +320,16 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
+        public bool IsDetailPopupVisible
+        {
+            get => isDetailPopupVisible;
+            set 
+            { 
+                isDetailPopupVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         /// <summary>
         ///     It will either push async to LoginPage or slide up the 
         ///     profile overlay based on an user is logged in or as a guest
@@ -334,6 +346,33 @@ namespace SmartPillowLib.ViewModels
         public ICommand OpenScanPillowCommand => new Command(() => IsScanPillowPopupVisible = true);
 
         public ICommand CloseScanPillowCommand => new Command(() => IsScanPillowPopupVisible = false);
+
+        public ICommand OpenDetailCommand => new Command(() => IsDetailPopupVisible = true);
+
+        private string brightness;
+
+        /// <summary>
+        ///     HomePage's brightness will be darker if local time is in between 12AM and 6AM
+        /// </summary>
+        public string Brightness
+        {
+            get 
+            {
+                // starts at midnight
+                var nightStart = DateTime.Now.Date.AddDays(0);
+
+                // ends at 6 am
+                var nightEnd = nightStart.Date.AddHours(6);
+
+                return (nightStart < DateTime.Now && DateTime.Now < nightEnd) ? "#b3000000" : "#00000000";
+            }
+            set 
+            {
+                brightness = value;
+                NotifyPropertyChanged();
+            }
+        }
+
 
         /// <summary>
         ///     Check if an user logged in or as a guest when HomePage is being load

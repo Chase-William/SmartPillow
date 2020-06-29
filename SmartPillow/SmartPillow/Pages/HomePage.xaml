@@ -28,6 +28,8 @@
 
             <Image Source="bedBackground.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
 
+            <Grid x:Name="brigtnessView" BackgroundColor="{Binding Brightness}"/>
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -86,7 +88,6 @@
                             Percentage="0"
                             HorizontalOptions="Start" VerticalOptions="End"/>
 
-
                         </Grid>
 
                         <Grid HorizontalOptions="Start" VerticalOptions="Start" Margin="14"
@@ -123,8 +124,7 @@
                               HeightRequest="30" WidthRequest="80">
 
                             <Grid.GestureRecognizers>
-                                <!--need to bind command for opening detail page or popup view (undecided) -->
-                                <TapGestureRecognizer Command="{Binding UserCommand}"/>
+                                <TapGestureRecognizer Command="{Binding OpenDetailCommand}"/>
                             </Grid.GestureRecognizers>
 
                             <pancake:PancakeView
@@ -226,16 +226,16 @@
                             </ResourceDictionary>
                         </Grid.Resources>
 
-                        <StackLayout Orientation="Vertical" BackgroundColor="Transparent" Padding="17,5,0,0">
+                        <StackLayout Orientation="Vertical" BackgroundColor="Transparent" Padding="13,5,0,0">
                             <Label Text="Awake"/>
                             <Label Text="REM"/>
                             <Label Text="Sleep"/>
                             <Label Text="Deep"/>
                         </StackLayout>
 
-                        <StackLayout Orientation="Vertical" Grid.Row="1" Padding="17,0,0,0" Margin="0,-2,0,20">
+                        <StackLayout Orientation="Vertical" Grid.Row="1" Padding="13,0,0,0" Margin="0,-2,0,20">
                             <Label Text="Time" Margin="0" FontSize="7"/>
-                            <Label Text="Snooze" FontSize="8"/>
+                            <Label Text="Snore" FontSize="8"/>
                         </StackLayout>
                         
                     </Grid>
@@ -246,7 +246,7 @@
                         <pancake:PancakeView CornerRadius="100" BackgroundColor="#5E5E5E" Margin="3" HorizontalOptions="Start" WidthRequest="280" VerticalOptions="Center" HeightRequest="5"/>
                     </Grid>
 
-                    <microcharts:ChartView Margin="40,0,0,0" Chart="{Binding SnoozeChart}"
+                    <microcharts:ChartView Margin="40,0,0,0" Chart="{Binding SnoreChart}"
                                                HorizontalOptions="Start" VerticalOptions="End" WidthRequest="290"/>
                 </Grid>
             </Grid>
@@ -321,5 +321,17 @@
             </Grid>
         </ContentView>
         
+        <!--detail popup view-->
+        <ContentView x:Name="DetailPopup" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="#BF000000" Opacity="0" IsVisible="{Binding IsDetailPopupVisible}" 
+                     PropertyChanged="DetailPopup_PropertyChanged">
+
+            <Grid VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="580" WidthRequest="320">
+                <pancake:PancakeView CornerRadius="22.25" Opacity=".9">
+                    <skia:SKCanvasView x:Name="SKCanvasDetail" PaintSurface="SKCanvasDetail_PaintSurface"/>
+                </pancake:PancakeView>
+            </Grid>
+
+        </ContentView>
     </AbsoluteLayout>
 </ContentPage>
