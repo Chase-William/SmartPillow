@@ -26,10 +26,8 @@ namespace SmartPillow.Droid
 
             base.OnCreate(savedInstanceState);
 
-
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
          
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);    // Getting the folder path that already exist on the device and will be used to map a location to our database.   
             string completedPath = Path.Combine(folderPath, App.DatabaseKeys.DATABASE_NAME);                    // Combining the two paths to create a completed path
@@ -38,8 +36,7 @@ namespace SmartPillow.Droid
 
             CreateNotificationFromIntent(Intent);
            
-            AndroidSmartPillowAlarm.Init(this);
-            
+            AndroidSmartPillowAlarm.Init(this);            
         }
 
         protected override void OnNewIntent(Intent intent)

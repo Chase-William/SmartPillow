@@ -19,16 +19,16 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         /// <summary>
         ///     Signals that an alarm has been selected and it should be handled.
         /// </summary>
-        public event Action<Alarm> AlarmSelected;
+        public event Action<AlarmListViewWrapper> AlarmSelected;
 
         // Collection Source (readonly)
-        public readonly ObservableCollection<Alarm> Alarms;
+        public readonly ObservableCollection<AlarmListViewWrapper> Alarms;
 
         /// <summary>
         ///     Query results
         /// </summary>
-        public ObservableCollection<Alarm> QueryResults => !string.IsNullOrWhiteSpace(queryText)
-                    ? new ObservableCollection<Alarm>(Alarms.Where(x => x.Name.Contains(queryText)).ToList())
+        public ObservableCollection<AlarmListViewWrapper> QueryResults => !string.IsNullOrWhiteSpace(queryText)
+                    ? new ObservableCollection<AlarmListViewWrapper>(Alarms.Where(x => x.Name.Contains(queryText)).ToList())
                     : Alarms;
 
         private string queryText;
@@ -48,11 +48,11 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             }
         }
 
-        private Alarm selectedAlarm;
+        private AlarmListViewWrapper selectedAlarm;
         /// <summary>
         ///     ListView item is selected prop.
         /// </summary>
-        public Alarm SelectedItem
+        public AlarmListViewWrapper SelectedItem
         {
             get => selectedAlarm;
             set
@@ -70,7 +70,12 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
         public NormalAlarmsVM()
         {
-            Alarms = new ObservableCollection<Alarm>(LocalDataServiceContext.Provider.GetAlarms());
+
+            var alarms = LocalDataServiceContext.Provider.GetAlarms().ToList();
+
+            List<AlarmListViewWrapper> aw = alarms.ConvertAll(x => new AlarmListViewWrapper(x.Id, x.Name, x.IsAlarmEnabled));
+
+            Alarms = new ObservableCollection<AlarmListViewWrapper>(aw);
             //Alarms = new ObservableCollection<Alarm>(alarms);
             Alarms.CollectionChanged += (sender, args) =>
             {

@@ -25,19 +25,19 @@ namespace SmartPillow.Pages.TimedAlarmPages
             };
             VM.AlarmSelected += (alarm) =>
             {
-                Navigation.PushAsync(new CreateTimedAlarmPage(alarm));
+                Navigation.PushAsync(new CreateTimedAlarmPage(VM.Alarms, alarm));
             };          
         }
 
         protected override void OnAppearing()
         {
-            Alarm.AlarmStateChanged += OnAlarmStateChanged;
+            AlarmListViewWrapper.AlarmStateChanged += OnAlarmStateChanged;
             base.OnAppearing();
         }
 
         protected override void OnDisappearing()
         {
-            Alarm.AlarmStateChanged -= OnAlarmStateChanged;
+            AlarmListViewWrapper.AlarmStateChanged -= OnAlarmStateChanged;
             base.OnDisappearing();
         }
 
@@ -45,8 +45,13 @@ namespace SmartPillow.Pages.TimedAlarmPages
         ///     Handles a alarm's state inside the listview being altered.<br/>
         ///     @param - alarm, alarm that has been modified
         /// </summary>
-        private void OnAlarmStateChanged(Alarm alarm)
+        private void OnAlarmStateChanged(AlarmListViewWrapper _alarmWrapper)
         {
+            // Getting a reference to the alarm.
+            var alarm = LocalDataServiceContext.Provider.GetAlarm(_alarmWrapper.Id);
+            // Updating the alarm.
+            alarm.IsAlarmEnabled = _alarmWrapper.IsAlarmEnabled;
+
             // Making platform specific calls to set alarm
             if (alarm.IsAlarmEnabled)
                 DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(DateTime.Now, alarm.Id);
