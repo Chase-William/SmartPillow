@@ -83,8 +83,8 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             // Adding our
             pendingIntents.Add(alarmId, alarmIntent);
                        
-            AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 10000, alarmIntent);
-            Toast.MakeText(MainActivity, $"Alarm set for: 10 seconds...", ToastLength.Short).Show();
+            AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, alarmIntent);
+            Toast.MakeText(MainActivity, $"Alarm set for: 5 seconds...", ToastLength.Short).Show();
         }
     }
 }
