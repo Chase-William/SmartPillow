@@ -32,7 +32,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
                 if (alarm.IsAlarmEnabled)
                     DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(DateTime.Now, alarm.Id);
 
-                LocalServiceContext.Provider.InsertAlarm(alarm);
+                LocalDataServiceContext.Provider.InsertAlarm(alarm);
             };
 
             BindPageVMHandlers();            
@@ -48,7 +48,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
             VM.SaveAlarm += (a) =>
             {
-                LocalServiceContext.Provider.UpdateAlarm(alarm);
+                LocalDataServiceContext.Provider.UpdateAlarm(alarm);
             };
 
             BindPageVMHandlers();

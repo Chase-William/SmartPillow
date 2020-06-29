@@ -70,7 +70,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
         public NormalAlarmsVM()
         {
-            Alarms = new ObservableCollection<Alarm>(LocalServiceContext.Provider.GetAlarms());
+            Alarms = new ObservableCollection<Alarm>(LocalDataServiceContext.Provider.GetAlarms());
             //Alarms = new ObservableCollection<Alarm>(alarms);
             Alarms.CollectionChanged += (sender, args) =>
             {

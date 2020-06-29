@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// </summary>
 namespace SmartPillowLib.Data.Local
 {
-    public class LocalServiceContext : ILocalServiceContext
+    public class LocalDataServiceContext : ILocalDataServiceContext
     {
         public static string DatabasePath;
 
@@ -23,9 +23,9 @@ namespace SmartPillowLib.Data.Local
         /// <summary>
         ///     Uses to create new instances of this class.
         /// </summary>
-        public static LocalServiceContext Provider => new LocalServiceContext();
+        public static LocalDataServiceContext Provider => new LocalDataServiceContext();
 
-        private LocalServiceContext() { }
+        private LocalDataServiceContext() { }
 
         public void InsertAlarm(Alarm alarm, string collection_key = TIMED_ALARM_COL_KEY)
         {

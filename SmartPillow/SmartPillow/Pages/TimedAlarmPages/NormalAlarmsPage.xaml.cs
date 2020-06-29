@@ -67,7 +67,9 @@ namespace SmartPillow.Pages.TimedAlarmPages
                 DependencyService.Get<ISmartPillowAlarmManager>().CancelAlarm(alarm.Id);
             
             // MessagingCenter.Send(this, App.MessagingCenterChannels.ALARM, Tuple.Create<Action<Alarm, string>, Alarm>(LocalServiceContext.Provider.UpdateAlarm, alarm));
-            MessagingCenter.Send(this, App.MessagingCenterChannels.ALARM, new DatabaseWorkerArgs(LocalServiceContext.Provider.UpdateAlarm, alarm, LocalServiceContext.TIMED_ALARM_COL_KEY));
+            MessagingCenter.Send(this, 
+                                 App.MessagingCenterChannels.ALARM,
+                                 new DatabaseWorkerArgs(LocalDataServiceContext.Provider.UpdateAlarm, alarm, LocalDataServiceContext.TIMED_ALARM_COL_KEY));
         }
 
         //private void Start_BtnClicked(object sender, EventArgs e)

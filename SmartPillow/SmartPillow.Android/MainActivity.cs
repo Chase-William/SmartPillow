@@ -12,6 +12,8 @@ using SmartPillow.Pages.TimedAlarmPages;
 using SmartPillow.Backgrounding;
 using AndroidX.Work;
 using SmartPillow.Droid.Locals.Backgrounding;
+using Android.Views.Accessibility;
+using SmartPillowLib.Models;
 
 namespace SmartPillow.Droid
 {
@@ -58,10 +60,38 @@ namespace SmartPillow.Droid
             // Setting a handler for when a specific messagingcenter channel is invoked.
             MessagingCenter.Subscribe<NormalAlarmsPage, DatabaseWorkerArgs>(this, App.MessagingCenterChannels.ALARM, (sender, args) =>
             {
-                OneTimeWorkRequest databaseWork = OneTimeWorkRequest.Builder.From<DatabaseWorker>().Build();
-                
-                WorkManager.Instance.Enqueue(databaseWork);               
+                // Build the builder instance
+                Data.Builder builder = new Data.Builder();
+
+                // Add data to builder
+                //builder.Put("action", new AndroidAlarmWrapper(args.Alarm));
+                //builder.Put("action", new Java.Lang.Object);
+                //builder.PutBoolean("asd", true);
+               
+                // Turn builder into a Data object
+                Data data = builder.Build();
+
+                // Make the one time work request and set the input data to our data
+                OneTimeWorkRequest databaseWork = OneTimeWorkRequest.Builder.From<DatabaseWorker>().SetInputData(data).Build();            
+
+                // enqueue the work request to workerManager
+                WorkManager.Instance.Enqueue(databaseWork);
             });
+        }
+         
+        public class Test : Java.Lang.Object
+        {
+
+        }
+
+        public class AndroidAlarmWrapper : Java.Lang.Object
+        {
+            public readonly Alarm Alarm;
+
+            public AndroidAlarmWrapper(Alarm alarm)
+            {
+                Alarm = alarm;
+            }
         }
 
         protected override void OnNewIntent(Intent intent)

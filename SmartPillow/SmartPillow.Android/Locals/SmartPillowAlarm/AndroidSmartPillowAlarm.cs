@@ -49,7 +49,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
         ///     @type - int, Alarm Id which acts as the key<br/>
         ///     @type - PendingIntent, the pending intent
         /// </summary>
-        private readonly Dictionary<int, PendingIntent> pendingIntents = new Dictionary<int, PendingIntent>();
+        private static readonly Dictionary<int, PendingIntent> pendingIntents = new Dictionary<int, PendingIntent>();
 
         /// <summary>
         ///     Initializes the LocalSmartPillowAlarm's static fields.
@@ -84,7 +84,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             pendingIntents.Add(alarmId, alarmIntent);
                        
             AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 10000, alarmIntent);
-            Toast.MakeText(MainActivity, $"Alarm set for: 20 seconds...", ToastLength.Short).Show();
+            Toast.MakeText(MainActivity, $"Alarm set for: 10 seconds...", ToastLength.Short).Show();
         }
     }
 }

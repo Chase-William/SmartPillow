@@ -27,7 +27,7 @@ namespace SmartPillow
             InitializeComponent();
 
             // Passing this path to our LocalService Provider to make our calls in the application simplier since we will only have one local db right now.
-            SmartPillowLib.Data.Local.LocalServiceContext.DatabasePath = dbPath;
+            SmartPillowLib.Data.Local.LocalDataServiceContext.DatabasePath = dbPath;
 
             // Initializing our MasterDetailPage which contains our drawer and action bar.
             MainPage = new MainMasterPage();
