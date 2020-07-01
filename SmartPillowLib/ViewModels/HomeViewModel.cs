@@ -336,6 +336,9 @@ namespace SmartPillowLib.ViewModels
         /// </summary>
         public ICommand UserCommand => new Command(() =>
         {
+            IsScanPillowPopupVisible = false;
+            IsDetailPopupVisible = false;
+
             if (IsUserLogged == false)
                 OpenLoginPage?.Invoke();
 

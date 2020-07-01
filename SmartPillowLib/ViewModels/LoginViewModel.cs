@@ -24,8 +24,22 @@ namespace SmartPillowLib.ViewModels
                 Image = "Zack.png",
                 Email = "Email@gmail.com",
                 PhoneNumber = "585-585-5858",
-                SmartPillowDeviceID = "ZZ987-19C"
+                SmartPillowDeviceID = "ZZ987-19C",
+                UserData = new List<History>()
             };
+
+            var week = new Week() { SleepQualityChart = SleepStatistic.JuneWeek };
+            var weeks = new List<Week>();
+            weeks.Add(week);
+            weeks.Add(week);
+
+            var a = new History() { Date = new DateTime(2020, 4, 1), Weeks = weeks };
+            var b = new History() { Date = new DateTime(2020, 5, 1), };
+            var c = new History() { Date = new DateTime(2020, 6, 1), Weeks = weeks };
+
+            user.UserData.Add(a);
+            user.UserData.Add(b);
+            user.UserData.Add(c);
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;
@@ -46,7 +60,8 @@ namespace SmartPillowLib.ViewModels
                 Image = "Twitter.png",
                 Email = "Twitter@gmail.com",
                 PhoneNumber = "111-111-1111",
-                SmartPillowDeviceID = "SP123-19B"
+                SmartPillowDeviceID = "SP123-19B",
+                UserData = new List<History>()
             };
 
             UserInformation.User = user;
@@ -68,7 +83,9 @@ namespace SmartPillowLib.ViewModels
                 Image = "Google.png",
                 Email = "Google@gmail.com",
                 PhoneNumber = "222-222-2222",
-                SmartPillowDeviceID = "YW455-19D"
+                SmartPillowDeviceID = "YW455-19D",
+                UserData = new List<History>()
+                
             };
 
             UserInformation.User = user;
@@ -90,8 +107,22 @@ namespace SmartPillowLib.ViewModels
                 Image = "Facebook.png",
                 Email = "Facebook@gmail.com",
                 PhoneNumber = "333-333-3333",
-                SmartPillowDeviceID = "WQW31-25X"
+                SmartPillowDeviceID = "WQW31-25X",
+                UserData = new List<History>()
             };
+
+            var week = new Week() { SleepQualityChart = SleepStatistic.JuneWeek };
+            var weeks = new List<Week>();
+            weeks.Add(week);
+            weeks.Add(week);
+
+            var a = new History() { Date = new DateTime(2020, 4, 1), Weeks = weeks };
+            var b = new History() { Date = new DateTime(2020, 5, 1), };
+            var c = new History() { Date = new DateTime(2020, 6, 1), Weeks = weeks };
+
+            user.UserData.Add(a);
+            user.UserData.Add(b);
+            user.UserData.Add(c);
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;

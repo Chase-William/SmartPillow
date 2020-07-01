@@ -1,4 +1,6 @@
-﻿using Xamarin.Essentials;
+﻿using SmartPillowLib.ViewModels;
+using System.Collections.Generic;
+using Xamarin.Essentials;
 
 namespace SmartPillowLib.Models
 {
@@ -15,7 +17,7 @@ namespace SmartPillowLib.Models
         {
             get
             {
-                return SecureStorage.GetAsync(nameof(PhoneNumber)).Result; 
+                return SecureStorage.GetAsync(nameof(PhoneNumber)).Result;
             }
             set
             {
@@ -28,5 +30,7 @@ namespace SmartPillowLib.Models
         /// </summary>
         public string SmartPillowDeviceID { get; set; }
 
+        public string DataUrl { get; set; }
+        public List<History> UserData { get; set; }
     }
 }
