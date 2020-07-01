@@ -1,4 +1,5 @@
 ﻿using Microcharts;
+using SmartPillow.Util;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,11 @@ namespace SmartPillowLib.ViewModels
 {
     public class HistoryViewModel : NotifyClass
     {
-        public static List<History> Months { get; set; } = UserInformation.User.UserData;
+        public List<History> Months { get; set; } = UserInformation.User.UserData;
         private bool isNoHistoryVisble = false;
         private bool isHaveHistoryVisble = false;
+        public int position;
+        private string brightness;
 
         public bool IsNoHistoryVisble
         {
@@ -67,21 +70,20 @@ namespace SmartPillowLib.ViewModels
         {
             if (History == null) IsNoHistoryVisble = true;
             if (History != null) IsHaveHistoryVisible = true;
-        }
 
-        private int position;
+            if (Months != null)
+                if (Months.Count() != 0)
+                    position = Months.Count() - 1;
+        }
 
         public int Position
         {
             get 
             {
-                if (Months != null )
-                {
+                if (Months != null)
                     if (Months.Count() != 0)
-                        position = Months.Count() - 1;
-                }
-                else
-                    position = 0;
+                        Weeks = History[position].Weeks;
+
                 return position; 
             }
             set 
@@ -95,14 +97,25 @@ namespace SmartPillowLib.ViewModels
 
         public List<Week> Weeks
         {
-            get 
-            {
-                if (Months != null)
-                    weeks = Months[position].Weeks;
-
-                return weeks; 
+            get => weeks; 
+            set 
+            { 
+                weeks = value;
+                NotifyPropertyChanged();
             }
-            set { weeks = value; }
+        }
+
+        /// <summary>
+        ///     HomePage's brightness will be darker if local time is in between 12AM and 6AM
+        /// </summary>
+        public string Brightness
+        {
+            get => AutoBrightness.CheckNightTime();
+            set
+            {
+                brightness = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public void OnAppearing()
@@ -110,6 +123,9 @@ namespace SmartPillowLib.ViewModels
             NotifyPropertiesChanged(nameof(History),
                                     nameof(User),
                                     nameof(ProfileImage),
+                                    nameof(Position),
+                                    nameof(Months),
+                                    nameof(Weeks),
                                     nameof(IsNoHistoryVisble),
                                     nameof(IsHaveHistoryVisible));
         }
