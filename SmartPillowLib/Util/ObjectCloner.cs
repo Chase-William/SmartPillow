@@ -27,7 +27,9 @@ namespace SmartPillow.Util
             // without ObjectCreationHandling.Replace default constructor values will be added to result
             var deserializeSettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
 
-            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
+            string test = JsonConvert.SerializeObject(source);
+
+            return JsonConvert.DeserializeObject<T>(test, deserializeSettings);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// </summary>
 namespace SmartPillowLib.Data.Local
 {
-    public class LocalServiceContext : ILocalServiceContext
+    public class LocalDataServiceContext : ILocalDataServiceContext
     {
         public static string DatabasePath;
 
@@ -23,9 +23,9 @@ namespace SmartPillowLib.Data.Local
         /// <summary>
         ///     Uses to create new instances of this class.
         /// </summary>
-        public static LocalServiceContext Provider => new LocalServiceContext();
+        public static LocalDataServiceContext Provider => new LocalDataServiceContext();
 
-        private LocalServiceContext() { }
+        private LocalDataServiceContext() { }
 
         public void InsertAlarm(Alarm alarm, string collection_key = TIMED_ALARM_COL_KEY)
         {
@@ -54,43 +54,28 @@ namespace SmartPillowLib.Data.Local
             }
         }
 
+
+        public Alarm GetAlarm(int alarmId)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alarm>(TIMED_ALARM_COL_KEY);
+                return col.FindAll().Single(x => x.Id == alarmId);
+            }
+        }
+
         public IEnumerable<Alarm> GetAlarms(string collection_key = TIMED_ALARM_COL_KEY)
         {
             using (var db = new LiteDatabase(DatabasePath))
             {
                 var col = db.GetCollection<Alarm>(collection_key);
 
-                var test = col.FindAll().ToList();
+                //col.DeleteAll();
 
-                test.Add(new Alarm
-                {
-                    PillowProps = new DeviceProperties
-                    {
-                        IsBrightnessEnabled = true,
-                        IsVibrationEnabled = true,
-                        IsEnabled = true,
-                        Brightness = 50,
-                        Vibration = 50
-                    },
-                    PhoneProps = new DeviceProperties
-                    {
-                        IsBrightnessEnabled = true,
-                        IsVibrationEnabled = true,
-                        IsEnabled = true,
-                        Brightness = 50,
-                        Vibration = 50
-                    },
-                    SnoozeProps = new SnoozeProperties
-                    {
-                        IsEnabled = true,
-                        Interval = 10,
-                        Repeat = 3
-                    },
-                    Name = "My Favorite Alarm"
-                });
+                var collection = col.FindAll().ToList();                
 
                 // Returns a IEnumerable of type Alarms
-                return test;
+                return collection;
             }
         }
     }

@@ -50,9 +50,9 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         });
 
         /// <summary>
-        ///     Default contructor for making a new alarm.
+        ///     Default constructor for making a new alarm.
         /// </summary>
-        public CreateTimedAlarmVM(ObservableCollection<Alarm> alarms) 
+        public CreateTimedAlarmVM(ObservableCollection<AlarmListViewWrapper> alarms) 
         {
             NewAlarm = new Alarm
             {
@@ -77,7 +77,8 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                     IsEnabled = true,
                     Interval = 10,
                     Repeat = 3
-                }
+                },
+                IsAlarmEnabled = true
             };
 
             // Create new alarm
@@ -90,7 +91,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
                 //LocalServiceContext.Provider.InsertAlarm(NewAlarm);
                 // Updating collection with the alarm
-                alarms.Add(NewAlarm);
+                alarms.Add(new AlarmListViewWrapper(NewAlarm));
                 
                 FinishedAdjustingSettings?.Invoke();
             });
@@ -100,9 +101,9 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         ///     Parameterized constructor for editing an existing alarm.
         /// </summary>
         /// <param name="alarm"></param>
-        public CreateTimedAlarmVM(Alarm alarm)
-        {            
-            // Creates a new copy of our object in memory for editing purposes
+        public CreateTimedAlarmVM(AlarmListViewWrapper alarmWrapper)
+        {
+            var alarm = LocalDataServiceContext.Provider.GetAlarm(alarmWrapper.Id);
             NewAlarm = ObjectCloner.CloneJson(alarm);            
 
             // Saves changes to alarm.

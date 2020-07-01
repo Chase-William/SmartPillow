@@ -2,6 +2,7 @@
 using SmartPillow.Pages.Nav;
 using System.Threading.Tasks;
 using System;
+using SmartPillow.CustomAbstractions.Alarms;
 
 /// <summary>
 ///     We use Custom fonts for our app theme
@@ -27,10 +28,10 @@ namespace SmartPillow
             InitializeComponent();
 
             // Passing this path to our LocalService Provider to make our calls in the application simplier since we will only have one local db right now.
-            SmartPillowLib.Data.Local.LocalServiceContext.DatabasePath = dbPath;
+            SmartPillowLib.Data.Local.LocalDataServiceContext.DatabasePath = dbPath;
 
             // Initializing our MasterDetailPage which contains our drawer and action bar.
-            MainPage = new MainMasterPage();
+            MainPage = new MainMasterPage();            
         }
 
         protected override void OnStart()
@@ -43,20 +44,7 @@ namespace SmartPillow
 
         protected override void OnResume()
         {
-            //LoadPersistedValues();
         }
-
-        //void LoadPersistedValues()
-        //{
-        //    if (App.Current.Properties.ContainsKey("SleepDate"))
-        //    {
-        //        var sleepDate = (DateTime)App.Current.Properties["SleepDate"];                
-        //    }
-        //    if (App.Current.Properties.ContainsKey("AlarmName"))
-        //    {
-        //        var alarmDate = (string)App.Current.Properties["AlarmName"];
-        //    }
-        //}
 
         /// <summary>
         ///     Contains keys for App.xaml resourceDictionary.
@@ -79,11 +67,6 @@ namespace SmartPillow
             {
                 Database_Path = dbPAth;
             }
-        }
-
-        public readonly struct MessagingCenterChannels
-        {
-            public const string ALARM = "alarm";
         }
     }
 }

@@ -8,10 +8,6 @@ using Android.Content;
 using SmartPillow.Droid.Locals.SmartPillowAlarm;
 using SmartPillow.CustomAbstractions.LocationNotification;
 using SmartPillow.Droid.Locals.Notifications;
-using SmartPillow.Pages.TimedAlarmPages;
-using SmartPillow.Backgrounding;
-using AndroidX.Work;
-using SmartPillow.Droid.Locals.Backgrounding;
 
 namespace SmartPillow.Droid
 {
@@ -30,10 +26,8 @@ namespace SmartPillow.Droid
 
             base.OnCreate(savedInstanceState);
 
-
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
          
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);    // Getting the folder path that already exist on the device and will be used to map a location to our database.   
             string completedPath = Path.Combine(folderPath, App.DatabaseKeys.DATABASE_NAME);                    // Combining the two paths to create a completed path
@@ -42,26 +36,7 @@ namespace SmartPillow.Droid
 
             CreateNotificationFromIntent(Intent);
            
-            AndroidSmartPillowAlarm.Init(this);
-
-            /// Assigning our shared code callbacks for when we want to run background task/jobs/work whatever.
-
-            // @Param1 - Subscriber
-            // @Param2 - Message
-            // @Param3 - Callback func
-            //MessagingCenter.Subscribe<StartLongRunningTaskMsg>(this, nameof(StartLongRunningTaskMsg), message =>
-            //{
-            //    var intent = new Intent(this, typeof(LongRunningTaskService));
-            //    StartService(intent);
-            //});
-
-            // Setting a handler for when a specific messagingcenter channel is invoked.
-            MessagingCenter.Subscribe<NormalAlarmsPage, DatabaseWorkerArgs>(this, App.MessagingCenterChannels.ALARM, (sender, args) =>
-            {
-                OneTimeWorkRequest databaseWork = OneTimeWorkRequest.Builder.From<DatabaseWorker>().Build();
-                
-                WorkManager.Instance.Enqueue(databaseWork);               
-            });
+            AndroidSmartPillowAlarm.Init(this);            
         }
 
         protected override void OnNewIntent(Intent intent)

@@ -38,7 +38,7 @@
                                     <Image Source="AlarmClockSmall" WidthRequest="50"/>
                                     <StackLayout>
                                         <Label Text="{Binding Name}" TextColor="White"/>
-                                        <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>
+                                        <!--<Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>-->
                                     </StackLayout>
                                     <Switch IsToggled="{Binding IsAlarmEnabled}"/>
                                 </StackLayout>

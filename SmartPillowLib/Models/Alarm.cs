@@ -1,6 +1,7 @@
 ﻿using SmartPillowLib.ViewModels;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
@@ -17,7 +18,7 @@ namespace SmartPillowLib.Models
         ///     Signals that the state of this alarm has changed.
         ///     This means it needs to be enabled or disabled on the native platform.
         /// </summary>
-        public static event Action<Alarm> AlarmStateChanged;
+        //public static event Action<Alarm> AlarmStateChanged;
 
         /// <summary>
         ///     The unique identifier for all alarms.
@@ -79,7 +80,7 @@ namespace SmartPillowLib.Models
                 
                 isAlarmEnabled = value;
 
-                AlarmStateChanged?.Invoke(this);
+                ///AlarmStateChanged?.Invoke(this);
                 NotifyPropertyChanged();             
             }
         }

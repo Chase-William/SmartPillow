@@ -15,7 +15,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
 {
     [BroadcastReceiver]
     public class AlarmReceiver : BroadcastReceiver
-    {        
+    {
         /// <summary>
         ///     Called when an alarm is triggered.<br/>
         ///     @param - context, sender<br/>
@@ -25,6 +25,9 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
         {
             var message = intent.GetStringExtra(AndroidSmartPillowAlarm.MSG_EXTRA);
             var title = intent.GetStringExtra(AndroidSmartPillowAlarm.TITLE_EXTRA);
+
+            // Informing our shared PCL that a specific alarm has been activated.
+            SmartPillowAlarmManager.ActivateAlarmAudio(intent.GetIntExtra(AndroidSmartPillowAlarm.ID, 0));
 
             AndroidNotificationManager notificationManager = new AndroidNotificationManager();
 
@@ -39,9 +42,10 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
     {
         public const string MSG_EXTRA = "message";
         public const string TITLE_EXTRA = "title";
+        public const string ID = "id";
 
         // Should be initialized from inside MainActivity Init
-        internal static AlarmManager AlarmManager { get; private set; }
+        internal static Android.App.AlarmManager AlarmManager { get; private set; }
         internal static MainActivity MainActivity { get; private set; }
 
         /// <summary>
@@ -49,7 +53,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
         ///     @type - int, Alarm Id which acts as the key<br/>
         ///     @type - PendingIntent, the pending intent
         /// </summary>
-        private readonly Dictionary<int, PendingIntent> pendingIntents = new Dictionary<int, PendingIntent>();
+        private static readonly Dictionary<int, PendingIntent> pendingIntents = new Dictionary<int, PendingIntent>();
 
         /// <summary>
         ///     Initializes the LocalSmartPillowAlarm's static fields.
@@ -62,9 +66,11 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
 
         public void CancelAlarm(int alarmId)
         {
-            PendingIntent alarmIntent = pendingIntents[alarmId];
+            // If the alarmId isn't inside the pendingIntents dict abort.
+            if (!pendingIntents.ContainsKey(alarmId)) return;
 
-            // Cancel here
+            PendingIntent alarmIntent = pendingIntents[alarmId];
+            pendingIntents.Remove(alarmId);
             AlarmManager.Cancel(alarmIntent);
         }
 
@@ -76,15 +82,17 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             calendar.Set(CalendarField.Minute, DateTime.Now.Minute + 2);
 
             Intent baseIntent = new Intent(MainActivity, typeof(AlarmReceiver));
-            baseIntent.PutExtra(MSG_EXTRA, "Hello");
+            baseIntent.PutExtra(MSG_EXTRA, "Alarm");
             baseIntent.PutExtra(TITLE_EXTRA, "This is a title");     
+            baseIntent.PutExtra(ID, alarmId);     
 
             PendingIntent alarmIntent = PendingIntent.GetBroadcast(MainActivity, 0, baseIntent, 0);
             // Adding our
             pendingIntents.Add(alarmId, alarmIntent);
-                       
-            AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 10000, alarmIntent);
-            Toast.MakeText(MainActivity, $"Alarm set for: 20 seconds...", ToastLength.Short).Show();
+
+            AlarmManager.SetRepeating(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, 5000, alarmIntent);
+            //AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, alarmIntent);
+            Toast.MakeText(MainActivity, $"Alarm set for: 5 seconds...", ToastLength.Short).Show();
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using System.Linq;
 
 namespace SmartPillow.Pages.TimedAlarmPages
 {
@@ -21,10 +22,10 @@ namespace SmartPillow.Pages.TimedAlarmPages
         /// <summary>
         ///     Constructor with no parameter means we are creating a new instance of an alarm.
         /// </summary>
-        public CreateTimedAlarmPage(ObservableCollection<Alarm> alarms)
+        public CreateTimedAlarmPage(ObservableCollection<AlarmListViewWrapper> _alarms)
         {
             InitializeComponent();
-            BindingContext = new CreateTimedAlarmVM(alarms);
+            BindingContext = new CreateTimedAlarmVM(_alarms);
 
             VM.SaveAlarm += (alarm) =>
             {
@@ -32,7 +33,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
                 if (alarm.IsAlarmEnabled)
                     DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(DateTime.Now, alarm.Id);
 
-                LocalServiceContext.Provider.InsertAlarm(alarm);
+                LocalDataServiceContext.Provider.InsertAlarm(alarm);
             };
 
             BindPageVMHandlers();            
@@ -41,14 +42,19 @@ namespace SmartPillow.Pages.TimedAlarmPages
         /// <summary>
         ///     Constructor with an alarm parameter means we intend to modify and existing alarm.
         /// </summary>
-        public CreateTimedAlarmPage(Alarm alarm)
+        public CreateTimedAlarmPage(ObservableCollection<AlarmListViewWrapper> _alarms, AlarmListViewWrapper _alarm)
         {
             InitializeComponent();
-            BindingContext = new CreateTimedAlarmVM(alarm);
+            BindingContext = new CreateTimedAlarmVM(_alarm);
 
             VM.SaveAlarm += (a) =>
             {
-                LocalServiceContext.Provider.UpdateAlarm(alarm);
+                // Updaing our ListView's wrapper
+                var alarmWrapper = _alarms.Where(x => x.Id == a.Id).Single();
+                alarmWrapper.IsAlarmEnabled = a.IsAlarmEnabled;
+                alarmWrapper.Name = a.Name;
+                // Updating local database
+                LocalDataServiceContext.Provider.UpdateAlarm(a);
             };
 
             BindPageVMHandlers();
