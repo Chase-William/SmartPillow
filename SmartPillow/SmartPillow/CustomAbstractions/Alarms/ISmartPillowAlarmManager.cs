@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartPillowLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,14 +12,14 @@ namespace SmartPillow.CustomAbstractions.Alarms
     {
         /// <summary>
         ///     Sets a alarm at a specific time.<br/>
-        ///     @param - time, the alarm will trigger at<br/>
+        ///     @param - time, the offset from 12 midnight in which the alarm should trigger<br/>
         ///     @param - alarmId, id of the alarm which this call is for
         /// </summary>
-        void SetAlarm(DateTime time, int alarmId);
+        void SetAlarm(TimeSpan timeOffset, Alarm alarm);
         /// <summary>
         ///     Cancels a set alarm.<br/>
         ///     @param - alarmId, id of alarm to cancel 
         /// </summary>
-        void CancelAlarm(int alarmId);
+        void CancelAlarm(Alarm alarmId);
     }
 }

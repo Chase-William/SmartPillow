@@ -78,7 +78,8 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                     Interval = 10,
                     Repeat = 3
                 },
-                IsAlarmEnabled = true
+                IsAlarmEnabled = true,
+                TimeOffset = default
             };
 
             // Create new alarm

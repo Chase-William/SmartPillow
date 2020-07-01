@@ -44,9 +44,8 @@
             <ScrollView>
                 <StackLayout Style="{StaticResource NestedWithinFrame}">
                 <Label Text="Time" FontSize="20" TextColor="{StaticResource GrayedFont}"/>
-                <TimePicker Format="T" TextColor="{StaticResource LightFont}" Time="{Binding NewAlarm.Time}"/>
+                <TimePicker Format="T" TextColor="{StaticResource LightFont}" Time="{Binding NewAlarm.TimeOffset}"/>
                 <Entry Placeholder="Alarm name..." Text="{Binding NewAlarm.Name}" PlaceholderColor="{StaticResource GrayedFont}" TextColor="{StaticResource LightFont}"/>
-
 
                 <!-- Pillow -->
                 <ContentView>

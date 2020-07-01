@@ -29,9 +29,9 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
             VM.SaveAlarm += (alarm) =>
             {
-                // If the alarm is enabled enabled the alarm in the background.
+                // If the alarm is enabled, enable the alarm in the background.
                 if (alarm.IsAlarmEnabled)
-                    DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(DateTime.Now, alarm.Id);
+                    DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(alarm.TimeOffset, alarm);
 
                 LocalDataServiceContext.Provider.InsertAlarm(alarm);
             };

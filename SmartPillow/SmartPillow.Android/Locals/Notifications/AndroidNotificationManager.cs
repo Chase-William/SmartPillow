@@ -83,7 +83,7 @@ namespace SmartPillow.Droid.Locals.Notifications
             if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
                 var channelNameJava = new Java.Lang.String(channelName);
-                var channel = new NotificationChannel(channelId, channelNameJava, NotificationImportance.Default)
+                var channel = new NotificationChannel(channelId, channelNameJava, NotificationImportance.High)
                 {
                     Description = channelDescription
                 };

@@ -1,11 +1,6 @@
 ﻿using SmartPillowLib.ViewModels;
-using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Xml.Linq;
-using Xamarin.Forms;
+using LiteDB;
 
 namespace SmartPillowLib.Models
 {
@@ -59,19 +54,17 @@ namespace SmartPillowLib.Models
             }
         }
 
+        [BsonField("TimeOffset")]
         /// <summary>
-        ///     When the timer should be executed.
-        /// </summary>
-        public DateTimeOffset Time { get; set; }
+        ///     Contains the Offset in time
+        /// </summary>        
+        public TimeSpan TimeOffset { get; set; }
 
-        // Protected for access when overriding the corresponding property.
-        protected bool isAlarmEnabled;
+        private bool isAlarmEnabled;
         /// <summary>
         ///     Bool indicates whether this alarm is enabled or disabled.
-        ///     Overridable because for example in a listview if you want to toggle this alarm on or off.
-        ///     You will need to use the dependency service to call the platform specific code to setup an alarm or cancel one.
         /// </summary>
-        public virtual bool IsAlarmEnabled
+        public bool IsAlarmEnabled
         {
             get => isAlarmEnabled;
             set

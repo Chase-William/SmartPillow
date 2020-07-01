@@ -70,12 +70,14 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
         public NormalAlarmsVM()
         {
+            //LocalDataServiceContext.Provider.DeleteAllAlarms();
 
+            // Getting our local alarms
             var alarms = LocalDataServiceContext.Provider.GetAlarms().ToList();
-
-            List<AlarmListViewWrapper> aw = alarms.ConvertAll(x => new AlarmListViewWrapper(x.Id, x.Name, x.IsAlarmEnabled));
-
-            Alarms = new ObservableCollection<AlarmListViewWrapper>(aw);
+            // Converting out local alarms into AlarmListViewWrappers for our own functionality.
+            List<AlarmListViewWrapper> alarmWrappers = alarms.ConvertAll(x => new AlarmListViewWrapper(x.Id, x.Name, x.IsAlarmEnabled));
+            
+            Alarms = new ObservableCollection<AlarmListViewWrapper>(alarmWrappers);
             //Alarms = new ObservableCollection<Alarm>(alarms);
             Alarms.CollectionChanged += (sender, args) =>
             {

@@ -25,6 +25,8 @@ namespace SmartPillowLib.Data.Local
         /// <param name="collection_key"> The key for a specific collection </param>
         /// <returns> returns a alarm collection </returns>
         IEnumerable<Alarm> GetAlarms(string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
+
+        void DeleteAllAlarms(string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
     }
 
     public enum DataServiceType

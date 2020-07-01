@@ -70,12 +70,19 @@ namespace SmartPillowLib.Data.Local
             {
                 var col = db.GetCollection<Alarm>(collection_key);
 
-                //col.DeleteAll();
-
                 var collection = col.FindAll().ToList();                
 
                 // Returns a IEnumerable of type Alarms
                 return collection;
+            }
+        }
+
+        public void DeleteAllAlarms(string collection_key = TIMED_ALARM_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alarm>(collection_key);
+                col.DeleteAll();
             }
         }
     }

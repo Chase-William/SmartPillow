@@ -54,9 +54,9 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
             // Making platform specific calls to set alarm
             if (alarm.IsAlarmEnabled)
-                DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(DateTime.Now, alarm.Id);
+                DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(alarm.TimeOffset, alarm);
             else
-                DependencyService.Get<ISmartPillowAlarmManager>().CancelAlarm(alarm.Id);
+                DependencyService.Get<ISmartPillowAlarmManager>().CancelAlarm(alarm);
 
             // Update local db
             LocalDataServiceContext.Provider.UpdateAlarm(alarm);

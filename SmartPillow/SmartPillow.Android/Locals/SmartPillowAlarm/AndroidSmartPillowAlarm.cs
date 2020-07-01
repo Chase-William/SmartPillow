@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Icu.Util;
@@ -7,7 +8,9 @@ using Android.Widget;
 using Java.Lang;
 using SmartPillow.CustomAbstractions.Alarms;
 using SmartPillow.Droid.Locals.Notifications;
+using SmartPillowLib.Models;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 // https://www.google.com/search?client=firefox-b-1-d&q=BroadcastReceiver
 [assembly: Dependency(typeof(SmartPillow.Droid.Locals.SmartPillowAlarm.AndroidSmartPillowAlarm))]
@@ -53,7 +56,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
         ///     @type - int, Alarm Id which acts as the key<br/>
         ///     @type - PendingIntent, the pending intent
         /// </summary>
-        private static readonly Dictionary<int, PendingIntent> pendingIntents = new Dictionary<int, PendingIntent>();
+        private static readonly List<int> activeAlarms = new List<int>();
 
         /// <summary>
         ///     Initializes the LocalSmartPillowAlarm's static fields.
@@ -62,19 +65,25 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
         {
             MainActivity = mainActivity;
             AlarmManager = (AlarmManager)mainActivity.GetSystemService(Context.AlarmService);
+
+            // Adding all active alarms to the activeAlarm collection
+            activeAlarms.AddRange(SmartPillowLib.Data.Local.LocalDataServiceContext.Provider.GetAlarms().Where(x => x.IsAlarmEnabled).Select(x => x.Id));
         }
 
-        public void CancelAlarm(int alarmId)
+        public void CancelAlarm(Alarm alarm)
         {
             // If the alarmId isn't inside the pendingIntents dict abort.
-            if (!pendingIntents.ContainsKey(alarmId)) return;
+            if (!activeAlarms.Contains(alarm.Id)) return;
 
-            PendingIntent alarmIntent = pendingIntents[alarmId];
-            pendingIntents.Remove(alarmId);
-            AlarmManager.Cancel(alarmIntent);
+            Intent alarmIntent = new Intent();
+            alarmIntent.PutExtra(ID, activeAlarms.Single(x => x == alarm.Id));
+
+            PendingIntent pendingIntent = PendingIntent.GetBroadcast(MainActivity, 0, alarmIntent, 0);
+            activeAlarms.Remove(alarm.Id);
+            AlarmManager.Cancel(pendingIntent);
         }
 
-        public void SetAlarm(DateTime time, int alarmId)
+        public void SetAlarm(TimeSpan timeOffset, Alarm alarm)
         {
             // Calendar stuff           
             Calendar calendar = Calendar.GetInstance(ULocale.Us);
@@ -82,17 +91,39 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             calendar.Set(CalendarField.Minute, DateTime.Now.Minute + 2);
 
             Intent baseIntent = new Intent(MainActivity, typeof(AlarmReceiver));
-            baseIntent.PutExtra(MSG_EXTRA, "Alarm");
-            baseIntent.PutExtra(TITLE_EXTRA, "This is a title");     
-            baseIntent.PutExtra(ID, alarmId);     
+            baseIntent.PutExtra(MSG_EXTRA, "Your alarm is set to go off at " + timeOffset.ToString());
+            baseIntent.PutExtra(TITLE_EXTRA, "Alarm " + alarm.Name + " set.");     
+            baseIntent.PutExtra(ID, alarm.Id);     
 
-            PendingIntent alarmIntent = PendingIntent.GetBroadcast(MainActivity, 0, baseIntent, 0);
-            // Adding our
-            pendingIntents.Add(alarmId, alarmIntent);
+            PendingIntent alarmIntent = PendingIntent.GetBroadcast(MainActivity, alarm.Id, baseIntent, 0);
+            // Adding our alarm to the active list
+            activeAlarms.Add(alarm.Id);
 
-            AlarmManager.SetRepeating(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, 5000, alarmIntent);
-            //AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, alarmIntent);
-            Toast.MakeText(MainActivity, $"Alarm set for: 5 seconds...", ToastLength.Short).Show();
+            //AlarmManager.SetRepeating(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, 5000, alarmIntent);
+            //AlarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + 5000, alarmIntent);            
+
+            // Getting the remaining time from the current time and the alarm's time and the difference between them.
+            var diff = timeOffset.Subtract(DateTime.Now.ToLocalTime().TimeOfDay);
+            var diffInMili = diff.TotalMilliseconds;
+
+            // If our alarm's time to fire has already passed add a day to it so it doesn't go off when turned on.
+            // Its important we don't change the original timeOffset to this new time.
+            if (DateTime.Now.ToLocalTime().TimeOfDay > timeOffset)
+            {
+                diffInMili = diff.TotalMilliseconds + TimeSpan.FromDays(1).TotalMilliseconds;
+            }
+
+            AlarmManager.SetExact(AlarmType.RtcWakeup, JavaSystem.CurrentTimeMillis() + (long)diffInMili, alarmIntent);
+
+            //var diff = TimeSpan.FromMilliseconds(diffInMili);
+
+            Toast.MakeText(MainActivity, "Alarm " + alarm.Name + " is set to go off at " 
+                    // If the time to go off from midnight is more than 12 we need to remove 12 so we arn't showing military time and can use am & pm
+                    // Also if the hour is midnight it will be represented as a 0 so we need to change that to 12 (midnight) when printed.
+                    + (timeOffset.Hours > 12 ? (timeOffset.Hours - 12).ToString() : (timeOffset.Hours == 0 ? "12" : timeOffset.Hours.ToString()) + ":"
+                    // Formatting the minutes
+                    + timeOffset.Minutes.ToString("00")) + " " + (timeOffset.Hours > 12 ? "pm" : "am"), ToastLength.Short).Show();
+
         }
     }
 }
