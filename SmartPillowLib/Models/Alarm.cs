@@ -70,18 +70,18 @@ namespace SmartPillowLib.Models
             set
             {
                 if (IsAlarmEnabled == value) return;
-                
+
                 isAlarmEnabled = value;
 
                 ///AlarmStateChanged?.Invoke(this);
-                NotifyPropertyChanged();             
+                NotifyPropertyChanged();
             }
         }
         /// <summary>
         ///     String which the user can put any notes about the alarm in. 
         /// </summary>        
         public string Note { get; set; }
-
+       
         /// <summary>
         ///     Contains properties for customizing the user's desire snooze duration and interval.
         /// </summary>

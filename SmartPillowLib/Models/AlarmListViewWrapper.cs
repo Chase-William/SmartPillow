@@ -42,6 +42,13 @@ namespace SmartPillowLib.Models
             }
         }
 
+        public TimeSpan TimeOffset { get; set; }
+
+        /// <summary>
+        ///     Gets the time in a normal fashion with pm or am.
+        /// </summary>
+        public string GetNormalTime => (TimeOffset.Hours > 12 ? (TimeOffset.Hours - 12).ToString() : (TimeOffset.Hours == 0 ? "12" : TimeOffset.Hours.ToString()) + ":" + TimeOffset.Minutes.ToString("00")) + " " + (TimeOffset.Hours > 12 ? "pm" : "am");
+
         private bool toBeDeleted = false;
         /// <summary>
         ///     Controls whether the delete button is present.
@@ -57,11 +64,12 @@ namespace SmartPillowLib.Models
             }
         }
 
-        public AlarmListViewWrapper(int _id, string _name, bool _isAlarmEnabled)
+        public AlarmListViewWrapper(int _id, string _name, bool _isAlarmEnabled, TimeSpan _timeOffset)
         {
             Id = _id;
             Name = _name;
             IsAlarmEnabled = _isAlarmEnabled;
+            TimeOffset = _timeOffset;
         }
 
         public AlarmListViewWrapper(Alarm _source)
@@ -69,6 +77,7 @@ namespace SmartPillowLib.Models
             Id = _source.Id;
             Name = _source.Name;
             IsAlarmEnabled = _source.IsAlarmEnabled;
+            TimeOffset = _source.TimeOffset;
         }
     }
 }

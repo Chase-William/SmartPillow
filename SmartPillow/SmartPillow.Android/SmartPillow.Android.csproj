@@ -208,5 +208,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\CheckedOutsideCircle64.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Delete128.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

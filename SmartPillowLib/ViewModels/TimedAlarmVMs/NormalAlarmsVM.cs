@@ -66,7 +66,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             }
         }
 
-        private bool isDeleteModeActive;
+        private bool isDeleteModeActive = false;
         /// <summary>
         ///     Informs the listview to display the deletion buttons
         /// </summary>
@@ -78,6 +78,10 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 if (IsDeleteModeActive == value) return;
                 isDeleteModeActive = value;
                 NotifyPropertyChanged();
+
+                // When delete mode is off, reset the delete status on all alarms.
+                if (isDeleteModeActive == false)
+                    Alarms.All(x => x.ToBeDeleted = false);                
             }
         }
 
@@ -86,9 +90,14 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             CreateNewAlarm?.Invoke();
         });
 
-        public ICommand DeleteAlarmsCMD => new Command(() =>
+        public ICommand InvokeDeleteModeCMD => new Command(() =>
         {
             IsDeleteModeActive = !IsDeleteModeActive;
+        });
+
+        public ICommand DeleteAlarmsCMD => new Command(() =>
+        {
+
         });
 
         public NormalAlarmsVM()
@@ -100,7 +109,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             // Getting our local alarms
             var alarms = LocalDataServiceContext.Provider.GetAlarms().ToList();
             // Converting out local alarms into AlarmListViewWrappers for our own functionality.
-            List<AlarmListViewWrapper> alarmWrappers = alarms.ConvertAll(x => new AlarmListViewWrapper(x.Id, x.Name, x.IsAlarmEnabled));
+            List<AlarmListViewWrapper> alarmWrappers = alarms.ConvertAll(x => new AlarmListViewWrapper(x.Id, x.Name, x.IsAlarmEnabled, x.TimeOffset));
             
             Alarms = new ObservableCollection<AlarmListViewWrapper>(alarmWrappers);
             //Alarms = new ObservableCollection<Alarm>(alarms);

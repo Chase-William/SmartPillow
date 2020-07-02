@@ -117,12 +117,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
 
             //var diff = TimeSpan.FromMilliseconds(diffInMili);
 
-            Toast.MakeText(MainActivity, "Alarm " + alarm.Name + " is set to go off at " 
-                    // If the time to go off from midnight is more than 12 we need to remove 12 so we arn't showing military time and can use am & pm
-                    // Also if the hour is midnight it will be represented as a 0 so we need to change that to 12 (midnight) when printed.
-                    + (timeOffset.Hours > 12 ? (timeOffset.Hours - 12).ToString() : (timeOffset.Hours == 0 ? "12" : timeOffset.Hours.ToString()) + ":"
-                    // Formatting the minutes
-                    + timeOffset.Minutes.ToString("00")) + " " + (timeOffset.Hours > 12 ? "pm" : "am"), ToastLength.Short).Show();
+            Toast.MakeText(MainActivity, "Alarm " + alarm.Name + " is active.", ToastLength.Short).Show();
 
         }
     }

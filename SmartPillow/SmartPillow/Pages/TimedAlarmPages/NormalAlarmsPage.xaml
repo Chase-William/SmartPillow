@@ -6,7 +6,8 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
              xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib" xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
-             x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage">
+             x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage"
+             x:Name="page">
 
     <ContentPage.BindingContext>
         <vm:NormalAlarmsVM x:Name="bindingContext"/>
@@ -18,7 +19,7 @@
                      Priority="0"
                      Order="Primary"/>
         <ToolbarItem Text="Delete"
-                     Command="{Binding DeleteAlarmsCMD}"
+                     Command="{Binding InvokeDeleteModeCMD}"
                      Priority="0"
                      Order="Secondary"/>
     </ContentPage.ToolbarItems>
@@ -34,7 +35,7 @@
             </Frame>
 
             <!-- Contains a collection of timed alarms -->
-            <ListView 
+            <ListView x:Name="listview"
                       ItemsSource="{Binding QueryResults}" 
                       HasUnevenRows="True" 
                       SeparatorVisibility="Default"
@@ -45,14 +46,20 @@
                         <ViewCell>
                             <Grid>
                                 <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
-                                    <controls:SmartPillowSelectableBtn IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" Margin="0,0,30,0"/>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Image Source="AlarmClockSmall" WidthRequest="50"/>
-                                        <StackLayout>
-                                            <Label Text="{Binding Name}" TextColor="White"/>
-                                            <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>
-                                        </StackLayout>
-                                    </StackLayout>
+                                    <controls:SmartPillowSelectableBtn IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" Margin="0,0,30,0" SiblingGrid="{x:Reference grid}"/>
+                                    <Grid HeightRequest="70" x:Name="grid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="0.4*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding GetNormalTime}" TextColor="White" FontSize="35"/>
+                                        <Label Text="{Binding Name}" TextColor="{StaticResource GrayedFont}" Grid.Row="1"/>
+
+                                    </Grid>
                                     <Switch IsToggled="{Binding IsAlarmEnabled}" HorizontalOptions="EndAndExpand"/>
                                 </StackLayout>
                             </Grid>
@@ -61,14 +68,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-
-        <ImageButton Source="AddClockBtn" 
-                     HorizontalOptions="EndAndExpand" 
-                     VerticalOptions="EndAndExpand" 
-                     WidthRequest="60" 
-                     BackgroundColor="Transparent" 
-                     Margin="10"
-                     Command="{Binding CreateNewAlarmCMD}"/>
+        <!--<controls:SmartPillowDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Start" Margin="5" IsVisible="{Binding IsDeleteModeActive}" AboveListView="{x:Reference listview}" ParentPage="{x:Reference page}"/>-->
     </Grid>
 
 </ContentPage>
