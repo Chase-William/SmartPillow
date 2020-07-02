@@ -11,6 +11,14 @@
              Title="History"
              x:Class="SmartPillow.Pages.HistoryPage">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Ubuntu"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.BindingContext>
         <viewModel:HistoryViewModel/>
     </ContentPage.BindingContext>
@@ -19,7 +27,7 @@
         <!--might use a command later-->
         <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}"/>
     </ContentPage.ToolbarItems>
-    
+
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
@@ -35,6 +43,8 @@
 
         <Image Source="cloudPageBackground" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
 
+        <Grid BackgroundColor="{Binding Brightness}"/>
+        
         <ContentView IsVisible="{Binding IsNoHistoryVisble}">
             <Image Source="noHistory" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="250"/>
         </ContentView>
@@ -44,10 +54,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="70"/>
-                    <!--<RowDefinition Height="259"/>-->
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        
+                    </ResourceDictionary>
+                </Grid.Resources>
                 <!--Sleep Quality title-->
                 <Grid>
                     <Label Text="Sleep Quality" VerticalOptions="Center" Padding="20,0,0,0"
@@ -56,25 +69,43 @@
 
                 <!--Select Month-->
                 <Grid Grid.Row="1" Padding="15,0,15,0">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="leftArrowCarousel"/>
+                                <Setter Property="HeightRequest" Value="25"/>
+                                <Setter Property="Opacity" Value=".75"/>
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
                     <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" 
                                          VerticalOptions="CenterAndExpand"
                                          HeightRequest="100"
                                          Opacity=".5"/>
-                    <Image Source="leftArrowCarousel" Margin="20,0,0,0" HorizontalOptions="Start" HeightRequest="25" Opacity=".75"/>
-                    <Image Source="leftArrowCarousel" Margin="0,0,20,0" Rotation="180" HorizontalOptions="End" HeightRequest="25" Opacity=".75"/>
+                    <Image Margin="20,0,0,0" HorizontalOptions="Start"/>
+                    <Image Margin="0,0,20,0" Rotation="180" HorizontalOptions="End"/>
                     <CarouselView ItemsSource="{Binding User.UserData}" Position="{Binding Position}"
                                   VerticalOptions="Center">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout VerticalOptions="Center" Padding="10">
-                                    <Label Text="{Binding Month}" TextColor="White" FontSize="26" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding Year}" TextColor="White" FontSize="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    <StackLayout.Resources>
+                                        <ResourceDictionary>
+                                            <Style TargetType="Label">
+                                                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                                                <Setter Property="FontFamily" Value="Ubuntu"/>
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </StackLayout.Resources>
+                                    <Label Text="{Binding Month}" TextColor="White" FontSize="26"/>
+                                    <Label Text="{Binding Year}" TextColor="White" FontSize="10"/>
                                 </StackLayout>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
                 </Grid>
-                
+
                 <!--Monthly Statistic - CollectView-->
                 <ListView Grid.Row="2" RowHeight="259"
                           SeparatorColor="Transparent" ItemsSource="{Binding Weeks}">
@@ -84,16 +115,16 @@
                                 <Grid Padding="15,6,15,6" HeightRequest="259">
 
                                     <Grid.Resources>
-                                    <ResourceDictionary>
-                                        <Style TargetType="Label">
-                                            <Setter Property="FontSize" Value="11"/>
-                                            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                                            <Setter Property="TextColor" Value="Gray"/>
-                                        </Style>
-                                    </ResourceDictionary>
-                                </Grid.Resources>
-                                
-                                <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" HeightRequest="259"
+                                        <ResourceDictionary>
+                                            <Style TargetType="Label">
+                                                <Setter Property="FontSize" Value="11"/>
+                                                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </Grid.Resources>
+
+                                    <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" HeightRequest="259"
                                          VerticalOptions="Start"
                                          Opacity=".5"/>
 
@@ -101,60 +132,25 @@
                                                HorizontalOptions="End" VerticalOptions="Center"
                                                HeightRequest="220" WidthRequest="300"/>
 
-                                <StackLayout HorizontalOptions="Start" WidthRequest="50" Padding="0,18,0,0">
-                                    <Label Text="100%"/>
-                                    <Label Text="90%"/>
-                                    <Label Text="80%"/>
-                                    <Label Text="70%"/>
-                                    <Label Text="60%"/>
-                                    <Label Text="50%"/>
-                                    <Label Text="40%"/>
-                                    <Label Text="30%"/>
-                                    <Label Text="20%"/>
-                                </StackLayout>
+                                    <StackLayout HorizontalOptions="Start" WidthRequest="50" Padding="0,12,0,0">
+                                        <Label Text="100%"/>
+                                        <Label Text="90%"/>
+                                        <Label Text="80%"/>
+                                        <Label Text="70%"/>
+                                        <Label Text="60%"/>
+                                        <Label Text="50%"/>
+                                        <Label Text="40%"/>
+                                        <Label Text="30%"/>
+                                        <Label Text="20%"/>
+                                    </StackLayout>
 
                                 </Grid>
                             </ViewCell>
-                           
+
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <!--<Grid Grid.Row="2" Padding="15,5,15,0" HeightRequest="259">
-
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="FontSize" Value="11"/>
-                                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                                <Setter Property="TextColor" Value="Gray"/>
-                            </Style>
-                        </ResourceDictionary>
-                    </Grid.Resources>
-                    <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" HeightRequest="259"
-                                         VerticalOptions="Start"
-                                         Opacity=".5"/>
-
-                    --><!--need to bind Chart--><!--
-                    <microcharts:ChartView x:Name="monthChart" Margin="0,0,25,0"
-                                               HorizontalOptions="End" VerticalOptions="Center"
-                                               HeightRequest="220" WidthRequest="300"/>
-                    
-                    <StackLayout HorizontalOptions="Start" WidthRequest="50" Padding="0,18,0,0">
-                        <Label Text="100%"/>
-                        <Label Text="90%"/>
-                        <Label Text="80%"/>
-                        <Label Text="70%"/>
-                        <Label Text="60%"/>
-                        <Label Text="50%"/>
-                        <Label Text="40%"/>
-                        <Label Text="30%"/>
-                        <Label Text="20%"/>
-                    </StackLayout>
-                </Grid>-->
-
             </Grid>
         </ContentView>
-
     </Grid>
-
 </ContentPage>

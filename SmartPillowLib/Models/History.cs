@@ -39,5 +39,11 @@ namespace SmartPillowLib.Models
     public class Day
     {
         public string SpecificDay { get; set; }
+        public TimeSpan TotalSleep { get; set; }
+        public TimeSpan AwakeDuration { get; set; }
+        public TimeSpan RemDuration { get; set; }
+        public PointChart EventChart { get; set; }
+        public LineChart LineChart { get; set; }
+        public PointChart SnoreChart { get; set; }
     }
 }

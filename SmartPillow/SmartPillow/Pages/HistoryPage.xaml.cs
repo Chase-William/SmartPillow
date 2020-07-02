@@ -11,13 +11,14 @@ using Xamarin.Forms.Xaml;
 using SkiaSharp;
 using SmartPillowLib.Models;
 using SmartPillowLib;
+using SmartPillowLib.ViewModels;
 
 namespace SmartPillow.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HistoryPage : ContentPage
     {
-        public static PointChart bar;
+        public HistoryViewModel VM => (HistoryViewModel)BindingContext;
         public HistoryPage()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace SmartPillow.Pages
 
         protected override void OnAppearing()
         {
-            //monthChart.Chart = bar;
+            VM.OnAppearing();
             base.OnAppearing();
         }
     }

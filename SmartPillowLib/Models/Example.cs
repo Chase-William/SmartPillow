@@ -1,10 +1,6 @@
 ﻿using LiteDB;
 using Microcharts;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms.Shapes;
 
 namespace SmartPillowLib.Models
 {

@@ -3,8 +3,7 @@ using Xamarin.Forms;
 using SmartPillowLib.Models;
 using System.Windows.Input;
 using Microcharts;
-using System.Net.Http.Headers;
-using Xamarin.Essentials;
+using SmartPillow.Util;
 
 namespace SmartPillowLib.ViewModels
 {
@@ -359,16 +358,7 @@ namespace SmartPillowLib.ViewModels
         /// </summary>
         public string Brightness
         {
-            get 
-            {
-                // starts at midnight
-                var nightStart = DateTime.Now.Date.AddDays(0);
-
-                // ends at 6 am
-                var nightEnd = nightStart.Date.AddHours(6);
-
-                return (nightStart < DateTime.Now && DateTime.Now < nightEnd) ? "#b3000000" : "#00000000";
-            }
+            get => AutoBrightness.CheckNightTime();
             set 
             {
                 brightness = value;

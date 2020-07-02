@@ -1,6 +1,10 @@
-﻿using SmartPillowLib.Models;
+﻿using Newtonsoft.Json;
+using SkiaSharp;
+using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -25,27 +29,11 @@ namespace SmartPillowLib.ViewModels
                 Email = "Email@gmail.com",
                 PhoneNumber = "585-585-5858",
                 SmartPillowDeviceID = "ZZ987-19C",
-                UserData = new List<History>()
+                DataUrl = "https://quoridge.blob.core.windows.net/bugle/markZ.json"
             };
 
-            var week = new Week() { SleepQualityChart = SleepStatistic.JuneWeek };
-            var weeks = new List<Week>();
-            weeks.Add(week);
-            weeks.Add(week);
-
-            var a = new History() { Date = new DateTime(2020, 4, 1), Weeks = weeks };
-            var b = new History() { Date = new DateTime(2020, 5, 1), };
-            var c = new History() { Date = new DateTime(2020, 6, 1), Weeks = weeks };
-
-            user.UserData.Add(a);
-            user.UserData.Add(b);
-            user.UserData.Add(c);
-
-            UserInformation.User = user;
-            UserInformation.IsUserLogged = true;
-            UserInformation.IsConnected = false;
-            CheckStatus?.Invoke();
-            PopAsyncPage?.Invoke();
+            user.UserData = GetHistories(user.DataUrl);
+            SetLightBlueAndCloseLoginPage(user);
         });
 
         public ICommand TwitterCommand => new Command(() =>
@@ -61,14 +49,11 @@ namespace SmartPillowLib.ViewModels
                 Email = "Twitter@gmail.com",
                 PhoneNumber = "111-111-1111",
                 SmartPillowDeviceID = "SP123-19B",
-                UserData = new List<History>()
+                DataUrl = "https://quoridge.blob.core.windows.net/bugle/twitter.json"
             };
 
-            UserInformation.User = user;
-            UserInformation.IsUserLogged = true;
-            UserInformation.IsConnected = true;
-            CheckStatus?.Invoke();
-            PopAsyncPage?.Invoke();
+            user.UserData = GetHistories(user.DataUrl);
+            SetLightBlueAndCloseLoginPage(user);
         });
 
         public ICommand GoogleCommand => new Command(() =>
@@ -84,15 +69,11 @@ namespace SmartPillowLib.ViewModels
                 Email = "Google@gmail.com",
                 PhoneNumber = "222-222-2222",
                 SmartPillowDeviceID = "YW455-19D",
-                UserData = new List<History>()
-                
+                DataUrl = "https://quoridge.blob.core.windows.net/bugle/google.json"
             };
 
-            UserInformation.User = user;
-            UserInformation.IsUserLogged = true;
-            UserInformation.IsConnected = false;
-            CheckStatus?.Invoke();
-            PopAsyncPage?.Invoke();
+            user.UserData = GetHistories(user.DataUrl);
+            SetLightBlueAndCloseLoginPage(user);
         });
 
         public ICommand FacebookCommand => new Command(() =>
@@ -108,32 +89,48 @@ namespace SmartPillowLib.ViewModels
                 Email = "Facebook@gmail.com",
                 PhoneNumber = "333-333-3333",
                 SmartPillowDeviceID = "WQW31-25X",
-                UserData = new List<History>()
+                DataUrl = "https://quoridge.blob.core.windows.net/bugle/facebook.json"
             };
 
-            var week = new Week() { SleepQualityChart = SleepStatistic.JuneWeek };
-            var weeks = new List<Week>();
-            weeks.Add(week);
-            weeks.Add(week);
+            user.UserData = GetHistories(user.DataUrl);
+            SetLightBlueAndCloseLoginPage(user);
+        });
 
-            var a = new History() { Date = new DateTime(2020, 4, 1), Weeks = weeks };
-            var b = new History() { Date = new DateTime(2020, 5, 1), };
-            var c = new History() { Date = new DateTime(2020, 6, 1), Weeks = weeks };
+        public LoginViewModel()
+        {
+          
+        }
 
-            user.UserData.Add(a);
-            user.UserData.Add(b);
-            user.UserData.Add(c);
+        public List<History> GetHistories(string url)
+        {
+            var list = new List<History>();
+            var client = new WebClient();
+            Stream all = client.OpenRead(url);
+            using (StreamReader reader = new StreamReader(all))
+            {
+                var page = reader.ReadToEnd();
+                list = JsonConvert.DeserializeObject<List<History>>(page);
+            }
+            return list;
+        }
+
+        // Temporarly method
+        public void SetLightBlueAndCloseLoginPage(User user)
+        {
+            // setting color to light blue for every single of entry -_-
+            foreach (var item in user.UserData)
+                foreach (var find in item.Weeks)
+                    foreach (var cmon in find.SleepQualityChart.Entries)
+                    {
+                        cmon.Color = SKColor.Parse("#7AC0DF");
+                        cmon.TextColor = SKColor.Parse("#7AC0DF");
+                    }
 
             UserInformation.User = user;
             UserInformation.IsUserLogged = true;
             UserInformation.IsConnected = true;
             CheckStatus?.Invoke();
             PopAsyncPage?.Invoke();
-        });
-
-        public LoginViewModel()
-        {
-          
         }
     }
 }
