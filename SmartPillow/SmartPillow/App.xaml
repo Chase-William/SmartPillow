@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:converters="clr-namespace:SmartPillowLib.Converters"
+             xmlns:converters="clr-namespace:SmartPillow.Converters"
              mc:Ignorable="d"
              x:Class="SmartPillow.App">
     <Application.Resources>
@@ -11,6 +11,7 @@
             
             <!-- Converters -->
             <converters:BoolToOffOnTextConverter x:Key="BoolToOffOnTextConverter"/>
+            <converters:BoolInverter x:Key="BoolInverter"/>
 
             <Color x:Key="GradientBlue">#215C77</Color>
             <Color x:Key="GradientPurp">#593573</Color>

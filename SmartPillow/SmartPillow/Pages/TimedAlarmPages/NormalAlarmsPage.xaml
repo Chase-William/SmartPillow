@@ -4,13 +4,24 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
-             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib"
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib" xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage">
 
     <ContentPage.BindingContext>
-        <vm:NormalAlarmsVM/>
+        <vm:NormalAlarmsVM x:Name="bindingContext"/>
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New"
+                     Command="{Binding CreateNewAlarmCMD}"
+                     Priority="0"
+                     Order="Primary"/>
+        <ToolbarItem Text="Delete"
+                     Command="{Binding DeleteAlarmsCMD}"
+                     Priority="0"
+                     Order="Secondary"/>
+    </ContentPage.ToolbarItems>
     
     <Grid>
 
@@ -23,24 +34,26 @@
             </Frame>
 
             <!-- Contains a collection of timed alarms -->
-            <ListView ItemsSource="{Binding QueryResults}" 
+            <ListView 
+                      ItemsSource="{Binding QueryResults}" 
                       HasUnevenRows="True" 
-                      SeparatorVisibility="None"
+                      SeparatorVisibility="Default"
                       SelectedItem="{Binding SelectedItem}"
                       ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <!-- Non-Wrapping Frame -->
                             <Grid>
-                                <Frame Style="{StaticResource RoundedTranslucentFrame}" CornerRadius="7" Padding="5" Margin="30,10"/>
                                 <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
-                                    <Image Source="AlarmClockSmall" WidthRequest="50"/>
-                                    <StackLayout>
-                                        <Label Text="{Binding Name}" TextColor="White"/>
-                                        <!--<Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>-->
+                                    <controls:SmartPillowSelectableBtn IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" Margin="0,0,30,0"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="AlarmClockSmall" WidthRequest="50"/>
+                                        <StackLayout>
+                                            <Label Text="{Binding Name}" TextColor="White"/>
+                                            <Label Style="{StaticResource PropValueLabel}" Text="{Binding SnoozeProps.GetSnoozeSettingsStr}"/>
+                                        </StackLayout>
                                     </StackLayout>
-                                    <Switch IsToggled="{Binding IsAlarmEnabled}"/>
+                                    <Switch IsToggled="{Binding IsAlarmEnabled}" HorizontalOptions="EndAndExpand"/>
                                 </StackLayout>
                             </Grid>
                         </ViewCell>

@@ -37,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Controls\SmartPillowSelectableBtn.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\SmartPillowRadioBtn.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -85,6 +88,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\SmartPillowSelectableBtn.xaml.cs">
+      <DependentUpon>SmartPillowSelectableBtn.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Controls\SmartPillowRadioBtn.xaml.cs">
       <DependentUpon>SmartPillowRadioBtn.xaml</DependentUpon>
     </Compile>

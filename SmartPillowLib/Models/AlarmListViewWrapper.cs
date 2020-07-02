@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartPillowLib.Models
 {
@@ -36,6 +38,21 @@ namespace SmartPillowLib.Models
             {
                 if (Name == value) return;
                 name = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private bool toBeDeleted = false;
+        /// <summary>
+        ///     Controls whether the delete button is present.
+        /// </summary>
+        public bool ToBeDeleted
+        {
+            get => toBeDeleted;
+            set
+            {
+                if (ToBeDeleted == value) return;
+                toBeDeleted = value;
                 NotifyPropertyChanged();
             }
         }

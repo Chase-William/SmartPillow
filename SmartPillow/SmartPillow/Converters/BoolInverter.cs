@@ -6,19 +6,16 @@ using Xamarin.Forms;
 
 namespace SmartPillow.Converters
 {
-    /// <summary>
-    ///     Converts a boolean to "On" or "Off" text.
-    /// </summary>
-    public class BoolToOffOnTextConverter : IValueConverter
+    public class BoolInverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "On" : "Off";
+            return !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return !(bool)value;
         }
     }
 }

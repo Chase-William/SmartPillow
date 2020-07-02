@@ -58,8 +58,26 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             set
             {
                 selectedAlarm = value;
-                if (selectedAlarm != null)                 
+                if (selectedAlarm == null) return;
+                if (IsDeleteModeActive)
+                    SelectedItem.ToBeDeleted = !SelectedItem.ToBeDeleted;
+                else
                     AlarmSelected?.Invoke(selectedAlarm);
+            }
+        }
+
+        private bool isDeleteModeActive;
+        /// <summary>
+        ///     Informs the listview to display the deletion buttons
+        /// </summary>
+        public bool IsDeleteModeActive
+        {
+            get => isDeleteModeActive;
+            set
+            {
+                if (IsDeleteModeActive == value) return;
+                isDeleteModeActive = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -68,9 +86,16 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
             CreateNewAlarm?.Invoke();
         });
 
+        public ICommand DeleteAlarmsCMD => new Command(() =>
+        {
+            IsDeleteModeActive = !IsDeleteModeActive;
+        });
+
         public NormalAlarmsVM()
         {
             //LocalDataServiceContext.Provider.DeleteAllAlarms();
+
+            NotifyPropertyChanged(nameof(IsDeleteModeActive));
 
             // Getting our local alarms
             var alarms = LocalDataServiceContext.Provider.GetAlarms().ToList();
