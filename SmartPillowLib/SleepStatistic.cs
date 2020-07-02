@@ -41,7 +41,6 @@ namespace SmartPillowLib
         public static PointChart EventChart { get; set; }
         public static LineChart LineChart { get; set; }
         public static PointChart SnoreChart { get; set; }
-        public static PointChart JuneWeek { get; set; }
 
         static SleepStatistic()
         {
@@ -71,27 +70,6 @@ namespace SmartPillowLib
             RemGauge = SetChartUp(RemPercentage);
             SleepGauge = SetChartUp(SleepPercentage);
             DeepGauge = SetChartUp(DeepPercentage);
-
-            JuneWeek = new PointChart()
-            {
-                Entries = new[]
-                {
-                    new Microcharts.Entry(1f) { Label = "21", Color = SKColor.Parse("#7AC0DF") },
-                    new Microcharts.Entry(.4f) { Label = "22", Color = SKColor.Parse("#7AC0DF") },
-                    new Microcharts.Entry(.6f) { Label = "23", Color = SKColor.Parse("#7AC0DF") },
-                    new Microcharts.Entry(.7f) { Label = "24", Color = SKColor.Parse("#7AC0DF") },
-                    new Microcharts.Entry(.1f) { Label = "25", Color = SKColor.Parse("#7AC0DF") },
-                    new Microcharts.Entry(.2f) { Label = "26", Color = SKColor.Parse("#7AC0DF") },
-                    new Microcharts.Entry(.3f) { Label = "27", Color = SKColor.Parse("#7AC0DF") },
-                },
-                BackgroundColor = SKColors.Transparent,
-                PointMode = PointMode.None,
-                PointAreaAlpha = 255,
-                PointSize = 60,
-                LabelTextSize = 28,
-                MaxValue = 1,
-                Margin = 20,
-            };
         }
 
         /// <summary>

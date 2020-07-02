@@ -3,8 +3,6 @@ using Xamarin.Forms;
 using SmartPillowLib.Models;
 using System.Windows.Input;
 using Microcharts;
-using System.Net.Http.Headers;
-using Xamarin.Essentials;
 using SmartPillow.Util;
 
 namespace SmartPillowLib.ViewModels

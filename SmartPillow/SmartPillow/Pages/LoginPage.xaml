@@ -15,7 +15,13 @@
     </ContentPage.BindingContext>
     
     <Grid>
-
+        <Grid.Resources>
+            <Style TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="WidthRequest" Value="300"/>
+            </Style>
+        </Grid.Resources>
+        
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
 
         <Image Source="cloudPageBackground.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
@@ -91,14 +97,23 @@
 
                 <Grid Grid.Row="1" HorizontalOptions="Center">
                     <Grid VerticalOptions="Start">
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="Label">
+                                    <Setter Property="TextColor" Value="White"/>
+                                    <Setter Property="Opacity" Value=".5"/>
+                                    <Setter Property="FontFamily" Value="Bahnschrift"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
                         <!-- New User Button -->
-                        <Label Text="New User ? SIGN UP" Opacity=".5" TextColor="White" HorizontalOptions="Start" FontFamily="Bahnschrift">
+                        <Label Text="New User ? SIGN UP" HorizontalOptions="Start">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="NewUser_Tapped"/>
                             </Label.GestureRecognizers>
                         </Label>
                         <!-- Forget Password Button -->
-                        <Label Text="Forget Password ?"  Opacity=".5" TextColor="White" HorizontalOptions="End" FontFamily="Bahnschrift">
+                        <Label Text="Forget Password ?" HorizontalOptions="End">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Forget_Tapped"/>
                             </Label.GestureRecognizers>
@@ -106,8 +121,7 @@
                     </Grid>
                     <Grid Grid.Row="1" VerticalOptions="End" HorizontalOptions="Center">
                         <!-- Login Button -->
-                        <ImageButton x:Name="LoginBtn" Source="LoginButton.png" BackgroundColor="Transparent"
-                                     VerticalOptions="End" WidthRequest="300" Command="{Binding LoginCommand}"/>
+                        <ImageButton Source="LoginButton.png" Command="{Binding LoginCommand}"/>
                     </Grid>
                 </Grid>
                 
@@ -120,29 +134,19 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="ImageButton">
-                                <Setter Property="BackgroundColor" Value="Transparent"/>
-                                <Setter Property="WidthRequest" Value="300"/>
-                                <Setter Property="HeightRequest" Value="45"/>
-                            </Style>
-                        </ResourceDictionary>
-                    </Grid.Resources>
-                    
                     <StackLayout>
                         <Image Source="orLine.png" BackgroundColor="Transparent" WidthRequest="300" HeightRequest="45"/>
                     </StackLayout>
                     
                     <StackLayout Grid.Row="1" Orientation="Vertical" HorizontalOptions="Center">
                         <!-- Twitter Button -->
-                        <ImageButton x:Name="TwitterBtn" Source="TwitterButton.png" Command="{Binding TwitterCommand}"/>
+                        <ImageButton Source="TwitterButton.png" Command="{Binding TwitterCommand}"/>
 
                         <!-- Google Button -->
-                        <ImageButton x:Name="GoogleBtn" Source="GoogleButton.png" Command="{Binding GoogleCommand}"/>
+                        <ImageButton Source="GoogleButton.png" Command="{Binding GoogleCommand}"/>
 
                         <!-- Facebook Button -->
-                        <ImageButton x:Name="FacebookBtn" Source="FacebookButton.png" Command="{Binding FacebookCommand}"/>
+                        <ImageButton Source="FacebookButton.png" Command="{Binding FacebookCommand}"/>
                     </StackLayout>
                     
                 </Grid>

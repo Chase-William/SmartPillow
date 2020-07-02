@@ -1,10 +1,7 @@
-﻿using Microcharts;
-using SmartPillow.Util;
+﻿using SmartPillow.Util;
 using SmartPillowLib.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SmartPillowLib.ViewModels
 {

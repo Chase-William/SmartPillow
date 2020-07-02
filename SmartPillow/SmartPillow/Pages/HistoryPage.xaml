@@ -11,6 +11,14 @@
              Title="History"
              x:Class="SmartPillow.Pages.HistoryPage">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Ubuntu"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.BindingContext>
         <viewModel:HistoryViewModel/>
     </ContentPage.BindingContext>
@@ -35,7 +43,7 @@
 
         <Image Source="cloudPageBackground" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
 
-        <Grid x:Name="brigtnessView" BackgroundColor="{Binding Brightness}"/>
+        <Grid BackgroundColor="{Binding Brightness}"/>
         
         <ContentView IsVisible="{Binding IsNoHistoryVisble}">
             <Image Source="noHistory" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="250"/>
@@ -48,7 +56,11 @@
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        
+                    </ResourceDictionary>
+                </Grid.Resources>
                 <!--Sleep Quality title-->
                 <Grid>
                     <Label Text="Sleep Quality" VerticalOptions="Center" Padding="20,0,0,0"
@@ -77,8 +89,17 @@
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout VerticalOptions="Center" Padding="10">
-                                    <Label Text="{Binding Month}" TextColor="White" FontSize="26" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    <Label Text="{Binding Year}" TextColor="White" FontSize="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    <StackLayout.Resources>
+                                        <ResourceDictionary>
+                                            <Style TargetType="Label">
+                                                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                                                <Setter Property="FontFamily" Value="Ubuntu"/>
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </StackLayout.Resources>
+                                    <Label Text="{Binding Month}" TextColor="White" FontSize="26"/>
+                                    <Label Text="{Binding Year}" TextColor="White" FontSize="10"/>
                                 </StackLayout>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
