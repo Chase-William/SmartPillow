@@ -160,8 +160,11 @@
                             <microcharts:ChartView Chart="{Binding BackgroundGray}" Grid.Column="0" Margin="0,0,15,0"/>
                             <microcharts:ChartView Chart="{Binding QualityGauge}" Grid.Column="0" Margin="0,0,15,0"/>
 
-                            <Label Text="{Binding Quality}" TextColor="White" Margin="0,0,15,0"
-                                   HorizontalOptions="Center" VerticalOptions="Center" FontSize="22" FontAttributes="Bold"/>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,15,0">
+                                <Label Text="{Binding Quality}" TextColor="#B2B2B2" Margin="5,0,0,-12"
+                                   FontSize="15" FontAttributes="Bold"/>
+                                <Label Text="Quality" TextColor="#B2B2B2" FontSize="12" FontAttributes="Bold"/>
+                            </StackLayout>
 
                             <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="-28,0,15,0">
                                 <Grid.ColumnDefinitions>

@@ -106,14 +106,13 @@
                     </CarouselView>
                 </Grid>
 
-                <!--Monthly Statistic - CollectView-->
-                <ListView Grid.Row="2" RowHeight="259"
+                <!--Monthly Statistic - ListView-->
+                <ListView x:Name="WeeklyChart" Grid.Row="2" RowHeight="259" ItemTapped="WeeklyChart_ItemTapped" 
                           SeparatorColor="Transparent" ItemsSource="{Binding Weeks}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <Grid Padding="15,6,15,6" HeightRequest="259">
-
                                     <Grid.Resources>
                                         <ResourceDictionary>
                                             <Style TargetType="Label">

@@ -1,42 +1,36 @@
 ﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
+using SmartPillowLib.Models;
+using SmartPillowLib.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microcharts;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using SkiaSharp;
-using SmartPillowLib.Models;
-using SmartPillowLib;
-using SmartPillowLib.ViewModels;
 
 namespace SmartPillow.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HistoryPage : ContentPage
+    public partial class WeekDayPage : ContentPage
     {
-        public HistoryViewModel VM => (HistoryViewModel)BindingContext;
-        public HistoryPage()
+        public WeekDayViewModel VM => (WeekDayViewModel)BindingContext;
+        public WeekDayPage()
         {
             InitializeComponent();
         }
-
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
-
         protected override void OnAppearing()
         {
-            VM.OnAppearing();
             base.OnAppearing();
         }
 
-        private async void WeeklyChart_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            UserInformation.Week = (Week)e.Item;
-            ((ListView)sender).SelectedItem = null;
-            await Navigation.PushAsync(new WeekDayPage());
+            var item = (Day)e.Item;
+            VM.HideOrShow(item);
         }
     }
 }

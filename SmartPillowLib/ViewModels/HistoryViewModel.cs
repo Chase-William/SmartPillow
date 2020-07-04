@@ -1,18 +1,24 @@
 ﻿using SmartPillow.Util;
 using SmartPillowLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartPillowLib.ViewModels
 {
     public class HistoryViewModel : NotifyClass
     {
+        public event Action OpenWeekDayPage;
         public List<History> Months { get; set; } = UserInformation.User.UserData;
         private bool isNoHistoryVisble = false;
         private bool isHaveHistoryVisble = false;
         public int position;
         private string brightness;
+        public static Week SelectedItem { get; set; }
 
+        public ICommand OpenWeekDay => new Command(() => { OpenWeekDayPage?.Invoke(); });
         public bool IsNoHistoryVisble
         {
             get => isNoHistoryVisble;
