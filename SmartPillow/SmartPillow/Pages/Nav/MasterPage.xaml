@@ -19,6 +19,7 @@
                 <Setter Property="Text" Value="{Binding Title}"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="Padding" Value="10"/>
+                <Setter Property="FontFamily" Value="Ubuntu"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>

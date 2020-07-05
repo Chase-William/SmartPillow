@@ -11,5 +11,6 @@ namespace SmartPillowLib
         public static bool IsUserLogged { get; set; } = false;
         public static bool IsConnected { get; set; } = false;
         public static User User { get; set; }
+        public static Week Week { get; set; }
     }
 }

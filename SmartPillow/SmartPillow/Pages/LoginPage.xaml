@@ -24,7 +24,7 @@
         
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
 
-        <Image Source="cloudPageBackground.png" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
+        <Image Style="{StaticResource CloudyBG}"/>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -152,5 +152,10 @@
                 </Grid>
             </StackLayout>
         </Grid>
+        
+        <ContentView BackgroundColor="#99000000" IsVisible="{Binding IsVisible}" >
+            <ActivityIndicator Color="#47C7FF" IsEnabled="True" IsRunning="True" IsVisible="True"
+                           VerticalOptions="CenterAndExpand"/>
+        </ContentView>
     </Grid>
 </ContentPage>
