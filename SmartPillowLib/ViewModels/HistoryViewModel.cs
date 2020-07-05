@@ -10,15 +10,11 @@ namespace SmartPillowLib.ViewModels
 {
     public class HistoryViewModel : NotifyClass
     {
-        public event Action OpenWeekDayPage;
         public List<History> Months { get; set; } = UserInformation.User.UserData;
         private bool isNoHistoryVisble = false;
         private bool isHaveHistoryVisble = false;
         public int position;
         private string brightness;
-        public static Week SelectedItem { get; set; }
-
-        public ICommand OpenWeekDay => new Command(() => { OpenWeekDayPage?.Invoke(); });
         public bool IsNoHistoryVisble
         {
             get => isNoHistoryVisble;
@@ -71,9 +67,13 @@ namespace SmartPillowLib.ViewModels
 
         public HistoryViewModel()
         {
+            // displays "no history" icon if an user doesn't have any history
             if (History == null) IsNoHistoryVisble = true;
-            if (History != null) IsHaveHistoryVisible = true;
 
+            //  otherwise, it displays user's monthly charts
+            else IsHaveHistoryVisible = true;
+
+            // automatically moves to user's recorded latest month when opening HistoryPage
             if (Months != null)
                 if (Months.Count() != 0)
                     position = Months.Count() - 1;
@@ -83,6 +83,7 @@ namespace SmartPillowLib.ViewModels
         {
             get 
             {
+                // make sure if a specific month has any week instance before getting an index 
                 if (Months != null)
                     if (Months.Count() != 0)
                         Weeks = History[position].Weeks;
@@ -108,9 +109,6 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        /// <summary>
-        ///     HomePage's brightness will be darker if local time is in between 12AM and 6AM
-        /// </summary>
         public string Brightness
         {
             get => AutoBrightness.CheckNightTime();

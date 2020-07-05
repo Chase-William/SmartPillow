@@ -6,6 +6,9 @@ namespace SmartPillow.Util
 {
     public class AutoBrightness
     {
+        /// <summary>
+        ///     HomePage's brightness will be darker if local time is in between 12AM and 6AM
+        /// </summary>
         public static string CheckNightTime()
         {
             // starts at midnight

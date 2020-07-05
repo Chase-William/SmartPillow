@@ -30,6 +30,7 @@ namespace SmartPillow.Pages
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var item = (Day)e.Item;
+            ((ListView)sender).SelectedItem = null;
             VM.HideOrShow(item);
         }
     }

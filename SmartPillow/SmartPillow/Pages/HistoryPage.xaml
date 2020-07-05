@@ -41,7 +41,7 @@
 
         <Grid BackgroundColor="White" Opacity=".1"/>
 
-        <Image Source="cloudPageBackground" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
+        <Image Style="{StaticResource CloudyBG}"/>
 
         <Grid BackgroundColor="{Binding Brightness}"/>
         
@@ -112,6 +112,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
+                                
                                 <Grid Padding="15,6,15,6" HeightRequest="259">
                                     <Grid.Resources>
                                         <ResourceDictionary>
@@ -126,6 +127,11 @@
                                     <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" HeightRequest="259"
                                          VerticalOptions="Start"
                                          Opacity=".5"/>
+
+                                    <!--recommanded average sleep quality is ~85%-->
+                                    <Image Source="dashedLine" WidthRequest="285" 
+                                           HorizontalOptions="Center" VerticalOptions="Start"
+                                           Margin="14,55,0,0"/>
 
                                     <microcharts:ChartView x:Name="monthChart" Margin="0,0,25,0" Chart="{Binding SleepQualityChart}"
                                                HorizontalOptions="End" VerticalOptions="Center"
@@ -145,7 +151,6 @@
 
                                 </Grid>
                             </ViewCell>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

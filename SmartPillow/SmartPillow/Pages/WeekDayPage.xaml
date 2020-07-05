@@ -41,7 +41,7 @@
 
         <Grid BackgroundColor="White" Opacity=".1"/>
 
-        <Image Source="cloudPageBackground" Aspect="Fill" VerticalOptions="CenterAndExpand"/>
+        <Image Style="{StaticResource CloudyBG}"/>
 
         <Grid BackgroundColor="{Binding Brightness}"/>
 
@@ -89,9 +89,20 @@
                                 </Grid.Resources>
                                 
                                 <Grid HeightRequest="70" Margin="15,0,15,0">
+
+                                    <Grid.Resources>
+                                        <ResourceDictionary>
+                                            <Style TargetType="Label">
+                                                <Setter Property="VerticalOptions" Value="Center"/>
+                                                <Setter Property="FontSize" Value="9"/>
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                            </Style>
+                                        </ResourceDictionary>
+                                    </Grid.Resources>
+                                    
                                     <pancake:PancakeView Opacity=".5" CornerRadius="8"/>
                                     <Label Text="{Binding CurrentDate}" Margin="22,0,0,0" 
-                                           FontSize="22" TextColor="White" VerticalOptions="Center"/>
+                                           FontSize="22" TextColor="White" FontFamily="Ubuntu"/>
                                     <Grid HeightRequest="50" VerticalOptions="Center">
                                         <microcharts:ChartView Chart="{Binding EventChart}" WidthRequest="170" Margin="0,0,70,0" HorizontalOptions="End"/>
                                     </Grid>
@@ -99,14 +110,16 @@
                                     <Grid HeightRequest="50" VerticalOptions="Center">
                                       <pancake:PancakeView HeightRequest="4" VerticalOptions="Center" Opacity=".10" BackgroundColor="Gray" WidthRequest="170" Margin="0,4,70,0" HorizontalOptions="End"/>
                                     </Grid>
-                                    <Label Text="{Binding StartTime}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="9" TextColor="Gray" Margin="0,30,100,0"/>
-                                    <Label Text="{Binding EndTime}" VerticalOptions="Center" HorizontalOptions="End" FontSize="9" TextColor="Gray" Margin="0,30,65,0"/>
+                                    <Label Text="{Binding StartTime}" HorizontalOptions="Center" Margin="0,30,100,0"/>
+                                    <Label Text="{Binding EndTime}" HorizontalOptions="End" Margin="0,30,65,0"/>
                                     <Image Source="expand" Margin="0,0,25,0" HeightRequest="12" VerticalOptions="Center" HorizontalOptions="End" Rotation="{Binding Rotation}"/>
                                 </Grid>
 
                                 <Grid Margin="15,0,15,0" HeightRequest="350" Grid.Row="1" IsVisible="{Binding IsVisible}">
                                     <pancake:PancakeView/>
-                                    <Grid Margin="0,20,0,0" WidthRequest="50" HorizontalOptions="Start" VerticalOptions="Start">
+                                    <Grid Margin="0,20,0,0" WidthRequest="50" 
+                                          HorizontalOptions="Start" VerticalOptions="Start">
+                                        
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="270"/>
                                             <RowDefinition Height="*"/>
@@ -150,9 +163,9 @@
                                 <Grid Margin="15,0,15,50" HeightRequest="90" Grid.Row="2" IsVisible="{Binding IsVisible}">
                                     <pancake:PancakeView HeightRequest="90" VerticalOptions="Start" Grid.ColumnSpan="2"/>
                                     <Grid HorizontalOptions="Start" Padding="20">
+                                        
                                         <Grid.Resources>
                                             <ResourceDictionary>
-
                                                 <Style TargetType="Label">
                                                     <Setter Property="FontFamily" Value="Ubuntu"/>
                                                     <Setter Property="FontSize" Value="10"/>
@@ -187,13 +200,14 @@
                                             <Label Text="{Binding DeepTime}"/>
                                             <Label Text="{Binding DeepPercentage}"/>
                                         </StackLayout>
+                                        
                                     </Grid>
+                                    
                                     <Grid Grid.Column="1">
                                         <Label Text="Alerts" Margin="-15,7,10,10" TextColor="#B2B2B2" FontSize="12"/>
                                         <CollectionView ItemsSource="{Binding Alerts}" Margin="-25,10,0,0">
                                             <CollectionView.ItemsLayout>
-                                                <GridItemsLayout Orientation="Horizontal"
-                                                                 SnapPointsType="MandatorySingle"/>
+                                                <GridItemsLayout Orientation="Horizontal"/>
                                             </CollectionView.ItemsLayout>
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate>

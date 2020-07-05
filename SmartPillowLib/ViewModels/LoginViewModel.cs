@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -17,85 +18,126 @@ namespace SmartPillowLib.ViewModels
         public static event Action CheckStatus;
         public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
 
-        public ICommand LoginCommand => new Command(() =>
+        private bool isVisible;
+
+        public bool IsVisible
+        {
+            get => isVisible;
+            set 
+            { 
+                isVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ICommand LoginCommand => new Command(async () =>
         {
             // !!! I need to code this deeper for login function
+            IsVisible = true;
 
-            // For testing purpose
-            var user = new User()
+            /// <summary>
+            ///     uses task.run to allow activity indicator to be displayed 
+            ///     while reading a json file and stores data into UserInformation
+            /// </summary>
+            await Task.Run(() =>
             {
-                FirstName = "Mark",
-                LastName = "Zuckerberg",
-                Image = "Zack.png",
-                Email = "Email@gmail.com",
-                PhoneNumber = "585-585-5858",
-                SmartPillowDeviceID = "ZZ987-19C",
-                DataUrl = "https://quoridge.blob.core.windows.net/bugle/markZ.json"
-            };
-            user.UserData = GetHistories(user.DataUrl);
-            SetLightBlueAndCloseLoginPage(user);
+                // For testing purpose
+                var user = new User()
+                {
+                    FirstName = "Mark",
+                    LastName = "Zuckerberg",
+                    Image = "Zack.png",
+                    Email = "Email@gmail.com",
+                    PhoneNumber = "585-585-5858",
+                    SmartPillowDeviceID = "ZZ987-19C",
+                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/markZ.json"
+                };
+                user.UserData = GetHistories(user.DataUrl);
+                SetLightBlueAndCloseLoginPage(user);
+                IsVisible = false;
+            });
         });
 
-        public ICommand TwitterCommand => new Command(() =>
+        public ICommand TwitterCommand => new Command(async () =>
         {
             // !!! I need to code this deeper for login function
+            IsVisible = true;
 
-            // For testing purpose
-            var user = new User()
+            await Task.Run(() =>
             {
-                FirstName = "Twitter",
-                LastName = "",
-                Image = "Twitter.png",
-                Email = "Twitter@gmail.com",
-                PhoneNumber = "111-111-1111",
-                SmartPillowDeviceID = "SP123-19B",
-                DataUrl = "https://quoridge.blob.core.windows.net/bugle/twitter.json"
-            };
-            user.UserData = GetHistories(user.DataUrl);
-            SetLightBlueAndCloseLoginPage(user);
+                // For testing purpose
+                var user = new User()
+                {
+                    FirstName = "Twitter",
+                    LastName = "",
+                    Image = "Twitter.png",
+                    Email = "Twitter@gmail.com",
+                    PhoneNumber = "111-111-1111",
+                    SmartPillowDeviceID = "SP123-19B",
+                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/twitter.json"
+                };
+                user.UserData = GetHistories(user.DataUrl);
+                SetLightBlueAndCloseLoginPage(user);
+                IsVisible = false;
+            });
         });
 
-        public ICommand GoogleCommand => new Command(() =>
+        public ICommand GoogleCommand => new Command(async () =>
         {
             // !!! I need to code this deeper for login function
+            IsVisible = true;
 
-            // For testing purpose
-            var user = new User()
+            await Task.Run(() =>
             {
-                FirstName = "Google",
-                LastName = "",
-                Image = "Google.png",
-                Email = "Google@gmail.com",
-                PhoneNumber = "222-222-2222",
-                SmartPillowDeviceID = "YW455-19D",
-                DataUrl = "https://quoridge.blob.core.windows.net/bugle/google.json"
-            };
-            user.UserData = GetHistories(user.DataUrl);
-            SetLightBlueAndCloseLoginPage(user);
+                // For testing purpose
+                var user = new User()
+                {
+                    FirstName = "Google",
+                    LastName = "",
+                    Image = "Google.png",
+                    Email = "Google@gmail.com",
+                    PhoneNumber = "222-222-2222",
+                    SmartPillowDeviceID = "YW455-19D",
+                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/google.json"
+                };
+                user.UserData = GetHistories(user.DataUrl);
+                SetLightBlueAndCloseLoginPage(user);
+                IsVisible = false;
+            });
         });
 
-        public ICommand FacebookCommand => new Command(() =>
+        public ICommand FacebookCommand => new Command(async () =>
         {
             // !!! I need to code this deeper for login function
+            IsVisible = true;
 
-            // For testing purpose
-            var user = new User()
+            /// <summary>
+            ///     uses task.run to allow activity indicator to be displayed 
+            ///     while reading a json file and stores data into UserInformation
+            /// </summary>
+            await Task.Run(() =>
             {
-                FirstName = "Facebook Inc",
-                LastName = "",
-                Image = "Facebook.png",
-                Email = "Facebook@gmail.com",
-                PhoneNumber = "333-333-3333",
-                SmartPillowDeviceID = "WQW31-25X",
-                DataUrl = "https://quoridge.blob.core.windows.net/bugle/facebook.json"
-            };
-            user.UserData = GetHistories(user.DataUrl);
-            SetLightBlueAndCloseLoginPage(user);
+                // For testing purpose
+                var user = new User()
+                {
+                    FirstName = "Facebook Inc",
+                    LastName = "",
+                    Image = "Facebook.png",
+                    Email = "Facebook@gmail.com",
+                    PhoneNumber = "333-333-3333",
+                    SmartPillowDeviceID = "WQW31-25X",
+                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/facebook.json"
+                };
+                user.UserData = GetHistories(user.DataUrl);
+                SetLightBlueAndCloseLoginPage(user);
+                IsVisible = false;
+            });
         });
 
         public LoginViewModel()
         {
-          
+            // hides activity indicator when LoginPage gets opened
+            IsVisible = false;
         }
 
         public List<History> GetHistories(string url)
@@ -147,6 +189,7 @@ namespace SmartPillowLib.ViewModels
                         {
                             lines.TextColor = SKColor.Parse("#B2B2B2");
                             lines.Color = SKColor.Parse(LineColors[lineColorCount]);
+
                             if (lineColorCount == 4)
                                 lineColorCount = 0;
                             else
@@ -156,10 +199,8 @@ namespace SmartPillowLib.ViewModels
                         day.SnoreChart.BackgroundColor = SKColors.Transparent;
                         foreach (var snores in day.SnoreChart.Entries)
                         {
-                            if(snores.Value == 0)
-                                snores.Color = SKColor.Parse("#0a00000c");
-                            else
-                                snores.Color = SKColor.Parse("#00C2FF");
+                            snores.Color = (snores.Value == 0) ? SKColor.Parse("#0a00000c") 
+                                : SKColor.Parse("#00C2FF");
                         }
 
                         foreach (var alert in day.Alerts)
