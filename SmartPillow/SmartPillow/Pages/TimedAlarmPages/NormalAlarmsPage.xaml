@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
-             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib" xmlns:controls="clr-namespace:SmartPillow.Controls"
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib" 
+             xmlns:controls="clr-namespace:SmartPillow.Controls.TimedAlarms"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage"
              x:Name="page">
@@ -29,11 +30,17 @@
         <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
 
         <StackLayout>
-
-            <Frame BackgroundColor="White" CornerRadius="10" Margin="10" Padding="3">
+            <Frame x:Name="searchFrame" BackgroundColor="White" CornerRadius="10" Margin="10" Padding="3" HorizontalOptions="FillAndExpand">
                 <SearchBar Text="{Binding QueryText}"/>
             </Frame>
 
+            <StackLayout IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" Orientation="Horizontal" Margin="0,10">
+                <!-- Need to bind the IsDeleteModeActive to the SPSelectAllListViewBtn because it needs to know when it has been made visible -->
+                <controls:SPSelectAllListViewBtn HorizontalOptions="Start" Margin="35,0,0,0" WidthRequest="30" IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" Command="{Binding ToggleAllAlarmsCMD}"/>
+                <Label TextColor="{StaticResource GrayedFont}" Text="All" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <!--<controls:SmartPillowDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" Margin="20,0,0,0" IsVisible="{Binding IsDeleteModeActive}" SiblingFrame="{x:Reference searchFrame}"/>-->
             <!-- Contains a collection of timed alarms -->
             <ListView x:Name="listview"
                       ItemsSource="{Binding QueryResults}" 
@@ -44,31 +51,28 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
-                                <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
-                                    <controls:SmartPillowSelectableBtn IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" Margin="0,0,30,0" SiblingGrid="{x:Reference grid}"/>
-                                    <Grid HeightRequest="70" x:Name="grid">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="0.4*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1.2*"/>
-                                        </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
+                                <controls:SPSelectThisListViewBtn x:Name="selectThis" IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" SiblingGrid="{x:Reference grid}"/>
+                                <Grid HeightRequest="70" x:Name="grid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="0.4*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.2*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                        <Label Text="{Binding GetNormalTime}" TextColor="White" FontSize="35"/>
-                                        <Label Text="{Binding Name}" TextColor="{StaticResource GrayedFont}" Grid.Row="1"/>
+                                    <Label Text="{Binding GetNormalTime}" TextColor="White" FontSize="35"/>
+                                    <Label Text="{Binding Name}" TextColor="{StaticResource GrayedFont}" Grid.Row="1"/>
 
-                                    </Grid>
-                                    <Switch IsToggled="{Binding IsAlarmEnabled}" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
-                            </Grid>
+                                </Grid>
+                                <Switch IsToggled="{Binding IsAlarmEnabled}" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-        <!--<controls:SmartPillowDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Start" Margin="5" IsVisible="{Binding IsDeleteModeActive}" AboveListView="{x:Reference listview}" ParentPage="{x:Reference page}"/>-->
     </Grid>
 
 </ContentPage>

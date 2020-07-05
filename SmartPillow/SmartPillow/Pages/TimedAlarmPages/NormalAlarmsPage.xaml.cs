@@ -6,6 +6,7 @@ using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace SmartPillow.Pages.TimedAlarmPages
@@ -14,7 +15,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
     public partial class NormalAlarmsPage : ContentPage
     {
         NormalAlarmsVM VM => (NormalAlarmsVM)BindingContext;
-
+        
         public NormalAlarmsPage()
         {
             InitializeComponent();
@@ -26,18 +27,42 @@ namespace SmartPillow.Pages.TimedAlarmPages
             VM.AlarmSelected += (alarm) =>
             {
                 Navigation.PushAsync(new CreateTimedAlarmPage(VM.Alarms, alarm));
-            };          
+            };
+
+            listview.ChildAdded += Listview_ChildAdded;
+
+            listview.ChildrenReordered += Listview_ChildrenReordered;
+
+            listview.ItemAppearing += Listview_ItemAppearing;
+        }
+
+        private void Listview_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            Console.WriteLine();
+        }
+
+        private void Listview_ChildrenReordered(object sender, EventArgs e)
+        {
+            Console.WriteLine();
+        }
+
+        private void Listview_ChildAdded(object sender, ElementEventArgs e)
+        {
+            Console.WriteLine();
         }
 
         protected override void OnAppearing()
         {
             AlarmListViewWrapper.AlarmStateChanged += OnAlarmStateChanged;
+            this.IsEnabled = true;
             base.OnAppearing();
         }
 
         protected override void OnDisappearing()
         {
             AlarmListViewWrapper.AlarmStateChanged -= OnAlarmStateChanged;
+            // Reseting the boolean that prevents duplicate CreateTimedAlarmPages from being created.
+            this.IsEnabled = false;
             base.OnDisappearing();
         }
 
@@ -66,7 +91,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
 
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ((ListView)sender).SelectedItem = null;
-        }        
+            ((ListView)sender).SelectedItem = null;           
+        }
     }
 }

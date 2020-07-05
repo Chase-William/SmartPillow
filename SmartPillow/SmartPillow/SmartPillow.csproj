@@ -37,13 +37,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Controls\SmartPillowDeleteBtn.xaml">
+    <EmbeddedResource Update="Controls\TimedAlarms\SPDeleteBtn.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Controls\SmartPillowSelectableBtn.xaml">
+    <EmbeddedResource Update="Controls\TimedAlarms\SPSelectThisListViewBtn.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Controls\SmartPillowRadioBtn.xaml">
+    <EmbeddedResource Update="Controls\TimedAlarms\SPRadioBtn.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TimedAlarms\SPSelectAllListViewBtn.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\HistoryPage.xaml">
@@ -91,11 +94,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\SmartPillowSelectableBtn.xaml.cs">
-      <DependentUpon>SmartPillowSelectableBtn.xaml</DependentUpon>
+    <Compile Update="Controls\TimedAlarms\SPDeleteBtn.xaml.cs">
+      <DependentUpon>SPDeleteBtn.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Controls\SmartPillowRadioBtn.xaml.cs">
-      <DependentUpon>SmartPillowRadioBtn.xaml</DependentUpon>
+    <Compile Update="Controls\TimedAlarms\SPSelectAllListViewBtn.xaml.cs">
+      <DependentUpon>SPSelectAllListViewBtn.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\TimedAlarms\SPSelectThisListViewBtn.xaml.cs">
+      <DependentUpon>SPSelectThisListViewBtn.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\TimedAlarms\SPRadioBtn.xaml.cs">
+      <DependentUpon>SPRadioBtn.xaml</DependentUpon>
     </Compile>
     <Compile Update="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>

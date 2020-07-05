@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartPillow.Controls
+namespace SmartPillow.Controls.TimedAlarms
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SmartPillowDeleteBtn : ContentView
+    public partial class SPDeleteBtn : ContentView
     {
         /// <summary>
         ///     Our Skia paint object for styling the outer circle
@@ -29,9 +29,8 @@ namespace SmartPillow.Controls
         /// <summary>
         ///     Bindable property support for Commands.
         /// </summary>
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(Command), typeof(SmartPillowDeleteBtn), null, BindingMode.TwoWay, null, null);
-        public static readonly BindableProperty AboveListViewProperty = BindableProperty.Create(nameof(AboveListView), typeof(ListView), typeof(SmartPillowDeleteBtn), null, BindingMode.OneWay, null, null);
-        public static readonly BindableProperty ParentPageProperty = BindableProperty.Create(nameof(ParentPage), typeof(Page), typeof(SmartPillowDeleteBtn), null, BindingMode.OneWay, null, null);
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(Command), typeof(SPDeleteBtn), null, BindingMode.TwoWay, null, null);
+        public static readonly BindableProperty SiblingFrameProperty = BindableProperty.Create(nameof(SiblingFrame), typeof(Frame), typeof(SPDeleteBtn), null, BindingMode.OneWay, null, null);
         #endregion
 
         #region UI Binding Properties
@@ -41,21 +40,16 @@ namespace SmartPillow.Controls
             set => SetValue(CommandProperty, value);
         }
 
-        public ListView AboveListView
+        public Frame SiblingFrame
         {
-            get => (ListView)GetValue(AboveListViewProperty);
-            set => SetValue(AboveListViewProperty, value);
+            get => (Frame)GetValue(SiblingFrameProperty);
+            set => SetValue(SiblingFrameProperty, value);
         }
 
-        public Page ParentPage
-        {
-            get => (Page)GetValue(ParentPageProperty);
-            set => SetValue(ParentPageProperty, value);
-        }
 
         #endregion
 
-        public SmartPillowDeleteBtn()
+        public SPDeleteBtn()
         {
             InitializeComponent();
 
@@ -71,7 +65,7 @@ namespace SmartPillow.Controls
             {
                 if (IsVisible)
                 {
-                    this.TranslationY = ParentPage.Height;
+                    
                 }
             }
         }
@@ -80,18 +74,7 @@ namespace SmartPillow.Controls
         {
             if (e.PropertyName == "IsVisible")
             {
-                if (IsVisible)
-                {                    
-                    var listViewRect = new Rectangle(AboveListView.X, AboveListView.Y, AboveListView.Width, AboveListView.Height - (this.HeightRequest * 1.2 + this.Margin.Bottom + this.Margin.Top));
-                    await Task.WhenAll(this.TranslateTo(0, AboveListView.Height, 200, Easing.BounceIn),
-                                       AboveListView.LayoutTo(listViewRect, 200));                
-                }    
-                else
-                {                    
-                    var listViewRect = new Rectangle(AboveListView.X, AboveListView.Y, AboveListView.Width, AboveListView.Height + (this.HeightRequest * 1.2 + this.Margin.Bottom + this.Margin.Top));
-                    await Task.WhenAll(this.TranslateTo(0, ParentPage.Height, 200, Easing.BounceOut),
-                                       AboveListView.LayoutTo(listViewRect, 200));
-                }
+                
             }
         }
 

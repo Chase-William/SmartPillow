@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using SmartPillowLib.Data.Local;
 using System.Runtime.InteropServices;
+using Xamarin.Forms.Internals;
 
 namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 {
@@ -81,7 +82,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
                 // When delete mode is off, reset the delete status on all alarms.
                 if (isDeleteModeActive == false)
-                    Alarms.All(x => x.ToBeDeleted = false);                
+                    Alarms.ForEach(alarm => alarm.ToBeDeleted = false);             
             }
         }
 
@@ -98,6 +99,13 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         public ICommand DeleteAlarmsCMD => new Command(() =>
         {
 
+        });
+
+        
+        public ICommand ToggleAllAlarmsCMD => new Command((SelectAllIsChecked) =>
+        {
+            // Updates all alarms toBeDeleted Status because the master button has been pressed. 
+            Alarms.ForEach(alarm => alarm.ToBeDeleted = (bool)SelectAllIsChecked);
         });
 
         public NormalAlarmsVM()

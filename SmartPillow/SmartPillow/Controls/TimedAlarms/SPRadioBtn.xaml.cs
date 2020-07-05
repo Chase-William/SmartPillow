@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SmartPillow.Controls
+namespace SmartPillow.Controls.TimedAlarms
 {
     /// <summary>
     ///     To see use of this button setup goto SmartPillow.Pages.TimedAlarmPages.SnoozeSettingsPage.xaml
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SmartPillowRadioBtn : ContentView
+    public partial class SPRadioBtn : ContentView
     {
         /// <summary>
         ///     Signals to all subscriber radio buttons that a new radio button has been selected.
@@ -29,12 +29,12 @@ namespace SmartPillow.Controls
         /// <summary>
         ///     Bindable property support for IsChecked.        
         /// </summary>
-        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(SmartPillowRadioBtn), false, BindingMode.TwoWay ,null, IsCheckedPropertyChanged);
+        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(SPRadioBtn), false, BindingMode.TwoWay ,null, IsCheckedPropertyChanged);
 
         /// <summary>
         ///     Bindable property support for Text.
         /// </summary>
-        public static readonly BindableProperty TextProperty =  BindableProperty.Create(nameof(Text), typeof(string), typeof(SmartPillowRadioBtn), string.Empty, BindingMode.TwoWay, null, TextPropertyChanged);
+        public static readonly BindableProperty TextProperty =  BindableProperty.Create(nameof(Text), typeof(string), typeof(SPRadioBtn), string.Empty, BindingMode.TwoWay, null, TextPropertyChanged);
         #endregion
 
         #region UI Binding Properties
@@ -61,7 +61,7 @@ namespace SmartPillow.Controls
         /// </summary>
         public string GroupName { get; set; }
 
-        public SmartPillowRadioBtn()
+        public SPRadioBtn()
         {
             InitializeComponent();
             NewRadioBtnSelected += (id, _groupName) =>
@@ -103,12 +103,12 @@ namespace SmartPillow.Controls
         /// <summary>
         ///     Callback function for when IsChecked is changed.
         /// </summary>
-        private static void IsCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue) => ((SmartPillowRadioBtn)bindable).ImgInner.ScaleTo(1.0, 100);
+        private static void IsCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue) => ((SPRadioBtn)bindable).ImgInner.ScaleTo(1.0, 100);
 
         /// <summary>
         ///     Callback function for when Text is changed.
         /// </summary>
-        private static void TextPropertyChanged(BindableObject bindable, object oldValue, object newValue) => ((SmartPillowRadioBtn)bindable).Label.Text = (string)newValue;
+        private static void TextPropertyChanged(BindableObject bindable, object oldValue, object newValue) => ((SPRadioBtn)bindable).Label.Text = (string)newValue;
 
 
 

@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
-             x:Class="SmartPillow.Controls.SmartPillowDeleteBtn">
+             x:Class="SmartPillow.Controls.TimedAlarms.SPDeleteBtn">
 
     <Grid>
         <skia:SKCanvasView x:Name="OuterCircle" PaintSurface="OuterCircle_PaintSurface"/>

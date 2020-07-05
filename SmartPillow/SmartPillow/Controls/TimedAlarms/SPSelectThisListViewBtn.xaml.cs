@@ -11,20 +11,25 @@ using Xamarin.Forms;
 using Xamarin.Forms.Markup;
 using Xamarin.Forms.Xaml;
 
-namespace SmartPillow.Controls
+namespace SmartPillow.Controls.TimedAlarms
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SmartPillowSelectableBtn : ContentView
+    public partial class SPSelectThisListViewBtn : ContentView
     {
+        /// <summary>
+        ///     Informs subscribers that this specific SPSelectThisListViewBtn has changed it selection state.
+        /// </summary>
+        public static event Action<Guid, bool> SelectionChanged;
+
         #region BindableProperties
         /// <summary>
         ///     Bindable property support for IsSelected.        
         /// </summary>
-        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(SmartPillowSelectableBtn), false, BindingMode.TwoWay, null, IsCheckedPropertyChanged);
+        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(SPSelectThisListViewBtn), false, BindingMode.TwoWay, null, IsCheckedPropertyChanged);
         /// <summary>
         ///     A referece to the grid this object lives next to.
         /// </summary>
-        public static readonly BindableProperty SiblingGridProperty = BindableProperty.Create(nameof(SiblingGrid), typeof(Grid), typeof(SmartPillowSelectableBtn), null, BindingMode.TwoWay, null, null);
+        public static readonly BindableProperty SiblingGridProperty = BindableProperty.Create(nameof(SiblingGrid), typeof(Grid), typeof(SPSelectThisListViewBtn), null, BindingMode.TwoWay, null, null);
                 
         #endregion
 
@@ -32,7 +37,7 @@ namespace SmartPillow.Controls
         public bool IsChecked
         {
             get => (bool)GetValue(IsCheckedProperty);
-            set => SetValue(IsCheckedProperty, value);
+            set => SetValue(IsCheckedProperty, value);            
         }
         public Grid SiblingGrid
         {
@@ -41,14 +46,14 @@ namespace SmartPillow.Controls
         }
         #endregion
 
-        public SmartPillowSelectableBtn()
+        public SPSelectThisListViewBtn()
         {
             InitializeComponent();
-            this.IsVisible = false;
             PropertyChanging += SmartPillowSelectableBtn_PropertyChanging;
             PropertyChanged += SmartPillowSelectableBtn_PropertyChanged;
-            ImgSelected.Scale = 0.1;
-            ImgNotSelected.Scale = 0.1;
+            ImgSelected.Scale = 0;
+            //ImgNotSelected.Scale = 0; < - removing this fixed a bug when viewcells were repopulated with data later in the runtime.
+            SPSelectAllListViewBtn.BtnKeyValues.Add(this.Id, this.IsChecked);
         }
 
         /// <summary>
@@ -58,7 +63,7 @@ namespace SmartPillow.Controls
         {
             // Check if IsVisible property was changed
             if(e.PropertyName == nameof(IsVisible))
-            {
+            {                
                 // If true we want to scale up the not selected buttons
                 if (IsVisible)
                 {
@@ -67,9 +72,9 @@ namespace SmartPillow.Controls
                 // If this ui is now hidden reset it to the default size
                 else
                 {
-                    ImgNotSelected.Scale = 0.1;
+                    ImgNotSelected.Scale = 0;
                 }
-            }
+            }            
         }
 
         /// <summary>
@@ -84,18 +89,23 @@ namespace SmartPillow.Controls
                 if (SiblingGrid == null) return;
                 // We are inverting IsVisible because since this containing method is called "PropertyChanging" it means the property hasn't actually been assigned the new value yet.
                 // Therefore we can do some operations before this IsVisible is assigned a new value.
+                // IS GOING TO BE HIDDEN
                 if (IsVisible)
                 {
                     // If we are deleting and therefore this class instance is visible we need to move the grid's layout to make room for it.
-                    var rect = new Rectangle(this.WidthRequest / 2, SiblingGrid.Y, SiblingGrid.Width + SiblingGrid.X, SiblingGrid.Height);
-                    await Task.WhenAll(SiblingGrid.LayoutTo(rect, 200, Easing.Linear));                    
+                    //var rect = new Rectangle(0, SiblingGrid.Y, SiblingGrid.Width + SiblingGrid.X, SiblingGrid.Height);
+                    //await Task.WhenAll(SiblingGrid.LayoutTo(rect, 200, Easing.Linear));
+                    await Task.WhenAll(SiblingGrid.TranslateTo(0, 0, 200, Easing.SinIn));                    
                 }
+                // IS GOING TO BE VISIBLE
                 else
                 {
                     // If we are not deleting and therefore this class instance is not visible we can bring the grid back to where it was when it started.
                     // Using WidthRequest because Width might not be set yet
-                    var rect = new Rectangle(this.WidthRequest * 2, SiblingGrid.Y, SiblingGrid.Width + SiblingGrid.X, SiblingGrid.Height);
-                    await Task.WhenAll(SiblingGrid.LayoutTo(rect, 200, Easing.Linear));
+                    //var rect = new Rectangle(this.WidthRequest + 50, SiblingGrid.Y, SiblingGrid.Width + SiblingGrid.X, SiblingGrid.Height);
+                    //await Task.WhenAll(SiblingGrid.LayoutTo(rect, 200, Easing.Linear));
+
+                    await Task.WhenAll(SiblingGrid.TranslateTo(this.WidthRequest + 20, 0, 200, Easing.SinIn));
                 }
             }
         }
@@ -105,19 +115,33 @@ namespace SmartPillow.Controls
         /// </summary>
         private async static void IsCheckedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var source = (SmartPillowSelectableBtn)bindable;
+            var source = (SPSelectThisListViewBtn)bindable;
+            // Invoking the static event that this SPSelectThisListViewBtn has changed.
+            SelectionChanged?.Invoke(source.Id, (bool)newValue);
             if ((bool)newValue)
             {
                 // When this is selected we want to Swap icons.
-                source.ImgSelected.IsVisible = true;
                 await Task.WhenAll(source.ImgSelected.ScaleTo(1.0, 100, Easing.SinIn), source.ImgNotSelected.FadeTo(0, 100, Easing.SinOut));
             }
             else
             {
                 // When this is deselected we want to Swap icons.
-                await Task.WhenAll(source.ImgSelected.ScaleTo(0.1, 100, Easing.SinOut), source.ImgNotSelected.FadeTo(1, 100, Easing.SinIn));
-                source.ImgSelected.IsVisible = false;
+                await Task.WhenAll(source.ImgSelected.ScaleTo(0, 100, Easing.SinOut), source.ImgNotSelected.FadeTo(1, 100, Easing.SinIn));               
             }
         }
+
+
+
+
+
+
+
+        // Fix the issue with the last cell (8th) being added later in the runtime.
+
+
+
+
+
+
     }
 }

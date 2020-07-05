@@ -81,6 +81,8 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             PendingIntent pendingIntent = PendingIntent.GetBroadcast(MainActivity, 0, alarmIntent, 0);
             activeAlarms.Remove(alarm.Id);
             AlarmManager.Cancel(pendingIntent);
+
+            Toast.MakeText(MainActivity, "Alarm " + alarm.Name + " cancelled.", ToastLength.Short).Show();
         }
 
         public void SetAlarm(TimeSpan timeOffset, Alarm alarm)

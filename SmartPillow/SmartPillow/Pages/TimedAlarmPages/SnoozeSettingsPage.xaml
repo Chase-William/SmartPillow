@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
-             xmlns:controls="clr-namespace:SmartPillow.Controls"
+             xmlns:controls="clr-namespace:SmartPillow.Controls.TimedAlarms"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.TimedAlarmPages.SnoozeSettingsPage"
              Title="Snooze Settings">
@@ -38,7 +38,7 @@
                 <Setter Property="Margin" Value="20,0"/>
             </Style>
 
-            <Style TargetType="controls:CustomRadioBtn">
+            <Style TargetType="controls:SPRadioBtn">
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="Padding" Value="0"/>
             </Style>
@@ -66,13 +66,13 @@
                 <Frame>
                     <StackLayout Style="{StaticResource NestedWithinFrame}">
 
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption1}" Text="5 minutes" GroupName="interval"/>
+                        <controls:SPRadioBtn IsChecked="{Binding IntervalRadioBtnOption1}" Text="5 minutes" GroupName="interval"/>
                         <BoxView/>
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption2}" Text="10 minutes" GroupName="interval"/>
+                        <controls:SPRadioBtn IsChecked="{Binding IntervalRadioBtnOption2}" Text="10 minutes" GroupName="interval"/>
                         <BoxView/>
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption3}" Text="20 minutes" GroupName="interval"/>
+                        <controls:SPRadioBtn IsChecked="{Binding IntervalRadioBtnOption3}" Text="20 minutes" GroupName="interval"/>
                         <BoxView/>
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding IntervalRadioBtnOption4}" Text="30 minutes" GroupName="interval"/>
+                        <controls:SPRadioBtn IsChecked="{Binding IntervalRadioBtnOption4}" Text="30 minutes" GroupName="interval"/>
 
                     </StackLayout>
                 </Frame>
@@ -82,11 +82,11 @@
                 <Frame>
                     <StackLayout Style="{StaticResource NestedWithinFrame}">
 
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding RepeatRadioBtnOption1}" Text="3 times" GroupName="repeat"/>
+                        <controls:SPRadioBtn IsChecked="{Binding RepeatRadioBtnOption1}" Text="3 times" GroupName="repeat"/>
                         <BoxView/>
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding RepeatRadioBtnOption2}" Text="5 times" GroupName="repeat"/>
+                        <controls:SPRadioBtn IsChecked="{Binding RepeatRadioBtnOption2}" Text="5 times" GroupName="repeat"/>
                         <BoxView/>
-                        <controls:SmartPillowRadioBtn IsChecked="{Binding RepeatRadioBtnOption3}" Text="Continuously" GroupName="repeat"/>
+                        <controls:SPRadioBtn IsChecked="{Binding RepeatRadioBtnOption3}" Text="Continuously" GroupName="repeat"/>
 
                     </StackLayout>
                 </Frame>
