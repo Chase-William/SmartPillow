@@ -28,27 +28,6 @@ namespace SmartPillow.Pages.TimedAlarmPages
             {
                 Navigation.PushAsync(new CreateTimedAlarmPage(VM.Alarms, alarm));
             };
-
-            listview.ChildAdded += Listview_ChildAdded;
-
-            listview.ChildrenReordered += Listview_ChildrenReordered;
-
-            listview.ItemAppearing += Listview_ItemAppearing;
-        }
-
-        private void Listview_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            Console.WriteLine();
-        }
-
-        private void Listview_ChildrenReordered(object sender, EventArgs e)
-        {
-            Console.WriteLine();
-        }
-
-        private void Listview_ChildAdded(object sender, ElementEventArgs e)
-        {
-            Console.WriteLine();
         }
 
         protected override void OnAppearing()
@@ -76,7 +55,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
             var alarm = LocalDataServiceContext.Provider.GetAlarm(_alarmWrapper.Id);
             // Updating the alarm.
             alarm.IsAlarmEnabled = _alarmWrapper.IsAlarmEnabled;
-
+           
             // Making platform specific calls to set alarm
             if (alarm.IsAlarmEnabled)
                 DependencyService.Get<ISmartPillowAlarmManager>().SetAlarm(alarm.TimeOffset, alarm);
@@ -92,6 +71,13 @@ namespace SmartPillow.Pages.TimedAlarmPages
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             ((ListView)sender).SelectedItem = null;           
+        }
+
+        private void listview_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            var test = (ListView)sender;
+            AlarmListViewWrapper wrapper = (AlarmListViewWrapper)e.Item;
+            wrapper.PropagateAppearing();
         }
     }
 }

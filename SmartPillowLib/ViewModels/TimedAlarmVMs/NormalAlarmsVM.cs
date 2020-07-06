@@ -23,7 +23,7 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
         public event Action<AlarmListViewWrapper> AlarmSelected;
 
         // Collection Source (readonly)
-        public readonly ObservableCollection<AlarmListViewWrapper> Alarms;
+        public ObservableCollection<AlarmListViewWrapper> Alarms { get; set; }
 
         /// <summary>
         ///     Query results
@@ -98,7 +98,23 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
 
         public ICommand DeleteAlarmsCMD => new Command(() =>
         {
+            //var alarms = Alarms.Where(alarm => alarm.ToBeDeleted == true);
 
+            //Alarms.ForEach(x => 
+            //{
+            //    if (x.ToBeDeleted)
+            //        Alarms.Remove(x);
+            //});
+            for (int i = 0; i < Alarms.Count; i++)
+            {
+                // If the alarm at the current index is to be deleted.. delete it.
+                if (Alarms[i].ToBeDeleted)
+                {
+                    Alarms.RemoveAt(i);
+                    // Stepping back to make sure we don't skip a item when we remove an item in the collection
+                    i--;
+                }
+            }
         });
 
         

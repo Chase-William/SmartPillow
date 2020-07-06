@@ -38,22 +38,21 @@
                 <!-- Need to bind the IsDeleteModeActive to the SPSelectAllListViewBtn because it needs to know when it has been made visible -->
                 <controls:SPSelectAllListViewBtn HorizontalOptions="Start" Margin="35,0,0,0" WidthRequest="30" IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" Command="{Binding ToggleAllAlarmsCMD}"/>
                 <Label TextColor="{StaticResource GrayedFont}" Text="All" VerticalOptions="Center"/>
+                <controls:SPDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" IsVisible="{Binding IsDeleteModeActive}"/>
             </StackLayout>
-
-            <!--<controls:SmartPillowDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" Margin="20,0,0,0" IsVisible="{Binding IsDeleteModeActive}" SiblingFrame="{x:Reference searchFrame}"/>-->
             <!-- Contains a collection of timed alarms -->
             <ListView x:Name="listview"
-                      ItemsSource="{Binding QueryResults}" 
-                      HasUnevenRows="True" 
-                      SeparatorVisibility="Default"
+                      ItemsSource="{Binding Alarms}" 
+                      HasUnevenRows="True"
+                      ItemAppearing="listview_ItemAppearing"                     
                       SelectedItem="{Binding SelectedItem}"
                       ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell x:Name="viewCell">
                             <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
-                                <controls:SPSelectThisListViewBtn x:Name="selectThis" IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" SiblingGrid="{x:Reference grid}"/>
-                                <Grid HeightRequest="70" x:Name="grid">
+                                <controls:SPSelectThisListViewBtn x:Name="selectThis" ToggleVisibility="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" SiblingGrid="{x:Reference grid}" ParentViewCell="{x:Reference viewCell}"/>
+                                <Grid HeightRequest="70" x:Name="grid" BackgroundColor="Yellow">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="0.4*"/>

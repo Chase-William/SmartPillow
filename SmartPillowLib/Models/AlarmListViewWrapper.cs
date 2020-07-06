@@ -64,6 +64,12 @@ namespace SmartPillowLib.Models
             }
         }
 
+        public event Action Appearing;
+        public void PropagateAppearing()
+        {
+            Appearing?.Invoke();
+        }
+
         public AlarmListViewWrapper(int _id, string _name, bool _isAlarmEnabled, TimeSpan _timeOffset)
         {
             Id = _id;

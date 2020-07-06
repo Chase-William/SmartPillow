@@ -30,7 +30,6 @@ namespace SmartPillow.Controls.TimedAlarms
         ///     Bindable property support for Commands.
         /// </summary>
         public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(Command), typeof(SPDeleteBtn), null, BindingMode.TwoWay, null, null);
-        public static readonly BindableProperty SiblingFrameProperty = BindableProperty.Create(nameof(SiblingFrame), typeof(Frame), typeof(SPDeleteBtn), null, BindingMode.OneWay, null, null);
         #endregion
 
         #region UI Binding Properties
@@ -38,12 +37,6 @@ namespace SmartPillow.Controls.TimedAlarms
         {
             get => (Command)GetValue(CommandProperty);
             set => SetValue(CommandProperty, value);
-        }
-
-        public Frame SiblingFrame
-        {
-            get => (Frame)GetValue(SiblingFrameProperty);
-            set => SetValue(SiblingFrameProperty, value);
         }
 
 
