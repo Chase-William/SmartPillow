@@ -19,6 +19,7 @@ namespace SmartPillowLib.ViewModels
         public event Action PopAsyncPage;
         public event Action FBCanceled;
         public static event Action CheckStatus;
+        public User User { get; set; }
         public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
 
         IFacebookClient _facebookService = CrossFacebookClient.Current;
@@ -28,8 +29,8 @@ namespace SmartPillowLib.ViewModels
         public bool IsVisible
         {
             get => isVisible;
-            set 
-            { 
+            set
+            {
                 isVisible = value;
                 NotifyPropertyChanged();
             }
@@ -55,10 +56,15 @@ namespace SmartPillowLib.ViewModels
                     Email = "Email@gmail.com",
                     PhoneNumber = "585-585-5858",
                     SmartPillowDeviceID = "ZZ987-19C",
-                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/markZ.json"
+                    DataUrl = "markZ"
                 };
                 user.UserData = GetHistories(user.DataUrl);
                 SetLightBlueAndCloseLoginPage(user);
+                UserInformation.User = user;
+                UserInformation.IsUserLogged = true;
+                UserInformation.IsConnected = true;
+                CheckStatus?.Invoke();
+                PopAsyncPage?.Invoke();
                 IsVisible = false;
             });
         });
@@ -79,10 +85,15 @@ namespace SmartPillowLib.ViewModels
                     Email = "Twitter@gmail.com",
                     PhoneNumber = "111-111-1111",
                     SmartPillowDeviceID = "SP123-19B",
-                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/twitter.json"
+                    DataUrl = "twitter"
                 };
                 user.UserData = GetHistories(user.DataUrl);
                 SetLightBlueAndCloseLoginPage(user);
+                UserInformation.User = user;
+                UserInformation.IsUserLogged = true;
+                UserInformation.IsConnected = true;
+                CheckStatus?.Invoke();
+                PopAsyncPage?.Invoke();
                 IsVisible = false;
             });
         });
@@ -103,49 +114,31 @@ namespace SmartPillowLib.ViewModels
                     Email = "Google@gmail.com",
                     PhoneNumber = "222-222-2222",
                     SmartPillowDeviceID = "YW455-19D",
-                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/google.json"
+                    DataUrl = "google"
                 };
                 user.UserData = GetHistories(user.DataUrl);
                 SetLightBlueAndCloseLoginPage(user);
+                UserInformation.User = user;
+                UserInformation.IsUserLogged = true;
+                UserInformation.IsConnected = true;
+                CheckStatus?.Invoke();
+                PopAsyncPage?.Invoke();
                 IsVisible = false;
             });
         });
 
         public ICommand FacebookCommand => new Command(async () =>
         {
-            // !!! I need to code this deeper for login function
-            //IsVisible = true;
+            IsVisible = true;
             await LoginFacebookAsync();
-            /// <summary>
-            ///     uses task.run to allow activity indicator to be displayed 
-            ///     while reading a json file and stores data into UserInformation
-            /// </summary>
-            //await Task.Run(() =>
-            //{
-            //    // For testing purpose
-            //    var user = new User()
-            //    {
-            //        FirstName = "Facebook Inc",
-            //        LastName = "",
-            //        Image = "Facebook.png",
-            //        Email = "Facebook@gmail.com",
-            //        PhoneNumber = "333-333-3333",
-            //        SmartPillowDeviceID = "WQW31-25X",
-            //        DataUrl = "https://quoridge.blob.core.windows.net/bugle/facebook.json"
-            //    };
-            //    user.UserData = GetHistories(user.DataUrl);
-            //    SetLightBlueAndCloseLoginPage(user);
-            //    IsVisible = false;
-            //});
         });
+
         async Task LoginFacebookAsync()
         {
             try
             {
                 if (_facebookService.IsLoggedIn)
-                {
                     _facebookService.Logout();
-                }
 
                 EventHandler<FBEventArgs<string>> userDataDelegate = null;
 
@@ -162,12 +155,27 @@ namespace SmartPillowLib.ViewModels
                                 Email = facebookProfile.Email,
                                 FirstName = $"{facebookProfile.FirstName} {facebookProfile.LastName}",
                                 Image = facebookProfile.Picture.Data.Url,
+                                Id = facebookProfile.Id,
                             };
-                            UserInformation.User = user;
+                            User = user;
+
+                            if (User.Id != null)
+                            {
+                                var existed = CheckUrlStatus(
+                                    "https://quoridge.blob.core.windows.net/bugle/" + User.Id + ".json");
+
+                                if(existed)
+                                {
+                                    User.UserData = GetHistories(User.Id);
+                                    if (User != null)
+                                        SetLightBlueAndCloseLoginPage(User);
+                                }
+                            }
+                            UserInformation.User = User;
                             UserInformation.IsUserLogged = true;
                             UserInformation.IsConnected = true;
-                            PopAsyncPage?.Invoke();
                             CheckStatus?.Invoke();
+                            PopAsyncPage?.Invoke();
                             break;
                         case FacebookActionStatus.Canceled:
                             FBCanceled?.Invoke();
@@ -197,11 +205,16 @@ namespace SmartPillowLib.ViewModels
             IsVisible = false;
         }
 
-        public List<History> GetHistories(string url)
+        /// <summary>
+        ///     Read User's data in json file and deserialize it to User's History
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<History> GetHistories(string id)
         {
             var list = new List<History>();
             var client = new WebClient();
-            Stream all = client.OpenRead(url);
+            Stream all = client.OpenRead("https://quoridge.blob.core.windows.net/bugle/" + id + ".json");
             using (StreamReader reader = new StreamReader(all))
             {
                 var page = reader.ReadToEnd();
@@ -210,10 +223,12 @@ namespace SmartPillowLib.ViewModels
             return list;
         }
 
-        // Temporarly method
+        /// <summary>
+        ///     Setting non-colors to actual colors after deserializing json for every single of entry -_-
+        /// </summary>
+        /// <param name="user"></param>
         public void SetLightBlueAndCloseLoginPage(User user)
         {
-            // setting non-colors to actual colors after deserializing json for every single of entry -_-
             foreach (var item in user.UserData)
                 foreach (var find in item.Weeks)
                 {
@@ -256,7 +271,7 @@ namespace SmartPillowLib.ViewModels
                         day.SnoreChart.BackgroundColor = SKColors.Transparent;
                         foreach (var snores in day.SnoreChart.Entries)
                         {
-                            snores.Color = (snores.Value == 0) ? SKColor.Parse("#0a00000c") 
+                            snores.Color = (snores.Value == 0) ? SKColor.Parse("#0a00000c")
                                 : SKColor.Parse("#00C2FF");
                         }
 
@@ -285,12 +300,26 @@ namespace SmartPillowLib.ViewModels
                         }
                     }
                 }
+        }
 
-            UserInformation.User = user;
-            UserInformation.IsUserLogged = true;
-            UserInformation.IsConnected = true;
-            CheckStatus?.Invoke();
-            PopAsyncPage?.Invoke();
+        /// <summary>
+        ///     Check the url if it is existed or not
+        /// </summary>
+        /// <param name="Website"></param>
+        /// <returns></returns>
+        protected bool CheckUrlStatus(string Website)
+        {
+            try
+            {
+                var request = WebRequest.Create(Website) as HttpWebRequest;
+                request.Method = "HEAD";
+                using (var response = (HttpWebResponse)request.GetResponse())
+                    return response.StatusCode == HttpStatusCode.OK;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
