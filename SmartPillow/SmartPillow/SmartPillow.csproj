@@ -14,12 +14,26 @@
     <None Remove="Fonts\Bahnschrift.TTF" />
     <None Remove="Fonts\Roboto-Medium.ttf" />
     <None Remove="Fonts\Ubuntu-Medium.ttf" />
+    <None Remove="Media\Ceiling_BackLayerCloud.png" />
+    <None Remove="Media\Ceiling_MiddleLayerCloud.png" />
+    <None Remove="Media\Ceiling_TopLayerCloud.png" />
+    <None Remove="Media\Cloud1.png" />
+    <None Remove="Media\Floor_BackLayerCloud.png" />
+    <None Remove="Media\Floor_MiddleLayerCloud.png" />
+    <None Remove="Media\Floor_TopLayerCloud.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Fonts\Bahnschrift.TTF" />
     <EmbeddedResource Include="Fonts\Roboto-Medium.ttf" />
     <EmbeddedResource Include="Fonts\Ubuntu-Medium.ttf" />
+    <EmbeddedResource Include="Media\Ceiling_BackLayerCloud.png" />
+    <EmbeddedResource Include="Media\Ceiling_MiddleLayerCloud.png" />
+    <EmbeddedResource Include="Media\Ceiling_TopLayerCloud.png" />
+    <EmbeddedResource Include="Media\Cloud1.png" />
+    <EmbeddedResource Include="Media\Floor_BackLayerCloud.png" />
+    <EmbeddedResource Include="Media\Floor_MiddleLayerCloud.png" />
+    <EmbeddedResource Include="Media\Floor_TopLayerCloud.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +51,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Controls\CloudBackground.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\TimedAlarms\SPDeleteBtn.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

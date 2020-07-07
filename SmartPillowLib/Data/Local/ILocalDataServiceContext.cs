@@ -27,12 +27,7 @@ namespace SmartPillowLib.Data.Local
         IEnumerable<Alarm> GetAlarms(string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
 
         void DeleteAllAlarms(string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
-    }
 
-    public enum DataServiceType
-    {
-        InsertAlarm = 0,
-        UpdateAlarm,
-        GetAlarms
+        void DeleteAlarm(int alarmId, string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
     }
 }

@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
              xmlns:vm="clr-namespace:SmartPillowLib.ViewModels.TimedAlarmVMs;assembly=SmartPillowLib" 
-             xmlns:controls="clr-namespace:SmartPillow.Controls.TimedAlarms"
+             xmlns:controls_timed_alarms="clr-namespace:SmartPillow.Controls.TimedAlarms" 
+             xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.TimedAlarmPages.NormalAlarmsPage"
              x:Name="page">
@@ -27,7 +28,8 @@
     
     <Grid>
 
-        <skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>
+        <!--<skia:SKCanvasView x:Name="SKCanvas" PaintSurface="SKCanvas_PaintSurface"/>-->
+        <controls:CloudBackground x:Name="cloudBackground"/>
 
         <StackLayout>
             <Frame x:Name="searchFrame" BackgroundColor="White" CornerRadius="10" Margin="10" Padding="3" HorizontalOptions="FillAndExpand">
@@ -36,9 +38,9 @@
 
             <StackLayout IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" Orientation="Horizontal" Margin="0,10">
                 <!-- Need to bind the IsDeleteModeActive to the SPSelectAllListViewBtn because it needs to know when it has been made visible -->
-                <controls:SPSelectAllListViewBtn HorizontalOptions="Start" Margin="35,0,0,0" WidthRequest="30" IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" Command="{Binding ToggleAllAlarmsCMD}"/>
+                <controls_timed_alarms:SPSelectAllListViewBtn HorizontalOptions="Start" Margin="35,0,0,0" WidthRequest="30" IsVisible="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" Command="{Binding ToggleAllAlarmsCMD}"/>
                 <Label TextColor="{StaticResource GrayedFont}" Text="All" VerticalOptions="Center"/>
-                <controls:SPDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" IsVisible="{Binding IsDeleteModeActive}"/>
+                <controls_timed_alarms:SPDeleteBtn Command="{Binding DeleteAlarmsCMD}" WidthRequest="50" HeightRequest="50" HorizontalOptions="EndAndExpand" Margin="0,0,35,0" IsVisible="{Binding IsDeleteModeActive}"/>
             </StackLayout>
             <!-- Contains a collection of timed alarms -->
             <ListView x:Name="listview"
@@ -51,8 +53,8 @@
                     <DataTemplate>
                         <ViewCell x:Name="viewCell">
                             <StackLayout Orientation="Horizontal" Padding="5" Margin="30,10">
-                                <controls:SPSelectThisListViewBtn x:Name="selectThis" ToggleVisibility="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" SiblingGrid="{x:Reference grid}" ParentViewCell="{x:Reference viewCell}"/>
-                                <Grid HeightRequest="70" x:Name="grid" BackgroundColor="Yellow">
+                                <controls_timed_alarms:SPSelectThisListViewBtn x:Name="selectThis" ToggleVisibility="{Binding Source={x:Reference bindingContext}, Path=IsDeleteModeActive}" IsChecked="{Binding ToBeDeleted}" WidthRequest="30" SiblingGrid="{x:Reference grid}" ParentViewCell="{x:Reference viewCell}"/>
+                                <Grid HeightRequest="70" x:Name="grid">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="0.4*"/>

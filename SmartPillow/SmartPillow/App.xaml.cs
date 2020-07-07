@@ -68,5 +68,32 @@ namespace SmartPillow
                 Database_Path = dbPAth;
             }
         }
+
+        /// <summary>
+        ///     Keys for animations to use.<br/>
+        ///     These key's values can be accessed by a get request to Xamarin.Essentials Preferences.
+        /// </summary>
+        public readonly struct AnimationKeys
+        {
+            /// <summary>
+            ///     Key to get the framerate value for costly animations.<br/>
+            ///     Costly means that the animation that uses this key must use alot of processesing power.
+            /// </summary>
+            public const string COSTLY_ANIMATION_FRAMERATE = "costly_animation_framerate";            
+        }
+    }
+
+    /// <summary>
+    ///     Contains states related to how the animations should be handled.<br/>
+    ///     <br/><br/>
+    ///     - Basic, No animation<br/>
+    ///     - Intermediate, Run animation with restraints<br/>
+    ///     - Fancy, Run the full animation<br/>
+    /// </summary>
+    public enum AnimationOptimization
+    {
+        Basic = 0,
+        Intermediate,
+        Fancy
     }
 }

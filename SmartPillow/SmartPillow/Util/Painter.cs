@@ -11,7 +11,7 @@ namespace SmartPillow.Util
             var surface = e.Surface;
             var canvas = surface.Canvas;
 
-            canvas.Clear();
+            canvas.Clear();            
 
             using (SKPaint paint = new SKPaint())
             {

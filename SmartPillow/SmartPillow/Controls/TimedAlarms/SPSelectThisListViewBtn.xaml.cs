@@ -32,6 +32,7 @@ namespace SmartPillow.Controls.TimedAlarms
         public static readonly BindableProperty SiblingGridProperty = BindableProperty.Create(nameof(SiblingGrid), typeof(Grid), typeof(SPSelectThisListViewBtn), null, BindingMode.TwoWay);
 
         public static readonly BindableProperty ToggleVisibilityProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(SPSelectThisListViewBtn), false, BindingMode.TwoWay, null, SPToggleVisibility_PropertyChanged, SPToggleVisibility_PropertyChanging);
+
         public static readonly BindableProperty ParentViewCellProperty = BindableProperty.Create(nameof(ParentViewCell), typeof(ViewCell), typeof(SPSelectThisListViewBtn), null, BindingMode.TwoWay);
                 
         #endregion

@@ -110,7 +110,8 @@ namespace SmartPillowLib.ViewModels.TimedAlarmVMs
                 // If the alarm at the current index is to be deleted.. delete it.
                 if (Alarms[i].ToBeDeleted)
                 {
-                    Alarms.RemoveAt(i);
+                    LocalDataServiceContext.Provider.DeleteAlarm(Alarms[i].Id);
+                    Alarms.RemoveAt(i);                    
                     // Stepping back to make sure we don't skip a item when we remove an item in the collection
                     i--;
                 }

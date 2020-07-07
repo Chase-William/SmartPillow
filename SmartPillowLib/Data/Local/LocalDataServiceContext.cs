@@ -85,5 +85,14 @@ namespace SmartPillowLib.Data.Local
                 col.DeleteAll();
             }
         }
+
+        public void DeleteAlarm(int alarmId, string collection_key = TIMED_ALARM_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alarm>(collection_key);
+                col.Delete(alarmId);
+            }
+        }
     }
 }

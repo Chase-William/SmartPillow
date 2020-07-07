@@ -7,6 +7,7 @@ using SmartPillowLib.ViewModels.TimedAlarmVMs;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using Xamarin.Forms.Markup;
 using Xamarin.Forms.Xaml;
 
 namespace SmartPillow.Pages.TimedAlarmPages
@@ -30,9 +31,10 @@ namespace SmartPillow.Pages.TimedAlarmPages
             };
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             AlarmListViewWrapper.AlarmStateChanged += OnAlarmStateChanged;
+            await cloudBackground.StartAnimation();
             this.IsEnabled = true;
             base.OnAppearing();
         }
@@ -40,6 +42,7 @@ namespace SmartPillow.Pages.TimedAlarmPages
         protected override void OnDisappearing()
         {
             AlarmListViewWrapper.AlarmStateChanged -= OnAlarmStateChanged;
+            cloudBackground.StopAnimation();
             // Reseting the boolean that prevents duplicate CreateTimedAlarmPages from being created.
             this.IsEnabled = false;
             base.OnDisappearing();
