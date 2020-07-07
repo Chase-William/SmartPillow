@@ -51,7 +51,11 @@
             <Image Source="cloudPageBackground.png" VerticalOptions="StartAndExpand" Grid.RowSpan="3"/>
             
             <Grid>
-                <Image Source="{Binding Image}" HeightRequest="200" Margin="0,0,0,10" VerticalOptions="End" HorizontalOptions="Center"/>
+                <Frame Padding="-10" CornerRadius="150" VerticalOptions="End" HeightRequest="200" WidthRequest="200"
+                       IsClippedToBounds="True" HorizontalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                    <Image Source="{Binding Image}" HeightRequest="200" WidthRequest="200"
+                            HorizontalOptions="CenterAndExpand" Aspect="AspectFill" VerticalOptions="CenterAndExpand"/>
+                </Frame>
             </Grid>
             
             <Grid Grid.Row="1">

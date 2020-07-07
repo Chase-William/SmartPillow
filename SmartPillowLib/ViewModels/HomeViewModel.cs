@@ -398,6 +398,7 @@ namespace SmartPillowLib.ViewModels
             if (PillowID == "No Pillow")
                 Status = "";
             PillowStatusColor = (IsConnected) ? Color.FromHex("#53FF6F") : Color.FromHex("#FF5353");
+            ProfileImage = User.Image;
         }
     }
 }

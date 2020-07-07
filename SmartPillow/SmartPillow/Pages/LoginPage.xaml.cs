@@ -24,7 +24,12 @@ namespace SmartPillow.Pages
                 ///     This page will be popped off to return to HomePage
                 /// </summary>
                 await Navigation.PopModalAsync();
-            };            
+            };
+
+            VM.FBCanceled += async delegate
+            {
+                await App.Current.MainPage.DisplayAlert("Facebook Auth", "Canceled", "Ok");
+            };
         }
 
         protected override void OnDisappearing()

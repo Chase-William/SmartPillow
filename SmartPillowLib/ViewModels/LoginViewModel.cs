@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Plugin.FacebookClient;
 using SkiaSharp;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -15,8 +17,11 @@ namespace SmartPillowLib.ViewModels
     public class LoginViewModel : NotifyClass
     {
         public event Action PopAsyncPage;
+        public event Action FBCanceled;
         public static event Action CheckStatus;
         public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
+
+        IFacebookClient _facebookService = CrossFacebookClient.Current;
 
         private bool isVisible;
 
@@ -109,31 +114,83 @@ namespace SmartPillowLib.ViewModels
         public ICommand FacebookCommand => new Command(async () =>
         {
             // !!! I need to code this deeper for login function
-            IsVisible = true;
-
+            //IsVisible = true;
+            await LoginFacebookAsync();
             /// <summary>
             ///     uses task.run to allow activity indicator to be displayed 
             ///     while reading a json file and stores data into UserInformation
             /// </summary>
-            await Task.Run(() =>
-            {
-                // For testing purpose
-                var user = new User()
-                {
-                    FirstName = "Facebook Inc",
-                    LastName = "",
-                    Image = "Facebook.png",
-                    Email = "Facebook@gmail.com",
-                    PhoneNumber = "333-333-3333",
-                    SmartPillowDeviceID = "WQW31-25X",
-                    DataUrl = "https://quoridge.blob.core.windows.net/bugle/facebook.json"
-                };
-                user.UserData = GetHistories(user.DataUrl);
-                SetLightBlueAndCloseLoginPage(user);
-                IsVisible = false;
-            });
+            //await Task.Run(() =>
+            //{
+            //    // For testing purpose
+            //    var user = new User()
+            //    {
+            //        FirstName = "Facebook Inc",
+            //        LastName = "",
+            //        Image = "Facebook.png",
+            //        Email = "Facebook@gmail.com",
+            //        PhoneNumber = "333-333-3333",
+            //        SmartPillowDeviceID = "WQW31-25X",
+            //        DataUrl = "https://quoridge.blob.core.windows.net/bugle/facebook.json"
+            //    };
+            //    user.UserData = GetHistories(user.DataUrl);
+            //    SetLightBlueAndCloseLoginPage(user);
+            //    IsVisible = false;
+            //});
         });
+        async Task LoginFacebookAsync()
+        {
+            try
+            {
+                if (_facebookService.IsLoggedIn)
+                {
+                    _facebookService.Logout();
+                }
 
+                EventHandler<FBEventArgs<string>> userDataDelegate = null;
+
+                userDataDelegate = async (object sender, FBEventArgs<string> e) =>
+                {
+                    if (e == null) return;
+
+                    switch (e.Status)
+                    {
+                        case FacebookActionStatus.Completed:
+                            var facebookProfile = await Task.Run(() => JsonConvert.DeserializeObject<FacebookProfile>(e.Data));
+                            var user = new User
+                            {
+                                Email = facebookProfile.Email,
+                                FirstName = $"{facebookProfile.FirstName} {facebookProfile.LastName}",
+                                Image = facebookProfile.Picture.Data.Url,
+                            };
+                            UserInformation.User = user;
+                            UserInformation.IsUserLogged = true;
+                            UserInformation.IsConnected = true;
+                            PopAsyncPage?.Invoke();
+                            CheckStatus?.Invoke();
+                            break;
+                        case FacebookActionStatus.Canceled:
+                            FBCanceled?.Invoke();
+                            break;
+                        case FacebookActionStatus.Unauthorized:
+                            FBCanceled?.Invoke();
+                            break;
+                    }
+
+                    _facebookService.OnUserData -= userDataDelegate;
+                };
+
+                _facebookService.OnUserData += userDataDelegate;
+
+                string[] fbRequestFields = { "email", "first_name", "gender", "last_name", "picture.width(1500).height(1500)" };
+                string[] fbPermisions = { "email" };
+                await _facebookService.RequestUserDataAsync(fbRequestFields, fbPermisions);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
         public LoginViewModel()
         {
             // hides activity indicator when LoginPage gets opened
