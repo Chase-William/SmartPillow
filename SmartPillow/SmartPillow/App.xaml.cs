@@ -76,24 +76,9 @@ namespace SmartPillow
         public readonly struct AnimationKeys
         {
             /// <summary>
-            ///     Key to get the framerate value for costly animations.<br/>
-            ///     Costly means that the animation that uses this key must use alot of processesing power.
+            ///     Animation quality for custom animations.
             /// </summary>
-            public const string COSTLY_ANIMATION_FRAMERATE = "costly_animation_framerate";            
+            public const string ANIMATION_QUALITY = "animation_quality";  
         }
-    }
-
-    /// <summary>
-    ///     Contains states related to how the animations should be handled.<br/>
-    ///     <br/><br/>
-    ///     - Basic, No animation<br/>
-    ///     - Intermediate, Run animation with restraints<br/>
-    ///     - Fancy, Run the full animation<br/>
-    /// </summary>
-    public enum AnimationOptimization
-    {
-        Basic = 0,
-        Intermediate,
-        Fancy
-    }
+    }    
 }

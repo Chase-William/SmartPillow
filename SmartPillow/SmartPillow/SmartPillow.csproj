@@ -17,10 +17,10 @@
     <None Remove="Media\Ceiling_BackLayerCloud.png" />
     <None Remove="Media\Ceiling_MiddleLayerCloud.png" />
     <None Remove="Media\Ceiling_TopLayerCloud.png" />
-    <None Remove="Media\Cloud1.png" />
     <None Remove="Media\Floor_BackLayerCloud.png" />
     <None Remove="Media\Floor_MiddleLayerCloud.png" />
     <None Remove="Media\Floor_TopLayerCloud.png" />
+    <None Remove="Media\SingleLargeCloud.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +30,7 @@
     <EmbeddedResource Include="Media\Ceiling_BackLayerCloud.png" />
     <EmbeddedResource Include="Media\Ceiling_MiddleLayerCloud.png" />
     <EmbeddedResource Include="Media\Ceiling_TopLayerCloud.png" />
-    <EmbeddedResource Include="Media\Cloud1.png" />
+    <EmbeddedResource Include="Media\SingleLargeCloud.png" />
     <EmbeddedResource Include="Media\Floor_BackLayerCloud.png" />
     <EmbeddedResource Include="Media\Floor_MiddleLayerCloud.png" />
     <EmbeddedResource Include="Media\Floor_TopLayerCloud.png" />
@@ -88,19 +88,22 @@
     <EmbeddedResource Update="Pages\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TimedAlarmPages\CreateTimedAlarmPage.xaml">
+    <EmbeddedResource Update="Pages\SettingsPages\PhoneSettings.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TimedAlarmPages\PhoneAlarmSettingsPage.xaml">
+    <EmbeddedResource Update="Pages\TimedAlarmsPages\CreateTimedAlarmPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TimedAlarmPages\PillowAlarmSettingsPage.xaml">
+    <EmbeddedResource Update="Pages\TimedAlarmsPages\PhoneAlarmSettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TimedAlarmPages\SnoozeSettingsPage.xaml">
+    <EmbeddedResource Update="Pages\TimedAlarmsPages\PillowAlarmSettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TimedAlarmPages\NormalAlarmsPage.xaml">
+    <EmbeddedResource Update="Pages\TimedAlarmsPages\SnoozeSettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TimedAlarmsPages\NormalAlarmsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\ProfileFrame.xaml">
@@ -130,13 +133,13 @@
     <Compile Update="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\TimedAlarmPages\CreateTimedAlarmPage.xaml.cs">
+    <Compile Update="Pages\TimedAlarmsPages\CreateTimedAlarmPage.xaml.cs">
       <DependentUpon>CreateTimedAlarmPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\TimedAlarmPages\SnoozeSettingsPage.xaml.cs">
+    <Compile Update="Pages\TimedAlarmsPages\SnoozeSettingsPage.xaml.cs">
       <DependentUpon>SnoozeSettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\TimedAlarmPages\NormalAlarmsPage.xaml.cs">
+    <Compile Update="Pages\TimedAlarmsPages\NormalAlarmsPage.xaml.cs">
       <DependentUpon>TimedAlarmsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>

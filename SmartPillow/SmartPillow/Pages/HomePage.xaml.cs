@@ -30,6 +30,10 @@ namespace SmartPillow.Pages
             {
                 await Navigation.PushModalAsync(new ProfilePage());
             };
+            VM.OpenSettingsPage += async delegate
+            {
+                await Navigation.PushModalAsync(new SettingsPages.PhoneSettings());
+            };
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);

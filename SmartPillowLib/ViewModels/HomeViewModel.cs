@@ -11,6 +11,7 @@ namespace SmartPillowLib.ViewModels
     {
         public event Action OpenLoginPage;
         public event Action OpenProfilePage;
+        public event Action OpenSettingsPage;
         private bool isScanPillowPopupVisible = false;
         private bool isDetailPopupVisible = false;
         private string status;
@@ -344,6 +345,8 @@ namespace SmartPillowLib.ViewModels
             else
                 OpenProfilePage?.Invoke();
         });
+
+        public ICommand SettingsCMD => new Command(() => OpenSettingsPage.Invoke());
 
         public ICommand OpenScanPillowCommand => new Command(() => IsScanPillowPopupVisible = true);
 

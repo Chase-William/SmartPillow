@@ -17,7 +17,14 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="rightIcon" IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
+        <ToolbarItem x:Name="rightIcon" 
+                     IconImageSource="{Binding ProfileImage}" 
+                     Command="{Binding UserCommand}"/>
+        <ToolbarItem 
+                     Text="Settings"
+                     Order="Secondary"
+                     Priority="0"
+                     Command="{Binding SettingsCMD}"/>
     </ContentPage.ToolbarItems>
 
 

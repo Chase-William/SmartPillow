@@ -1,5 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SmartPillowLib.ViewModels.SettingsVMs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,26 +62,30 @@ namespace SmartPillow.Controls
 
                 // Draw the gradient on the rectangle
                 e.Surface.Canvas.DrawRect(0, 0, e.Info.Width, e.Info.Height, GradientPaint);
-            };           
-            
+            };
+
             // Get the current opimization state
-            AnimationOptimization optimization = (AnimationOptimization)Preferences.Get(App.AnimationKeys.COSTLY_ANIMATION_FRAMERATE, (int)AnimationOptimization.Fancy);
+            AnimationQuality optimization = (AnimationQuality)Preferences.Get(App.AnimationKeys.ANIMATION_QUALITY, (int)AnimationQuality.Fancy);
 
             // Depending on the current optimization state attach a different event handler.
             switch (optimization)
             {
-                case AnimationOptimization.Basic:
-                    
+                case AnimationQuality.Simple:
+                    Clouds = new Dictionary<string, CloudData>
+                    {
+                        { SINGLE_CLOUD_KEY , new CloudData(GetSKBitmap("SmartPillow.Media.SingleLargeCloud.png")) }
+                    };
+                    canvasView.PaintSurface += CanvasView_Simple_PaintSurface;
                     break;
-                case AnimationOptimization.Intermediate:
+                case AnimationQuality.Intermediate:
                     // Getting the embedded bitmap
                     Clouds = new Dictionary<string, CloudData>
                     {
-                        { SINGLE_CLOUD_KEY , new CloudData(GetSKBitmap("SmartPillow.Media.Cloud1.png")) }
+                        { SINGLE_CLOUD_KEY , new CloudData(GetSKBitmap("SmartPillow.Media.SingleLargeCloud.png")) }
                     };
-                    canvasView.PaintSurface += SKCanvas_Intermediate_PaintCanvas;
+                    canvasView.PaintSurface += CanvasView_Intermediate_PaintCanvas;
                     break;
-                case AnimationOptimization.Fancy:
+                case AnimationQuality.Fancy:
 
                     int height = (int)DeviceDisplay.MainDisplayInfo.Height;
 
@@ -88,14 +93,16 @@ namespace SmartPillow.Controls
                     // Ceiling clouds are loaded first and then floor clouds
                     Clouds = new Dictionary<string, CloudData>
                     {
-                        { CEILING_TOP_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Ceiling_BackLayerCloud.png"), 70, 0.3f) },
-                        { CEILING_MIDDLE_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Ceiling_MiddleLayerCloud.png"), 45, 0.7f) },
-                        { CEILING_BACK_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Ceiling_TopLayerCloud.png"), 30, 0.9f) },
+                        // IMPORTANT -- Currently all animation speeds should be a factor of 1 or 1 itself.
+                        // If this is not follow there will be overlap of the two clouds which will appear as a white line.
+                        { CEILING_TOP_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Ceiling_BackLayerCloud.png"), 70, 0.2f) },
+                        { CEILING_MIDDLE_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Ceiling_MiddleLayerCloud.png"), 45, 0.5f) },
+                        { CEILING_BACK_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Ceiling_TopLayerCloud.png"), 30, 1f) },
                         { FLOOR_TOP_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Floor_BackLayerCloud.png"), height / 2 + 200, 0.2f) },
-                        { FLOOR_MIDDLE_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Floor_MiddleLayerCloud.png"), height / 2 + 150, 0.6f) },
-                        { FLOOR_BACK_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Floor_TopLayerCloud.png"), height / 2 + 130, 0.8f) }
+                        { FLOOR_MIDDLE_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Floor_MiddleLayerCloud.png"), height / 2 + 150, 0.5f) },
+                        { FLOOR_BACK_CLOUD_KEY, new CloudData(GetSKBitmap("SmartPillow.Media.Floor_TopLayerCloud.png"), height / 2 + 130, 1.0f) }
                     };
-                    canvasView.PaintSurface += SKCanvas_Fancy_PaintCanvas;
+                    canvasView.PaintSurface += CanvasView_Fancy_PaintCanvas;
                     break;
                 default:
                     
@@ -103,9 +110,12 @@ namespace SmartPillow.Controls
             }
         }
 
-        private void CloudBackground_MeasureInvalidated(object sender, EventArgs e)
+        /// <summary>
+        ///     Draws one un-animated bitmap of a large cloud.
+        /// </summary>
+        private void CanvasView_Simple_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
-            Console.WriteLine();
+            e.Surface.Canvas.DrawBitmap(Clouds[SINGLE_CLOUD_KEY].CloudBitmap, new SKPoint());
         }
 
         /// <summary>
@@ -115,7 +125,7 @@ namespace SmartPillow.Controls
         ///     Ceiling clouds are drawn before floor clouds.<br/>
         ///     Cloud layers are drawn back to front.
         /// </summary>
-        private void SKCanvas_Fancy_PaintCanvas(object sender, SKPaintSurfaceEventArgs e)
+        private void CanvasView_Fancy_PaintCanvas(object sender, SKPaintSurfaceEventArgs e)
         {
             var surface = e.Surface;
             var canvas = surface.Canvas;
@@ -141,7 +151,7 @@ namespace SmartPillow.Controls
         ///     Intermediate level of optimiation for drawing our animation.<br/>
         ///     Draws 2 Bitmaps that are recycled to create a infinite loop of clouds floating by.
         /// </summary>
-        private void SKCanvas_Intermediate_PaintCanvas(object sender, SKPaintSurfaceEventArgs e)
+        private void CanvasView_Intermediate_PaintCanvas(object sender, SKPaintSurfaceEventArgs e)
         {
             var surface = e.Surface;
             var canvas = surface.Canvas;
@@ -273,7 +283,5 @@ namespace SmartPillow.Controls
                 IncrementBy = _incrementBy;
             }
         }
-
-        // Get the height from the parent view or something
     }
 }
