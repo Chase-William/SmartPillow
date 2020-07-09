@@ -37,8 +37,8 @@ namespace SmartPillow.Droid
             LoadApplication(new App(completedPath));
 
             CreateNotificationFromIntent(Intent);
-           
-            AndroidSmartPillowAlarm.Init(this);            
+
+            AndroidSmartPillowAlarm.Init(this);
         }
 
         protected override void OnNewIntent(Intent intent)

@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace SmartPillowLib.ViewModels
@@ -17,6 +18,7 @@ namespace SmartPillowLib.ViewModels
     public class LoginViewModel : NotifyClass
     {
         public event Action PopAsyncPage;
+        public event Action<OAuth1Authenticator> OpenTwitterPage;
         public event Action FBCanceled;
         public static event Action CheckStatus;
         public User User { get; set; }
@@ -74,29 +76,69 @@ namespace SmartPillowLib.ViewModels
             // !!! I need to code this deeper for login function
             IsVisible = true;
 
-            await Task.Run(() =>
+            var auth = new OAuth1Authenticator(
+                consumerKey: "RdghlGeE9yKzXmqfKclCxqeWR",
+                consumerSecret: "UblALjSOXJTRAz0DvqHhtJcDm9qpIpzYd0CHE8FyhNVO99JBnP",
+                requestTokenUrl: new Uri("https://api.twitter.com/oauth/request_token"),
+                authorizeUrl: new Uri("https://api.twitter.com/oauth/authorize"),
+                accessTokenUrl: new Uri("https://api.twitter.com/oauth/access_token"),
+                callbackUrl: new Uri("http://mobile.twitter.com")
+                );
+
+            auth.Completed += Auth_Completed;
+
+            // ?????? 
+            //auth.GetUI();
+            
+            OpenTwitterPage?.Invoke(auth);
+
+
+            //await Task.Run(() =>
+            //{
+            //    // For testing purpose
+            //    var user = new User()
+            //    {
+            //        FirstName = "Twitter",
+            //        LastName = "",
+            //        Image = "Twitter.png",
+            //        Email = "Twitter@gmail.com",
+            //        PhoneNumber = "111-111-1111",
+            //        SmartPillowDeviceID = "SP123-19B",
+            //        DataUrl = "twitter"
+            //    };
+            //    user.UserData = GetHistories(user.DataUrl);
+            //    SetLightBlueAndCloseLoginPage(user);
+            //    UserInformation.User = user;
+            //    UserInformation.IsUserLogged = true;
+            //    UserInformation.IsConnected = true;
+            //    CheckStatus?.Invoke();
+            //    PopAsyncPage?.Invoke();
+            //    IsVisible = false;
+            //});
+        });
+
+        
+        async void Auth_Completed(object sender, AuthenticatorCompletedEventArgs e)
+        {
+            if(e.IsAuthenticated)
             {
-                // For testing purpose
+                var request = new OAuth1Request("GET", new Uri("https://api.twitter.com/1.1/account/verify_credentials.json"),
+                    null, e.Account);
+
+                var response = await request.GetResponseAsync();
+
+                var json = response.GetResponseText();
+
+                var twitterUser = JsonConvert.DeserializeObject<Twitter>(json);
+
                 var user = new User()
                 {
-                    FirstName = "Twitter",
-                    LastName = "",
-                    Image = "Twitter.png",
-                    Email = "Twitter@gmail.com",
-                    PhoneNumber = "111-111-1111",
-                    SmartPillowDeviceID = "SP123-19B",
-                    DataUrl = "twitter"
+                    FirstName = twitterUser.name,
+                    Id = twitterUser.id.ToString(),
+                    Image = twitterUser.profile_background_image_url
                 };
-                user.UserData = GetHistories(user.DataUrl);
-                SetLightBlueAndCloseLoginPage(user);
-                UserInformation.User = user;
-                UserInformation.IsUserLogged = true;
-                UserInformation.IsConnected = true;
-                CheckStatus?.Invoke();
-                PopAsyncPage?.Invoke();
-                IsVisible = false;
-            });
-        });
+            }
+        }
 
         public ICommand GoogleCommand => new Command(async () =>
         {
