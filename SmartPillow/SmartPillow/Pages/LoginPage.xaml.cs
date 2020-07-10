@@ -14,6 +14,7 @@ namespace SmartPillow.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        public Action SuccessfulLoginAction;
         public LoginViewModel VM => (LoginViewModel)BindingContext;
         public LoginPage()
         {
@@ -30,6 +31,22 @@ namespace SmartPillow.Pages
             {
                 await App.Current.MainPage.DisplayAlert("Facebook Auth", "Canceled", "Ok");
             };
+
+            VM.OpenTwitterPage += async delegate
+            {
+                await Navigation.PushModalAsync(new ProviderPage());
+            };
+
+            SuccessfulLoginAction += async delegate
+            {
+                await Navigation.PopModalAsync();
+            };
+        }
+
+        protected override void OnAppearing()
+        {
+            IsEnabled = true;
+            base.OnAppearing();
         }
 
         protected override void OnDisappearing()

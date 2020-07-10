@@ -7,7 +7,7 @@ namespace SmartPillowLib.Models
     public class Twitter
     {
         public string name { get; set; }
-        public int id { get; set; }
-        public string profile_background_image_url { get; set; }
+        //public int id { get; set; }
+        public string profile_image_url_https { get; set; }
     }
 }

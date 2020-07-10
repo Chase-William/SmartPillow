@@ -18,7 +18,7 @@ namespace SmartPillowLib.ViewModels
     public class LoginViewModel : NotifyClass
     {
         public event Action PopAsyncPage;
-        public event Action<OAuth1Authenticator> OpenTwitterPage;
+        public event Action OpenTwitterPage;
         public event Action FBCanceled;
         public static event Action CheckStatus;
         public User User { get; set; }
@@ -71,27 +71,9 @@ namespace SmartPillowLib.ViewModels
             });
         });
 
-        public ICommand TwitterCommand => new Command(async () =>
+        public ICommand TwitterCommand => new Command(() =>
         {
-            // !!! I need to code this deeper for login function
-            IsVisible = true;
-
-            var auth = new OAuth1Authenticator(
-                consumerKey: "RdghlGeE9yKzXmqfKclCxqeWR",
-                consumerSecret: "UblALjSOXJTRAz0DvqHhtJcDm9qpIpzYd0CHE8FyhNVO99JBnP",
-                requestTokenUrl: new Uri("https://api.twitter.com/oauth/request_token"),
-                authorizeUrl: new Uri("https://api.twitter.com/oauth/authorize"),
-                accessTokenUrl: new Uri("https://api.twitter.com/oauth/access_token"),
-                callbackUrl: new Uri("http://mobile.twitter.com")
-                );
-
-            auth.Completed += Auth_Completed;
-
-            // ?????? 
-            //auth.GetUI();
-            
-            OpenTwitterPage?.Invoke(auth);
-
+            OpenTwitterPage?.Invoke();
 
             //await Task.Run(() =>
             //{
@@ -116,29 +98,6 @@ namespace SmartPillowLib.ViewModels
             //    IsVisible = false;
             //});
         });
-
-        
-        async void Auth_Completed(object sender, AuthenticatorCompletedEventArgs e)
-        {
-            if(e.IsAuthenticated)
-            {
-                var request = new OAuth1Request("GET", new Uri("https://api.twitter.com/1.1/account/verify_credentials.json"),
-                    null, e.Account);
-
-                var response = await request.GetResponseAsync();
-
-                var json = response.GetResponseText();
-
-                var twitterUser = JsonConvert.DeserializeObject<Twitter>(json);
-
-                var user = new User()
-                {
-                    FirstName = twitterUser.name,
-                    Id = twitterUser.id.ToString(),
-                    Image = twitterUser.profile_background_image_url
-                };
-            }
-        }
 
         public ICommand GoogleCommand => new Command(async () =>
         {

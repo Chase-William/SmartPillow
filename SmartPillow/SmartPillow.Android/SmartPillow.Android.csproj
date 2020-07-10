@@ -73,6 +73,7 @@
     <Compile Include="Locals\Notifications\AndroidNotificationManager.cs" />
     <Compile Include="Renderers\CustomTimePickerRenderer.cs" />
     <Compile Include="Renderers\EntryNoUnderlineRenderer.cs" />
+    <Compile Include="Renderers\ProviderRenderer.cs" />
     <Compile Include="Renderers\RadioBtnRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
