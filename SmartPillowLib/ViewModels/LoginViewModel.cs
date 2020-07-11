@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Plugin.FacebookClient;
 using SkiaSharp;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
@@ -99,33 +100,39 @@ namespace SmartPillowLib.ViewModels
             //});
         });
 
-        public ICommand GoogleCommand => new Command(async () =>
+        public ICommand GoogleCommand => new Command(() =>
         {
             // !!! I need to code this deeper for login function
             IsVisible = true;
 
-            await Task.Run(() =>
-            {
-                // For testing purpose
-                var user = new User()
-                {
-                    FirstName = "Google",
-                    LastName = "",
-                    Image = "Google.png",
-                    Email = "Google@gmail.com",
-                    PhoneNumber = "222-222-2222",
-                    SmartPillowDeviceID = "YW455-19D",
-                    DataUrl = "google"
-                };
-                user.UserData = GetHistories(user.DataUrl);
-                SetLightBlueAndCloseLoginPage(user);
-                UserInformation.User = user;
-                UserInformation.IsUserLogged = true;
-                UserInformation.IsConnected = true;
-                CheckStatus?.Invoke();
-                PopAsyncPage?.Invoke();
-                IsVisible = false;
-            });
+            var googleAuth = new GoogleAuthenticator(
+                "300644153670-d7enm5rerpojto6gcb4hiibmch34stip.apps.googleusercontent.com",
+                "email",
+                "com.companyname.smartpillow:/oauth2redirect",
+                DependencyService.Get<IGoogleAuthenticationDelegate>());
+
+            //await Task.Run(() =>
+            //{
+            //    // For testing purpose
+            //    var user = new User()
+            //    {
+            //        FirstName = "Google",
+            //        LastName = "",
+            //        Image = "Google.png",
+            //        Email = "Google@gmail.com",
+            //        PhoneNumber = "222-222-2222",
+            //        SmartPillowDeviceID = "YW455-19D",
+            //        DataUrl = "google"
+            //    };
+            //    user.UserData = GetHistories(user.DataUrl);
+            //    SetLightBlueAndCloseLoginPage(user);
+            //    UserInformation.User = user;
+            //    UserInformation.IsUserLogged = true;
+            //    UserInformation.IsConnected = true;
+            //    CheckStatus?.Invoke();
+            //    PopAsyncPage?.Invoke();
+            //    IsVisible = false;
+            //});
         });
 
         public ICommand FacebookCommand => new Command(async () =>

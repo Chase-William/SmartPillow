@@ -9,6 +9,9 @@ using SmartPillow.Droid.Locals.SmartPillowAlarm;
 using SmartPillow.CustomAbstractions.LocationNotification;
 using SmartPillow.Droid.Locals.Notifications;
 using Plugin.FacebookClient;
+using System;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
 
 namespace SmartPillow.Droid
 {
@@ -20,7 +23,7 @@ namespace SmartPillow.Droid
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
               LaunchMode = LaunchMode.SingleTop)] // The SingleTop mode prevents multiple instances of an Activity from being started while the application is in the foreground 
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-    {
+    {       
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -72,11 +75,12 @@ namespace SmartPillow.Droid
             base.OnActivityResult(requestCode, resultCode, intent);
             FacebookClientManager.OnActivityResult(requestCode, resultCode, intent);
         }
+
         public override void OnBackPressed()
         {
             // Invoking the backbtn pressed func
             App.OnHWBackBtnPressed?.Invoke();
             base.OnBackPressed();
-        }
-    } 
+        }        
+    }
 }

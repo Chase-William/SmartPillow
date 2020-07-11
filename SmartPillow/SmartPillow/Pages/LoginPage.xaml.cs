@@ -1,11 +1,8 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
-using SmartPillowLib;
-using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels;
 using System;
-using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

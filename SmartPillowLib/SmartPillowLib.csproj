@@ -14,4 +14,8 @@
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPillowAuthLib\SmartPillowAuthLib.csproj" />
+  </ItemGroup>
+
 </Project>
