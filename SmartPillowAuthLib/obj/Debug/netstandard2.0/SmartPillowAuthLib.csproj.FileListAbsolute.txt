@@ -6,3 +6,11 @@ C:\Dev\SmartPillow\SmartPillowAuthLib\bin\Debug\netstandard2.0\SmartPillowAuthLi
 C:\Dev\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.csproj.CoreCompileInputs.cache
 C:\Dev\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.dll
 C:\Dev\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.pdb
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\bin\Debug\netstandard2.0\SmartPillowAuthLib.deps.json
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\bin\Debug\netstandard2.0\SmartPillowAuthLib.dll
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\bin\Debug\netstandard2.0\SmartPillowAuthLib.pdb
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.AssemblyInfoInputs.cache
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.AssemblyInfo.cs
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.csproj.CoreCompileInputs.cache
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.dll
+C:\Users\peace\Desktop\SmartPillow\SmartPillowAuthLib\obj\Debug\netstandard2.0\SmartPillowAuthLib.pdb

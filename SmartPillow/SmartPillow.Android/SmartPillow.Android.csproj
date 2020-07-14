@@ -58,9 +58,6 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Plugin.FacebookClient">
-      <Version>2.2.1</Version>
-    </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
     </PackageReference>
@@ -79,7 +76,6 @@
     <Compile Include="Locals\Notifications\AndroidNotificationManager.cs" />
     <Compile Include="Renderers\CustomTimePickerRenderer.cs" />
     <Compile Include="Renderers\EntryNoUnderlineRenderer.cs" />
-    <Compile Include="Renderers\ProviderRenderer.cs" />
     <Compile Include="Renderers\RadioBtnRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -271,12 +267,12 @@
     <AndroidResource Include="Resources\drawable\dashedLine.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\strings.xml">
+    <AndroidResource Include="Resources\layout\GoogleLogin.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\GoogleLogin.xml">
+    <AndroidResource Include="Resources\values\strings.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

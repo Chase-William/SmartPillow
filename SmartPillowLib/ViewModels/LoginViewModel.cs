@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
-using Plugin.FacebookClient;
 using SkiaSharp;
-using SmartPillowAuthLib.OAuth2.GoogleOAuth;
+using SmartPillowAuthLib.OAuth1.TwitterOAuth;
+using SmartPillowAuthLib.OAuth2;
+using SmartPillowAuthLib.OAuth2.FacebookOAuth;
+//using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Auth;
+using Xamarin.Auth.Presenters;
 using Xamarin.Forms;
 
 namespace SmartPillowLib.ViewModels
@@ -19,13 +19,10 @@ namespace SmartPillowLib.ViewModels
     public class LoginViewModel : NotifyClass
     {
         public event Action PopAsyncPage;
-        public event Action OpenTwitterPage;
-        public event Action FBCanceled;
         public static event Action CheckStatus;
         public User User { get; set; }
-        public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
 
-        IFacebookClient _facebookService = CrossFacebookClient.Current;
+        public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
 
         private bool isVisible;
 
@@ -74,42 +71,34 @@ namespace SmartPillowLib.ViewModels
 
         public ICommand TwitterCommand => new Command(() =>
         {
-            OpenTwitterPage?.Invoke();
+            var twitterAuth = new TwitterAuth();
+            var auth = twitterAuth.GetAuth();
 
-            //await Task.Run(() =>
-            //{
-            //    // For testing purpose
-            //    var user = new User()
-            //    {
-            //        FirstName = "Twitter",
-            //        LastName = "",
-            //        Image = "Twitter.png",
-            //        Email = "Twitter@gmail.com",
-            //        PhoneNumber = "111-111-1111",
-            //        SmartPillowDeviceID = "SP123-19B",
-            //        DataUrl = "twitter"
-            //    };
-            //    user.UserData = GetHistories(user.DataUrl);
-            //    SetLightBlueAndCloseLoginPage(user);
-            //    UserInformation.User = user;
-            //    UserInformation.IsUserLogged = true;
-            //    UserInformation.IsConnected = true;
-            //    CheckStatus?.Invoke();
-            //    PopAsyncPage?.Invoke();
-            //    IsVisible = false;
-            //});
+            var presenter = new OAuthLoginPresenter();
+            presenter.Login(auth);
+
+            twitterAuth.SendProfileInfo += delegate (TwitterProfile profile)
+            {
+                PopAsyncPage?.Invoke();
+                UserInformation.User = new User
+                {
+                    Id = profile.Id,
+                    FirstName = profile.Name,
+                    Image = profile.Profile_image_url_https
+                };
+
+                UserInformation.IsUserLogged = true;
+                CheckStatus?.Invoke();
+            };
         });
 
         public ICommand GoogleCommand => new Command(() =>
         {
-            // !!! I need to code this deeper for login function
-            IsVisible = true;
-
-            var googleAuth = new GoogleAuthenticator(
-                "300644153670-d7enm5rerpojto6gcb4hiibmch34stip.apps.googleusercontent.com",
-                "email",
-                "com.companyname.smartpillow:/oauth2redirect",
-                DependencyService.Get<IGoogleAuthenticationDelegate>());
+            //var googleAuth = new GoogleAuthenticator(
+            //    "300644153670-d7enm5rerpojto6gcb4hiibmch34stip.apps.googleusercontent.com",
+            //    "email",
+            //    "com.companyname.smartpillow:/oauth2redirect",
+            //    DependencyService.Get<IGoogleAuthenticationDelegate>());
 
             //await Task.Run(() =>
             //{
@@ -135,78 +124,30 @@ namespace SmartPillowLib.ViewModels
             //});
         });
 
-        public ICommand FacebookCommand => new Command(async () =>
+        public ICommand FacebookCommand => new Command(() =>
         {
-            IsVisible = true;
-            await LoginFacebookAsync();
-        });
+            var fbAuth = new FacebookAuth();
+            var auth = fbAuth.GetAuth();
 
-        async Task LoginFacebookAsync()
-        {
-            try
+            var presenter = new OAuthLoginPresenter();
+            presenter.Login(auth);
+
+            fbAuth.SendProfileInfo += delegate (FacebookProfile profile)
             {
-                if (_facebookService.IsLoggedIn)
-                    _facebookService.Logout();
-
-                EventHandler<FBEventArgs<string>> userDataDelegate = null;
-
-                userDataDelegate = async (object sender, FBEventArgs<string> e) =>
+                PopAsyncPage?.Invoke();
+                UserInformation.User = new User
                 {
-                    if (e == null) return;
-
-                    switch (e.Status)
-                    {
-                        case FacebookActionStatus.Completed:
-                            var facebookProfile = await Task.Run(() => JsonConvert.DeserializeObject<FacebookProfile>(e.Data));
-                            var user = new User
-                            {
-                                Email = facebookProfile.Email,
-                                FirstName = $"{facebookProfile.FirstName} {facebookProfile.LastName}",
-                                Image = facebookProfile.Picture.Data.Url,
-                                Id = facebookProfile.Id,
-                            };
-                            User = user;
-
-                            if (User.Id != null)
-                            {
-                                var existed = CheckUrlStatus(
-                                    "https://quoridge.blob.core.windows.net/bugle/" + User.Id + ".json");
-
-                                if(existed)
-                                {
-                                    User.UserData = GetHistories(User.Id);
-                                    if (User != null)
-                                        SetLightBlueAndCloseLoginPage(User);
-                                }
-                            }
-                            UserInformation.User = User;
-                            UserInformation.IsUserLogged = true;
-                            UserInformation.IsConnected = true;
-                            CheckStatus?.Invoke();
-                            PopAsyncPage?.Invoke();
-                            break;
-                        case FacebookActionStatus.Canceled:
-                            FBCanceled?.Invoke();
-                            break;
-                        case FacebookActionStatus.Unauthorized:
-                            FBCanceled?.Invoke();
-                            break;
-                    }
-
-                    _facebookService.OnUserData -= userDataDelegate;
+                    Id = profile.Id,
+                    FirstName = profile.Name,
+                    Email = profile.Email,
+                    Image = profile.Picture.Data.Url
                 };
 
-                _facebookService.OnUserData += userDataDelegate;
+                UserInformation.IsUserLogged = true;
+                CheckStatus?.Invoke();
+            };
+        });
 
-                string[] fbRequestFields = { "email", "first_name", "gender", "last_name", "picture.width(1500).height(1500)" };
-                string[] fbPermisions = { "email" };
-                await _facebookService.RequestUserDataAsync(fbRequestFields, fbPermisions);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-        }
         public LoginViewModel()
         {
             // hides activity indicator when LoginPage gets opened

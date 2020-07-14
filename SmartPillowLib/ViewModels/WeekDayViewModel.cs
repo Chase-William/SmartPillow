@@ -17,7 +17,6 @@ namespace SmartPillowLib.ViewModels
         private Week week;
         private string dayRange;
         private string brightness;
-        private ObservableCollection<Day> days;
 
         public string ProfileImage
         {

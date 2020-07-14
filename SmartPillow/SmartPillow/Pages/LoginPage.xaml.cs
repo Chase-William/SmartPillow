@@ -11,7 +11,6 @@ namespace SmartPillow.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public Action SuccessfulLoginAction;
         public LoginViewModel VM => (LoginViewModel)BindingContext;
         public LoginPage()
         {
@@ -21,21 +20,6 @@ namespace SmartPillow.Pages
                 /// <summary>
                 ///     This page will be popped off to return to HomePage
                 /// </summary>
-                await Navigation.PopModalAsync();
-            };
-
-            VM.FBCanceled += async delegate
-            {
-                await App.Current.MainPage.DisplayAlert("Facebook Auth", "Canceled", "Ok");
-            };
-
-            VM.OpenTwitterPage += async delegate
-            {
-                await Navigation.PushModalAsync(new ProviderPage());
-            };
-
-            SuccessfulLoginAction += async delegate
-            {
                 await Navigation.PopModalAsync();
             };
         }
@@ -53,7 +37,7 @@ namespace SmartPillow.Pages
         }
 
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
-        
+
         private async void NewUser_Tapped(object sender, EventArgs e)
         {
             // !!! Need to code this deeper for new user function

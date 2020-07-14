@@ -8,22 +8,21 @@ using Android.Content;
 using SmartPillow.Droid.Locals.SmartPillowAlarm;
 using SmartPillow.CustomAbstractions.LocationNotification;
 using SmartPillow.Droid.Locals.Notifications;
-using Plugin.FacebookClient;
 using System;
 using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
 
 namespace SmartPillow.Droid
 {
-    [Activity(Label = "Smart Pillow", 
-              Icon = "@mipmap/icon", 
-              Theme = "@style/MainTheme", 
+    [Activity(Label = "Smart Pillow",
+              Icon = "@mipmap/icon",
+              Theme = "@style/MainTheme",
               MainLauncher = true,
               ScreenOrientation = ScreenOrientation.Portrait, // Locks in portrait screen
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
               LaunchMode = LaunchMode.SingleTop)] // The SingleTop mode prevents multiple instances of an Activity from being started while the application is in the foreground 
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-    {       
+    {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -33,7 +32,8 @@ namespace SmartPillow.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            FacebookClientManager.Initialize(this);
+
+            global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);    // Getting the folder path that already exist on the device and will be used to map a location to our database.   
             string completedPath = Path.Combine(folderPath, App.DatabaseKeys.DATABASE_NAME);                    // Combining the two paths to create a completed path
 
@@ -70,17 +70,11 @@ namespace SmartPillow.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
-        {
-            base.OnActivityResult(requestCode, resultCode, intent);
-            FacebookClientManager.OnActivityResult(requestCode, resultCode, intent);
-        }
-
         public override void OnBackPressed()
         {
             // Invoking the backbtn pressed func
             App.OnHWBackBtnPressed?.Invoke();
             base.OnBackPressed();
-        }        
+        }
     }
 }
