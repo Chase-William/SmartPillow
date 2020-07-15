@@ -13,7 +13,6 @@ namespace SmartPillow.Pages.Nav
             InitializeComponent();            
         }
 
-
         private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => SmartPillow.Util.Painter.PaintGradientBG(e);
     }
 }

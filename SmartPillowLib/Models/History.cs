@@ -82,7 +82,7 @@ namespace SmartPillowLib.Models
     public class AlertEvent
     {
         public string Name { get; set; }
-        //public TimeSpan Time { get; set; }
+
         public SKColor Color { get; set; }
         public string AtTime { get; set; }
     }

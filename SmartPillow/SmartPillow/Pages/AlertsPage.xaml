@@ -5,13 +5,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
-             x:Class="SmartPillow.Pages.AlarmsPage"
-             Title="Alarms">
+             x:Class="SmartPillow.Pages.AlertsPage"
+             Title="Alerts">
 
+    <ContentPage.ToolbarItems>
+        <!--need to bind Command -->
+        <ToolbarItem IconImageSource="filterIcon"/>
+        <ToolbarItem IconImageSource="Zack"/>
+    </ContentPage.ToolbarItems>
+    
     <Grid>
 
         <skia:SKCanvasView x:Name="SKCanvas"
                            PaintSurface="SKCanvas_PaintSurface"/>
+
+        <Grid BackgroundColor="White" Opacity=".1"/>
+
+        <Image Style="{StaticResource CloudyBG}"/>
+
+        <!--<Grid BackgroundColor="{Binding Brightness}"/>-->
+        
     </Grid>
-    
+
 </ContentPage>

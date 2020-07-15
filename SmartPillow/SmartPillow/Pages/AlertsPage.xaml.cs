@@ -1,5 +1,4 @@
-﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -7,9 +6,9 @@ using Xamarin.Forms.Xaml;
 namespace SmartPillow.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AlarmsPage : ContentPage
+    public partial class AlertsPage : ContentPage
     {
-        public AlarmsPage()
+        public AlertsPage()
         {
             InitializeComponent();
         }
