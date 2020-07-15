@@ -9,8 +9,9 @@ namespace SmartPillowAuthLib.OAuth2.FacebookOAuth
 {
     public class FacebookAuth
     {
-        public event Action<FacebookProfile> SendProfileInfo;
+        public event Action<object[], FacebookProfile> SendProfileInfo;
 
+        public object[] LoginInfo = new object[3];
         public FacebookProfile Profile { get; set; }
 
         public string ClientID = "561614271198499";
@@ -41,6 +42,9 @@ namespace SmartPillowAuthLib.OAuth2.FacebookOAuth
             if (e.IsAuthenticated)
             {
                 string accesstoken = e.Account.Properties["access_token"];
+                //       [0] = id,         [1] = logged with          [2] = access token value
+                LoginInfo[0] = 0; LoginInfo[1] = "facebook"; LoginInfo[2] = accesstoken;
+
                 FacebookUserProfileAsync(accesstoken);
             }
         }
@@ -53,8 +57,7 @@ namespace SmartPillowAuthLib.OAuth2.FacebookOAuth
                 accesstoken);
 
             Profile = JsonConvert.DeserializeObject<FacebookProfile>(response);
-
-            SendProfileInfo?.Invoke(Profile);
+            SendProfileInfo?.Invoke(LoginInfo, Profile);
         }
 
         //public void Authenticator_Failed(object sender, AuthenticatorErrorEventArgs e)

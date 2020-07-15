@@ -30,6 +30,7 @@ namespace SmartPillow.Pages
             {
                 await Navigation.PushModalAsync(new ProfilePage());
             };
+
             VM.OpenSettingsPage += async delegate
             {
                 await Navigation.PushModalAsync(new SettingsPages.PhoneSettings());

@@ -18,6 +18,7 @@ namespace SmartPillowLib.Data.Local
         #region Collection Keys
         public const string TIMED_ALARM_COL_KEY = "timed_alarms";
         public const string SAFETY_ALARM_COL_KEY = "safety_alarms";
+        public const string LOGIN_COL_KEY = "login_saved";
         #endregion               
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace SmartPillowLib.Data.Local
                 var col = db.GetCollection<Alarm>(collection_key);
 
                 // Updates a specific alarm
-                if(!col.Update(alarm))
+                if (!col.Update(alarm))
                 {
                     throw new Exception("Alarm not found inside collection.");
                 }
@@ -70,7 +71,7 @@ namespace SmartPillowLib.Data.Local
             {
                 var col = db.GetCollection<Alarm>(collection_key);
 
-                var collection = col.FindAll().ToList();                
+                var collection = col.FindAll().ToList();
 
                 // Returns a IEnumerable of type Alarms
                 return collection;
@@ -92,6 +93,35 @@ namespace SmartPillowLib.Data.Local
             {
                 var col = db.GetCollection<Alarm>(collection_key);
                 col.Delete(alarmId);
+            }
+        }
+
+        public void InsertLoginAccessToken(AccessToken loginInfo, string collection_key = LOGIN_COL_KEY)
+        {
+            // Open database (or create if doesn't exist)
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<AccessToken>(collection_key);
+                loginInfo.Id = col.Insert(loginInfo).AsInt32;
+            }
+        }
+
+        public AccessToken GetLoginAccessToken(string collection_key = LOGIN_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<AccessToken>(collection_key);
+                var loginInfo = col.FindById(1);
+                return loginInfo;
+            }
+        }
+
+        public void DeleteLoginAccessToken(string collection_key = LOGIN_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<AccessToken>(collection_key);
+                col.DeleteAll();
             }
         }
     }

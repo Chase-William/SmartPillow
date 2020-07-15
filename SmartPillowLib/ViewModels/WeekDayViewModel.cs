@@ -1,13 +1,7 @@
 ﻿using Microcharts;
 using SmartPillow.Util;
 using SmartPillowLib.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace SmartPillowLib.ViewModels
 {
@@ -43,7 +37,7 @@ namespace SmartPillowLib.ViewModels
         public Week Week
         {
             get => UserInformation.Week;
-            set 
+            set
             {
                 week = value;
                 NotifyPropertyChanged();
@@ -53,8 +47,8 @@ namespace SmartPillowLib.ViewModels
         public ObservableCollection<Day> Days
         {
             get => Week.Days;
-            set 
-            { 
+            set
+            {
                 Week.Days = value;
                 NotifyPropertiesChanged();
             }
@@ -77,7 +71,7 @@ namespace SmartPillowLib.ViewModels
         /// <param name="day"></param>
         public void HideOrShow(Day day)
         {
-            if(OldDay == day)
+            if (OldDay == day)
             {
                 // Click twice on the same item will hide it
                 day.IsVisible = !day.IsVisible;
@@ -86,7 +80,7 @@ namespace SmartPillowLib.ViewModels
             }
             else
             {
-                if(OldDay != null)
+                if (OldDay != null)
                 {
                     // Hide previous selected item
                     OldDay.IsVisible = false;
@@ -97,7 +91,7 @@ namespace SmartPillowLib.ViewModels
                 // Show selected item
                 day.IsVisible = true;
                 day.Rotation = 180;
-                
+
                 UpdateItems(day);
             }
 
