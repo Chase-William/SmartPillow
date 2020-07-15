@@ -2,10 +2,9 @@
 using SkiaSharp;
 using SmartPillowAuthLib;
 using SmartPillowAuthLib.OAuth1.TwitterOAuth;
-using SmartPillowAuthLib.OAuth2;
 using SmartPillowAuthLib.OAuth2.FacebookOAuth;
-using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
-//using SmartPillowAuthLib.OAuth2.GoogleOAuth;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth;
+using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
@@ -61,26 +60,35 @@ namespace SmartPillowLib.ViewModels
             await Task.Run(() =>
             {
                 // For testing purpose
-                var user = new User()
-                {
-                    FirstName = "Mark",
-                    LastName = "Zuckerberg",
-                    Image = "Zack.png",
-                    Email = "Email@gmail.com",
-                    PhoneNumber = "585-585-5858",
-                    SmartPillowDeviceID = "ZZ987-19C",
-                    DataUrl = "markZ"
-                };
-                user.UserData = GetHistories(user.DataUrl);
-                SetLightBlueAndCloseLoginPage(user);
-                UserInformation.User = user;
-                UserInformation.IsUserLogged = true;
-                UserInformation.IsConnected = true;
-                CheckStatus?.Invoke();
+                LoginWithMarkZ();
                 PopAsyncPage?.Invoke();
-                IsVisible = false;
             });
         });
+
+        public void LoginWithMarkZ()
+        {
+            var user = new User()
+            {
+                FirstName = "Mark",
+                LastName = "Zuckerberg",
+                Image = "Zack.png",
+                Email = "Email@gmail.com",
+                PhoneNumber = "585-585-5858",
+                SmartPillowDeviceID = "ZZ987-19C",
+                DataUrl = "markZ"
+            };
+            user.UserData = HistoryJsonDeserialize(user.DataUrl);
+            GetActualColorsForGraphs(user);
+            UserInformation.User = user;
+            UserInformation.IsUserLogged = true;
+            UserInformation.IsConnected = true;
+            CheckStatus?.Invoke();
+            IsVisible = false;
+
+            var access = new AccessToken();
+            access.LoginWith = "native";
+            LocalDataServiceContext.Provider.InsertLoginAccessToken(access);
+        }
 
         public ICommand TwitterCommand => new Command(() =>
         {
@@ -90,21 +98,21 @@ namespace SmartPillowLib.ViewModels
             var presenter = new OAuthLoginPresenter();
             presenter.Login(auth);
 
-            twitterAuth.SendProfileInfo += delegate (TwitterProfile profile)
+            twitterAuth.SendProfileInfo += delegate (object[] account, TwitterProfile profile)
             {
                 PopAsyncPage?.Invoke();
-                UserInformation.User = new User
+                UpdateTwitterUser(profile);
+
+                var accountInfo = new AccessToken()
                 {
-                    Id = profile.Id,
-                    FirstName = profile.Name,
-                    Image = profile.Profile_image_url_https
+                    Id = int.Parse(account[0].ToString()),
+                    LoginWith = account[1].ToString(),
+                    Auth1Account = account[2].ToString()
                 };
 
-                UserInformation.IsUserLogged = true;
-                CheckStatus?.Invoke();
+                LocalDataServiceContext.Provider.InsertLoginAccessToken(accountInfo);
             };
         });
-
 
         public ICommand GoogleCommand => new Command(() =>
         {            
@@ -121,19 +129,19 @@ namespace SmartPillowLib.ViewModels
             var presenter = new OAuthLoginPresenter();
             presenter.Login(auth);
 
-            fbAuth.SendProfileInfo += delegate (FacebookProfile profile)
+            fbAuth.SendProfileInfo += (object[] loginInfo, FacebookProfile profile) =>
             {
                 PopAsyncPage?.Invoke();
-                UserInformation.User = new User
+                UpdateFbUser(profile);
+
+                var token = new AccessToken()
                 {
-                    Id = profile.Id,
-                    FirstName = profile.Name,
-                    Email = profile.Email,
-                    Image = profile.Picture.Data.Url
+                    Id = int.Parse(loginInfo[0].ToString()),
+                    LoginWith = loginInfo[1].ToString(),
+                    AccessTokenValue = loginInfo[2].ToString()
                 };
 
-                UserInformation.IsUserLogged = true;
-                CheckStatus?.Invoke();
+                LocalDataServiceContext.Provider.InsertLoginAccessToken(token);
             };
         });
 
@@ -148,7 +156,7 @@ namespace SmartPillowLib.ViewModels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<History> GetHistories(string id)
+        public List<History> HistoryJsonDeserialize(string id)
         {
             var list = new List<History>();
             var client = new WebClient();
@@ -161,11 +169,55 @@ namespace SmartPillowLib.ViewModels
             return list;
         }
 
+        public void UpdateTwitterUser(TwitterProfile profile)
+        {
+            UserInformation.User = new User
+            {
+                Id = profile.Id,
+                FirstName = profile.Name,
+                Image = profile.Profile_image_url_https,
+                DataUrl = "https://quoridge.blob.core.windows.net/bugle/" + profile.Id + ".json",
+            };
+
+            var HasHistory = CheckUrlStatus(UserInformation.User.DataUrl);
+
+            if (HasHistory)
+                UserInformation.User.UserData = HistoryJsonDeserialize(UserInformation.User.Id);
+
+            UserInformation.IsUserLogged = true;
+            CheckStatus?.Invoke();
+        }
+
+        /// <summary>
+        ///     Updates user info and keeps sync with UI
+        /// </summary>
+        /// <param name="profile"></param>
+        public void UpdateFbUser(FacebookProfile profile)
+        {
+            UserInformation.User = new User
+            {
+                Id = profile.Id,
+                FirstName = profile.Name,
+                Email = profile.Email,
+                Image = profile.Picture.Data.Url,
+                DataUrl = "https://quoridge.blob.core.windows.net/bugle/" + profile.Id + ".json"
+            };
+
+            var HasHistory = CheckUrlStatus(UserInformation.User.DataUrl);
+
+            if (HasHistory)
+                UserInformation.User.UserData = HistoryJsonDeserialize(UserInformation.User.Id);
+
+            UserInformation.IsUserLogged = true;
+            GetActualColorsForGraphs(UserInformation.User);
+            CheckStatus?.Invoke();
+        }
+
         /// <summary>
         ///     Setting non-colors to actual colors after deserializing json for every single of entry -_-
         /// </summary>
         /// <param name="user"></param>
-        public void SetLightBlueAndCloseLoginPage(User user)
+        public void GetActualColorsForGraphs(User user)
         {
             foreach (var item in user.UserData)
                 foreach (var find in item.Weeks)

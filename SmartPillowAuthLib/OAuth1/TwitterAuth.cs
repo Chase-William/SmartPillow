@@ -9,8 +9,9 @@ namespace SmartPillowAuthLib.OAuth1.TwitterOAuth
 {
     public class TwitterAuth
     {
-        public event Action<TwitterProfile> SendProfileInfo;
+        public event Action<object[], TwitterProfile> SendProfileInfo;
 
+        public object[] LoginInfo = new object[3];
         public TwitterProfile Profile { get; set; }
 
         public string ConsumerKey = "RdghlGeE9yKzXmqfKclCxqeWR";
@@ -19,8 +20,6 @@ namespace SmartPillowAuthLib.OAuth1.TwitterOAuth
         public string TwitterAccessTokenUrl = "https://api.twitter.com/oauth/access_token/";
         public string TwitterRequestTokenUrl = "https://api.twitter.com/oauth/request_token";
         public string CallBackUrl = "http://mobile.twitter.com";
-
-        public string TwitterScope = "email";
 
         public OAuth1Authenticator GetAuth()
         {
@@ -35,7 +34,7 @@ namespace SmartPillowAuthLib.OAuth1.TwitterOAuth
                 false);
 
             auth.Completed += Authenticator_Completed;
-            //auth.Error += Authenticator_Failed;
+            auth.Error += Authenticator_Failed;
 
             return auth;
         }
@@ -54,6 +53,10 @@ namespace SmartPillowAuthLib.OAuth1.TwitterOAuth
                 var request = new OAuth1Request("GET",
                     new Uri("https://api.twitter.com/1.1/account/verify_credentials.json"),
                     d, e.Account, false);
+                var account = JsonConvert.SerializeObject(e.Account);
+
+                //       [0] = id,         [1] = logged with         [2] = accountString
+                LoginInfo[0] = 0; LoginInfo[1] = "twitter"; LoginInfo[2] = account;
 
                 UserProfileAsync(request);
             }
@@ -67,16 +70,19 @@ namespace SmartPillowAuthLib.OAuth1.TwitterOAuth
 
             var twitterUser = JsonConvert.DeserializeObject<TwitterProfile>(json);
 
-            //"remove _normal" to get an original size of the image
+            //remove "_normal" to get an original size of the image
             var bigImage = twitterUser.Profile_image_url_https.Replace("_normal", "");
-            Profile.Profile_image_url_https = bigImage;
 
-            SendProfileInfo?.Invoke(Profile);
+            if (Profile == null)
+                Profile = twitterUser;
+
+            Profile.Profile_image_url_https = bigImage;
+            SendProfileInfo?.Invoke(LoginInfo, Profile);
         }
 
-        //public void Authenticator_Failed(object sender, AuthenticatorErrorEventArgs e)
-        //{
+        public void Authenticator_Failed(object sender, AuthenticatorErrorEventArgs e)
+        {
 
-        //}
+        }
     }
 }

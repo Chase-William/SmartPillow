@@ -1,4 +1,5 @@
-﻿using SmartPillowLib.Models;
+﻿using SmartPillowLib.Data.Local;
+using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,7 @@ namespace SmartPillowLib.ViewModels
         public ICommand LogoutCommand => new Command(() =>
         {
             CloseFrame?.Invoke();
+            LocalDataServiceContext.Provider.DeleteLoginAccessToken();
             UserInformation.IsUserLogged = false;
             User = UserInformation.Guest;
             CheckStatus?.Invoke();
@@ -29,7 +31,8 @@ namespace SmartPillowLib.ViewModels
         public string Image
         {
             get { return User.Image; }
-            set { 
+            set
+            {
                 User.Image = value;
                 NotifyPropertyChanged();
             }
