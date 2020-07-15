@@ -11,6 +11,8 @@ using SmartPillow.Droid.Locals.Notifications;
 using System;
 using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
+using SmartPillowLib.ViewModels;
+using SmartPillowLib.Models;
 
 namespace SmartPillow.Droid
 {
@@ -23,6 +25,12 @@ namespace SmartPillow.Droid
               LaunchMode = LaunchMode.SingleTop)] // The SingleTop mode prevents multiple instances of an Activity from being started while the application is in the foreground 
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private const byte LOGIN_CODE = 10;
+
+        private User user => GoogleLoginActivity.User;
+
+        private LoginViewModel vm;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -42,6 +50,23 @@ namespace SmartPillow.Droid
             CreateNotificationFromIntent(Intent);
 
             AndroidSmartPillowAlarm.Init(this);
+
+            MessagingCenter.Subscribe<LoginViewModel>(this, "google_auth2",
+                (_vm) =>
+                {
+                    vm = _vm;
+                    this.StartActivityForResult(typeof(GoogleLoginActivity), LOGIN_CODE);
+                });           
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == LOGIN_CODE && resultCode == Result.Ok)
+            {
+                vm.User = user;
+            }
         }
 
         protected override void OnNewIntent(Intent intent)

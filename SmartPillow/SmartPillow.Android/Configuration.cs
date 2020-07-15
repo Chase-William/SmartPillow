@@ -14,7 +14,7 @@ namespace SmartPillow.Droid
 {
     public static class Configuration
     {
-        public const string ClientId = "300644153670-d7enm5rerpojto6gcb4hiibmch34stip.apps.googleusercontent.com";
+        public const string ClientId = "300644153670-fks34l4r7sot5nnk9gb8617sg5c657uj.apps.googleusercontent.com";
         public const string Scope = "email";
         public const string RedirectUrl = "com.companyname.smartpillow:/oauth2redirect";
     }

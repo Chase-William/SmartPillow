@@ -1,14 +1,17 @@
 ﻿using Newtonsoft.Json;
 using SkiaSharp;
+using SmartPillowAuthLib;
 using SmartPillowAuthLib.OAuth1.TwitterOAuth;
 using SmartPillowAuthLib.OAuth2;
 using SmartPillowAuthLib.OAuth2.FacebookOAuth;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
 //using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Auth.Presenters;
@@ -20,7 +23,17 @@ namespace SmartPillowLib.ViewModels
     {
         public event Action PopAsyncPage;
         public static event Action CheckStatus;
-        public User User { get; set; }
+
+        private User user;
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                Console.WriteLine();
+            }
+        }
 
         public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
 
@@ -92,36 +105,12 @@ namespace SmartPillowLib.ViewModels
             };
         });
 
-        public ICommand GoogleCommand => new Command(() =>
-        {
-            //var googleAuth = new GoogleAuthenticator(
-            //    "300644153670-d7enm5rerpojto6gcb4hiibmch34stip.apps.googleusercontent.com",
-            //    "email",
-            //    "com.companyname.smartpillow:/oauth2redirect",
-            //    DependencyService.Get<IGoogleAuthenticationDelegate>());
 
-            //await Task.Run(() =>
-            //{
-            //    // For testing purpose
-            //    var user = new User()
-            //    {
-            //        FirstName = "Google",
-            //        LastName = "",
-            //        Image = "Google.png",
-            //        Email = "Google@gmail.com",
-            //        PhoneNumber = "222-222-2222",
-            //        SmartPillowDeviceID = "YW455-19D",
-            //        DataUrl = "google"
-            //    };
-            //    user.UserData = GetHistories(user.DataUrl);
-            //    SetLightBlueAndCloseLoginPage(user);
-            //    UserInformation.User = user;
-            //    UserInformation.IsUserLogged = true;
-            //    UserInformation.IsConnected = true;
-            //    CheckStatus?.Invoke();
-            //    PopAsyncPage?.Invoke();
-            //    IsVisible = false;
-            //});
+        public ICommand GoogleCommand => new Command(() =>
+        {            
+            // Informing listeners that a google auth is to take place
+            // Specifially android is listening right now.
+            MessagingCenter.Send(this, "google_auth2");
         });
 
         public ICommand FacebookCommand => new Command(() =>

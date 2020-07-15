@@ -1,10 +1,11 @@
-﻿using SmartPillowLib.ViewModels;
+﻿using SmartPillowAuthLib;
+using SmartPillowLib.ViewModels;
 using System.Collections.Generic;
 using Xamarin.Essentials;
 
 namespace SmartPillowLib.Models
 {
-    public class User
+    public class User : IUser
     {
         /// <summary>
         ///     Information of user that is currently logged in.

@@ -4,70 +4,72 @@ using Android.Widget;
 using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
 using System;
+using Android.Content.PM;
+using Xamarin.Essentials;
+using Android.Content;
+using Xamarin.Forms;
+using SmartPillowLib.Models;
+using SmartPillowLib.ViewModels;
 
 namespace SmartPillow.Droid
 {
-    public class GoogleLoginActivity : Activity, IGoogleAuthenticationDelegate
+    [Activity(Label = "GoogleLoginActivity", Theme = "@style/MainTheme", NoHistory = true)]
+    public class GoogleLoginActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IGoogleAuthenticationDelegate
     {
         // Need to be static because we need to access it
         // in GoogleAuthInterceptor for continuation
         public static GoogleAuthenticator Auth;
+        
+        public static User User { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.GoogleLogin);
-
             Auth = new GoogleAuthenticator(
-                Configuration.ClientId,
-                Configuration.Scope,
-                Configuration.RedirectUrl,
-                this); // Completed/Error events
+                    Configuration.ClientId,
+                    Configuration.Scope,
+                    Configuration.RedirectUrl,
+                    this); // Completed/Error events
 
-            var googleLoginButton =
-                FindViewById<Button>(Resource.Id.googleLoginButton);
-
-            googleLoginButton.Click += OnGoogleLoginButtonClicked;
+            Login();
         }
 
-        #region Google Auth2.0 Functions
-        private void OnGoogleLoginButtonClicked(object sender, EventArgs e)
+        #region Google Auth2 Functions
+        private void Login()
         {
             // Display the activity handling the authentication
             var authenticator = Auth.GetAuthenticator();
             var intent = authenticator.GetUI(this);
+            Xamarin.Auth.CustomTabsConfiguration.CustomTabsClosingMessage = null; // Turning off the toast
             StartActivity(intent);
         }
 
         public async void OnAuthenticationCompleted(GoogleOAuthToken token)
-        {
+        {           
             // Retrieve the user's email address
             var googleService = new GoogleService();
-            var email =
-                await googleService.GetEmailAsync(
-                    token.TokenType,
-                    token.AccessToken);
+            GoogleAccountInfo googleAccount = await googleService.GetAccountInfo(token); // ------------------------------ fix this
 
-            // Display it on the UI
-            var googleButton =
-                FindViewById<Button>(Resource.Id.googleLoginButton);
+            User = new User
+            {
+                Id = googleAccount.Id,
+                Image = googleAccount.Image,
+                Email = googleAccount.Email
+            };
 
-            googleButton.Text = $"Connected with {email}";
+            Finish();
         }
 
         public void OnAuthenticationFailed(string message, Exception exception)
         {
             new AlertDialog.Builder(this)
-                .SetTitle(message)
-                .SetMessage(exception?.ToString())
-                .Show();
+                           .SetTitle(message)
+                           .SetMessage(exception?.ToString())
+                           .Show();
         }
 
-        public void OnAuthenticationCanceled()
-        {
-            throw new NotImplementedException();
-        }
+        public void OnAuthenticationCanceled() { }
         #endregion
     }
 }

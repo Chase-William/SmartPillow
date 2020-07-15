@@ -45,20 +45,5 @@ namespace SmartPillow.Droid
 
             Finish();
         }
-
-        public async Task<string> GetEmailAsync(string tokenType, string accessToken)
-        {
-            var httpClient = new HttpClient();
-    
-            // Provide the OAuth token as an Authorization header
-            httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue(tokenType, accessToken);
-        
-            // Query the API
-            var json =
-                await httpClient.GetStringAsync("https://www.googleapis.com/userinfo/email?alt=json");
-            var email = JsonConvert.DeserializeObject<GoogleEmail>(json);
-            return email.Data.Email;
-        }
     }
 }

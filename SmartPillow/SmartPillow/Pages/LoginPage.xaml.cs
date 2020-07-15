@@ -1,6 +1,10 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using SmartPillow.Util;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth;
+using SmartPillowAuthLib.OAuth2.GoogleOAuth.Services;
+using SmartPillowLib;
+using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels;
 using System;
 using Xamarin.Forms;
