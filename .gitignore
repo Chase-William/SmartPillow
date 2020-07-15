@@ -7,4 +7,6 @@ SmartPillow/SmartPillow.iOS/bin
 SmartPillow/SmartPillow.iOS/obj
 SmartPillowLib/bin
 SmartPillowLib/obj
+SmartPillowAuthLib/bin
+SmartPillowAuthLib/obj
 .vs
