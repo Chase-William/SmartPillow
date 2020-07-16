@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SkiaSharp;
 using SmartPillowLib.Models;
+using SmartPillowLib.Util;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,23 +20,23 @@ namespace SmartPillowLib
         // User's total sleep duration
         public static TimeSpan TotalSleep { get; set; }
         public static double Quality { get; set; }
-        public static RadialGaugeChart QualityGauge { get; set; }
+        public static GradientRadialGaugeChart QualityGauge { get; set; }
 
         public static TimeSpan AwakeDuration { get; set; }
         public static double AwakePercentage { get; set; }
-        public static RadialGaugeChart AwakeGauge { get; set; }
+        public static GradientRadialGaugeChart AwakeGauge { get; set; }
 
         public static TimeSpan RemDuration { get; set; }
         public static double RemPercentage { get; set; }
-        public static RadialGaugeChart RemGauge { get; set; }
+        public static GradientRadialGaugeChart RemGauge { get; set; }
 
         public static TimeSpan SleepDuration { get; set; }
         public static double SleepPercentage { get; set; }
-        public static RadialGaugeChart SleepGauge { get; set; }
+        public static GradientRadialGaugeChart SleepGauge { get; set; }
 
         public static TimeSpan DeepDuration { get; set; }
         public static double DeepPercentage { get; set; }
-        public static RadialGaugeChart DeepGauge { get; set; }
+        public static GradientRadialGaugeChart DeepGauge { get; set; }
 
         // Charts with example values
         public static PointChart EventChart { get; set; }
@@ -92,9 +93,9 @@ namespace SmartPillowLib
             sw.Reset();
         }
 
-        static RadialGaugeChart SetChartUp(double percentage)
+        static GradientRadialGaugeChart SetChartUp(double percentage)
         {
-            var chart = new RadialGaugeChart()
+            var chart = new GradientRadialGaugeChart()
             {
                 Entries = new[]
                 {

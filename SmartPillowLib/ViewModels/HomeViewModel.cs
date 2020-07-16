@@ -4,6 +4,7 @@ using SmartPillowLib.Models;
 using System.Windows.Input;
 using Microcharts;
 using SmartPillow.Util;
+using SmartPillowLib.Util;
 
 namespace SmartPillowLib.ViewModels
 {
@@ -39,7 +40,7 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public RadialGaugeChart QualityGauge
+        public GradientRadialGaugeChart QualityGauge
         {
             get => SleepStatistic.QualityGauge;
             set 
@@ -75,7 +76,7 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public RadialGaugeChart AwakeGauge
+        public GradientRadialGaugeChart AwakeGauge
         {
             get => SleepStatistic.AwakeGauge;
             set
@@ -111,7 +112,7 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public RadialGaugeChart RemGauge
+        public GradientRadialGaugeChart RemGauge
         {
             get => SleepStatistic.RemGauge;
             set
@@ -147,7 +148,7 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public RadialGaugeChart SleepGauge
+        public GradientRadialGaugeChart SleepGauge
         {
             get => SleepStatistic.SleepGauge;
             set
@@ -183,7 +184,7 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public RadialGaugeChart DeepGauge
+        public GradientRadialGaugeChart DeepGauge
         {
             get => SleepStatistic.DeepGauge;
             set
