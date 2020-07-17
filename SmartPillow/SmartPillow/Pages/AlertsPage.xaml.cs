@@ -13,6 +13,18 @@ namespace SmartPillow.Pages
             InitializeComponent();
         }
 
-        private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+        //private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+
+        protected async override void OnAppearing()
+        {
+            await cloudBackground.StartAnimation();
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            cloudBackground.StopAnimation();
+            base.OnDisappearing();
+        }
     }
 }

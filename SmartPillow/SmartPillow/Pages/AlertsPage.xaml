@@ -25,12 +25,14 @@
 
     <Grid>
 
-        <skia:SKCanvasView x:Name="SKCanvas"
-                           PaintSurface="SKCanvas_PaintSurface"/>
+        <!--<skia:SKCanvasView x:Name="SKCanvas"
+                           PaintSurface="SKCanvas_PaintSurface"/>-->
+
+        <controls:CloudBackground x:Name="cloudBackground"/>
 
         <Grid BackgroundColor="White" Opacity=".1"/>
 
-        <Image Style="{StaticResource CloudyBG}"/>
+        <!--<Image Style="{StaticResource CloudyBG}"/>-->
 
         <Grid BackgroundColor="{Binding Brightness}"/>
 
