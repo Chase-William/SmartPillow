@@ -63,9 +63,9 @@ namespace SmartPillowLib.Util
 
                 // from top left to bottom right
                 Shader = SKShader.CreateLinearGradient(
-                                    new SKPoint(cx / 2, cy / 2),
+                                    new SKPoint(cx / 1.8f, cy / 1.8f),
                                     new SKPoint(cx * 1.45f, cy * 1.45f),
-                                    new SKColor[] { SKColor.Parse("#D765FF"), SKColor.Parse("#7AC0DF") },
+                                    new SKColor[] { SKColor.Parse("#7AC0DF"), SKColor.Parse("#D765FF") },
                                     null,
                                     SKShaderTileMode.Repeat),
 
@@ -73,7 +73,7 @@ namespace SmartPillowLib.Util
                 //Shader = SKShader.CreateLinearGradient(
                 //                    new SKPoint(cx * 2f, 0),
                 //                    new SKPoint(cx * 2f, cy * 1.65f),
-                //                    new SKColor[] { SKColor.Parse("#D765FF"), SKColor.Parse("#7AC0DF") },
+                //                    new SKColor[] { SKColor.Parse("#7AC0DF"), SKColor.Parse("#D765FF") },
                 //                    null,
                 //                    SKShaderTileMode.Repeat),
 

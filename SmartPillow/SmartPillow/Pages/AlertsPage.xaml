@@ -4,16 +4,25 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
+             xmlns:controls="clr-namespace:SmartPillow.Controls"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.AlertsPage"
              Title="Alerts">
 
+    <ContentPage.BindingContext>
+        <vm:AlertsViewModel/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.ToolbarItems>
         <!--need to bind Command -->
         <ToolbarItem IconImageSource="filterIcon"/>
+        
+        <!--need to bind Command-->
         <ToolbarItem IconImageSource="Zack"/>
     </ContentPage.ToolbarItems>
-    
+
     <Grid>
 
         <skia:SKCanvasView x:Name="SKCanvas"
@@ -23,8 +32,167 @@
 
         <Image Style="{StaticResource CloudyBG}"/>
 
-        <!--<Grid BackgroundColor="{Binding Brightness}"/>-->
-        
-    </Grid>
+        <Grid BackgroundColor="{Binding Brightness}"/>
 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="67"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Margin="12">
+
+                <pancake:PancakeView HorizontalOptions="FillAndExpand"
+                                     CornerRadius="10"
+                                     BackgroundColor="Black"
+                                     Opacity=".5"
+                                     HasShadow="True"
+                                     Elevation="6"/>
+
+                <!--need to bind command-->
+                <controls:CustomSearchBar
+                    TextColor="White"
+                    FontFamily="Ubuntu"/>
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding Alerts}" Grid.Row="1" 
+                            Margin="8,-12,8,8">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid WidthRequest="184" HeightRequest="146" HorizontalOptions="Start" VerticalOptions="Start">
+                            <pancake:PancakeView HorizontalOptions="FillAndExpand" Margin="5"
+                                     CornerRadius="18"
+                                     BackgroundColor="Black"
+                                     Opacity=".5"
+                                     HasShadow="True"
+                                     Elevation="6"/>
+
+                            <!-- an image of the specific alert-->
+                            <Image Source="{Binding Image}" Margin="16"
+                                   VerticalOptions="Start" HorizontalOptions="Start"
+                                   HeightRequest="40"/>
+
+                            <!-- name of alert-->
+                            <Label Text="{Binding SpecificAlert}"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center"
+                                   TextColor="#D1D1D1"
+                                   TranslationY="-9"
+                                   Margin="16,0,0,0"
+                                   FontFamily="Ubuntu"
+                                   FontSize="14"/>
+
+                            <!-- need to bind text-->
+                            <Label Text="Last Updated 6/15/2020"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="End"
+                                   TextColor="#949494"
+                                   Margin="16,0,0,15"
+                                   FontFamily="Ubuntu"
+                                   FontSize="8"/>
+
+                            <!-- Vibration or Brightness only-->
+                            <Grid IsVisible="{Binding HasOnlyOneSetting}"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="End"
+                                  HeightRequest="70"
+                                  WidthRequest="84">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- either Vibration or Brightness based on the specific alert has-->
+                                <Label Text="{Binding SpecificSetting}"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="14"/>
+
+                                <!-- percent of either brightness or vibration-->
+                                <!-- need to bind FontSize (45 or 32) -->
+                                <Label Text="{Binding Percent}" Grid.Row="1" Margin="0,-20,0,0"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="End"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="{Binding Font}"/>
+
+                                <Label Text="%" Grid.Row="1" Margin="0,0,11,5"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="End"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="20"/>
+
+                            </Grid>
+
+                            <!-- Both Vibration and Brightness-->
+                            <Grid IsVisible="{Binding HasBothVibandBri}"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="End"
+                                  HeightRequest="70"
+                                  WidthRequest="84">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- percent of brightness-->
+                                <Label Text="Brightness"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="10"/>
+
+                                <Label Text="{Binding BrightnessPercentString}" Grid.Row="1" Margin="15,-8,0,0"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="20"/>
+
+                                <!-- percent of vibration-->
+                                <Label Text="Vibration" Grid.Row="2"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="10"/>
+
+                                <Label Text="{Binding VibrationPercentString}" Grid.Row="3" Margin="15,-8,0,0"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   FontFamily="Ubuntu"
+                                   TextColor="#D1D1D1"
+                                   FontSize="20"/>
+
+                            </Grid>
+
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- need to bind command-->
+            <ImageButton Source="addFab"
+                         Grid.Row="1"
+                         Margin="20"
+                         HeightRequest="68"
+                         BackgroundColor="Transparent"
+                         HorizontalOptions="End"
+                         VerticalOptions="End"/>
+        </Grid>
+    </Grid>
 </ContentPage>

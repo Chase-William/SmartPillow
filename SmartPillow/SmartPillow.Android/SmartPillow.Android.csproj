@@ -74,6 +74,7 @@
     <Compile Include="Locals\SmartPillowAlarm\AndroidSmartPillowAlarm.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Locals\Notifications\AndroidNotificationManager.cs" />
+    <Compile Include="Renderers\CustomSearchBarRenderer.cs" />
     <Compile Include="Renderers\CustomTimePickerRenderer.cs" />
     <Compile Include="Renderers\EntryNoUnderlineRenderer.cs" />
     <Compile Include="Renderers\RadioBtnRenderer.cs" />
@@ -278,6 +279,30 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\filterIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\SearchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\cancelIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\doorbellIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weatherIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\babyIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\fireIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\CarIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\addFab.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
