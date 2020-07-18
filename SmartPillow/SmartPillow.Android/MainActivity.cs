@@ -49,7 +49,7 @@ namespace SmartPillow.Droid
 
             CreateNotificationFromIntent(Intent);
 
-            AndroidSmartPillowAlarm.Init(this);
+            AndroidSPAlarmManager.Init(this);
 
             MessagingCenter.Subscribe<LoginViewModel>(this, "google_auth2",
                 (_vm) =>
