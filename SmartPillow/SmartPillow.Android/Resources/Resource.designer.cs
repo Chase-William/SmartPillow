@@ -11250,31 +11250,37 @@ namespace SmartPillow.Droid
 			public const int pillowScan = 2131165350;
 			
 			// aapt resource value: 0x7F0700A7
-			public const int SearchIcon = 2131165351;
+			public const int popMenu = 2131165351;
 			
 			// aapt resource value: 0x7F0700A8
-			public const int Smoke = 2131165352;
+			public const int scrollbar = 2131165352;
 			
 			// aapt resource value: 0x7F0700A9
-			public const int tooltip_frame_dark = 2131165353;
+			public const int SearchIcon = 2131165353;
 			
 			// aapt resource value: 0x7F0700AA
-			public const int tooltip_frame_light = 2131165354;
+			public const int Smoke = 2131165354;
 			
 			// aapt resource value: 0x7F0700AB
-			public const int Twitter = 2131165355;
+			public const int tooltip_frame_dark = 2131165355;
 			
 			// aapt resource value: 0x7F0700AC
-			public const int TwitterButton = 2131165356;
+			public const int tooltip_frame_light = 2131165356;
 			
 			// aapt resource value: 0x7F0700AD
-			public const int UserIcon = 2131165357;
+			public const int Twitter = 2131165357;
 			
 			// aapt resource value: 0x7F0700AE
-			public const int weatherIcon = 2131165358;
+			public const int TwitterButton = 2131165358;
 			
 			// aapt resource value: 0x7F0700AF
-			public const int Zack = 2131165359;
+			public const int UserIcon = 2131165359;
+			
+			// aapt resource value: 0x7F0700B0
+			public const int weatherIcon = 2131165360;
+			
+			// aapt resource value: 0x7F0700B1
+			public const int Zack = 2131165361;
 			
 			static Drawable()
 			{

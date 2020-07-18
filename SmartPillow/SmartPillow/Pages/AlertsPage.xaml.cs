@@ -10,7 +10,7 @@ namespace SmartPillow.Pages
     {
         public AlertsPage()
         {
-            InitializeComponent();
+            InitializeComponent();    
         }
 
         //private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);

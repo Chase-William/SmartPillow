@@ -30,11 +30,6 @@ namespace SmartPillow.Droid.Renderers
                 int searchIconId = Context.Resources.GetIdentifier("android:id/search_mag_icon", null, null);
                 var icon = searchView.FindViewById(searchIconId);
                 (icon as ImageView).SetImageResource(Resource.Drawable.SearchIcon);
-
-                int searchCancelIcon = Context.Resources.GetIdentifier("android:id/search_close_btn", null, null);
-                var cancelIcon = searchView.FindViewById(searchCancelIcon);
-
-                (cancelIcon as ImageView).SetImageResource(Resource.Drawable.cancelIcon);
             }
         }
     }

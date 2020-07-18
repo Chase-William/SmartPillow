@@ -1,12 +1,10 @@
 ﻿using SmartPillow.Util;
 using SmartPillowLib.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace SmartPillowLib.ViewModels
 {
@@ -27,8 +25,7 @@ namespace SmartPillowLib.ViewModels
 
         public ICommand SearchCommand => new Command(() =>
         {
-            var data = new AlertsList();
-            var list = data.Alerts;
+            var list = GetActualAlerts();
 
             Alerts.Clear();
 
@@ -37,12 +34,48 @@ namespace SmartPillowLib.ViewModels
                 var newList = (list.Where(x => x.SpecificAlert.ToLower().Contains(Keyword.ToLower())));
 
                 var filtered = newList.ToList();
-                foreach (var item in filtered)
-                    Alerts.Add(item);
+                filtered.ForEach(x => Alerts.Add(x));
             }
             else
                 Alerts = list;
+        });
 
+        public ICommand ByNameCommand => new Command(() =>
+        {
+            var list = GetActualAlerts();
+
+            Alerts.Clear();
+
+            var newList = list.OrderBy(x => x.SpecificAlert).ToList();
+            newList.ForEach(x => Alerts.Add(x));
+        });
+
+        public ICommand BrightnessEnabledCommand => new Command(() =>
+        {
+            var list = GetActualAlerts();
+
+            Alerts.Clear();
+
+            list.ForEach(x => { if (x.BrightnessPercent != 0) { Alerts.Add(x); } });
+        });
+
+        public ICommand VibrationEnabledCommand => new Command(() =>
+        {
+            var list = GetActualAlerts();
+
+            Alerts.Clear();
+
+            list.ForEach(x => { if (x.VibrationPercent != 0) { Alerts.Add(x); } });
+        });
+
+        public ICommand LastUpdatedCommand => new Command(() =>
+        {
+            var list = GetActualAlerts();
+
+            Alerts.Clear();
+
+            var newList = list.OrderByDescending(x => x.LastUpdated).ToList();
+            newList.ForEach(x => Alerts.Add(x));
         });
 
         public string Brightness
@@ -69,8 +102,13 @@ namespace SmartPillowLib.ViewModels
 
         public AlertsViewModel()
         {
+            Alerts = GetActualAlerts();
+        }
+
+        public ObservableCollection<Alert> GetActualAlerts()
+        {
             var data = new AlertsList();
-            Alerts = data.Alerts;
+            return data.Alerts;
         }
     }
 }

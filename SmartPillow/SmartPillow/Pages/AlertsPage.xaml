@@ -17,11 +17,18 @@
     </ContentPage.BindingContext>
     
     <ContentPage.ToolbarItems>
-        <!--need to bind Command -->
-        <ToolbarItem IconImageSource="filterIcon"/>
+        <!--need to bind Command --><!--
+        <ToolbarItem IconImageSource="filterIcon"/>-->
         
-        <!--need to bind Command-->
+        <!--might need to bind Command-->
         <ToolbarItem IconImageSource="Zack"/>
+
+        <!--filters alert collections--> <!-- need to figure how to change the secondary icon -->
+        <ToolbarItem Text="By Name" Priority="1" Order="Secondary" Command="{Binding ByNameCommand}"/>
+        <ToolbarItem Text="Brightness Enabled" Priority="2" Order="Secondary" Command="{Binding BrightnessEnabledCommand}"/>
+        <ToolbarItem Text="Vibration Enabled" Priority="3" Order="Secondary" Command="{Binding VibrationEnabledCommand}"/>
+        <ToolbarItem Text="Recently Updated" Priority="4" Order="Secondary" Command="{Binding LastUpdatedCommand}"/>
+        
     </ContentPage.ToolbarItems>
 
     <Grid>
@@ -57,6 +64,7 @@
                     Text="{Binding Keyword}"
                     TextColor="White"
                     FontFamily="Ubuntu"
+                    CancelButtonColor="#E1E1E1"
                     SearchCommand="{Binding SearchCommand}">
                     <controls:CustomSearchBar.Behaviors>
                         <behaviors:SearchbarCommand/>
@@ -71,7 +79,6 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-
                         <Grid WidthRequest="184" HeightRequest="146" HorizontalOptions="Start" VerticalOptions="Start">
                             <pancake:PancakeView HorizontalOptions="FillAndExpand" Margin="5"
                                      CornerRadius="18"
@@ -95,8 +102,8 @@
                                    FontFamily="Ubuntu"
                                    FontSize="14"/>
 
-                            <!-- need to bind text-->
-                            <Label Text="Last Updated 6/15/2020"
+                            <!-- last updated-->
+                            <Label Text="{Binding LastUpdatedString}"
                                    HorizontalOptions="Start"
                                    VerticalOptions="End"
                                    TextColor="#949494"
@@ -187,9 +194,7 @@
                                    FontSize="20"/>
 
                             </Grid>
-
                         </Grid>
-
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

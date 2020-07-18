@@ -14,6 +14,13 @@ namespace SmartPillowLib.Models
         public int BrightnessPercent { get; set; }
         public DateTime LastUpdated { get; set; }
 
+        private string lastUpdatedString;
+        public string LastUpdatedString
+        {
+            get => "Last Updated " + LastUpdated.ToString("d");
+            set => lastUpdatedString = value;
+        }
+
         /// <summary>
         ///     determine IsVisible is either true or false based on 
         ///     a specific alert has either both or only one setting (vibration/brightness)

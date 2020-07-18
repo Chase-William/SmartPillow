@@ -24,6 +24,8 @@
 	  <!--<item name="android:timePickerStyle">@style/MyTimePicker</item>-->
     <!-- Sets the background of the listview to transparent instead of the default orange -->
     <item name="android:colorActivatedHighlight">@android:color/transparent</item>
+    <item name="android:itemBackground">@drawable/popMenu</item>
+    <item name="android:scrollbarThumbVertical">@drawable/scrollbar</item>
   </style>
 
   <!--<style name="MyTimePicker" parent="android:Widget.Material.Light.TimePicker">
