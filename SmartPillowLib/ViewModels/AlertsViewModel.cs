@@ -3,13 +3,48 @@ using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartPillowLib.ViewModels
 {
     public class AlertsViewModel : NotifyClass
     {
         private string brightness;
+
+        private string keyword;
+        public string Keyword
+        {
+            get => keyword;
+            set
+            {
+                keyword = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ICommand SearchCommand => new Command(() =>
+        {
+            var data = new AlertsList();
+            var list = data.Alerts;
+
+            Alerts.Clear();
+
+            if (!string.IsNullOrEmpty(Keyword))
+            {
+                var newList = (list.Where(x => x.SpecificAlert.ToLower().Contains(Keyword.ToLower())));
+
+                var filtered = newList.ToList();
+                foreach (var item in filtered)
+                    Alerts.Add(item);
+            }
+            else
+                Alerts = list;
+
+        });
+
         public string Brightness
         {
             get => AutoBrightness.CheckNightTime();
@@ -34,27 +69,8 @@ namespace SmartPillowLib.ViewModels
 
         public AlertsViewModel()
         {
-            var alertList = new ObservableCollection<Alert>();
-
-            alertList.Add(new Alert() { Image = "fireIcon", SpecificAlert = "Fire", BrightnessPercent = 100, VibrationPercent = 0 });
-            alertList.Add(new Alert() { Image = "babyIcon", SpecificAlert = "Baby", BrightnessPercent = 27, VibrationPercent = 45 });
-            alertList.Add(new Alert() { Image = "CarIcon", SpecificAlert = "Car", BrightnessPercent = 0, VibrationPercent = 18 });
-            alertList.Add(new Alert() { Image = "weatherIcon", SpecificAlert = "Nature", BrightnessPercent = 30, VibrationPercent = 13 });
-            alertList.Add(new Alert() { Image = "doorbellIcon", SpecificAlert = "Doorbell", BrightnessPercent = 0, VibrationPercent = 80 });
-
-            alertList.Add(new Alert() { Image = "fireIcon", SpecificAlert = "Fire", BrightnessPercent = 23, VibrationPercent = 0 });
-            alertList.Add(new Alert() { Image = "babyIcon", SpecificAlert = "Baby", BrightnessPercent = 0, VibrationPercent = 26 });
-            alertList.Add(new Alert() { Image = "CarIcon", SpecificAlert = "Car", BrightnessPercent = 78, VibrationPercent = 0 });
-            alertList.Add(new Alert() { Image = "weatherIcon", SpecificAlert = "Nature", BrightnessPercent = 15, VibrationPercent = 32 });
-            alertList.Add(new Alert() { Image = "doorbellIcon", SpecificAlert = "Doorbell", BrightnessPercent = 60, VibrationPercent = 0 });
-
-            alertList.Add(new Alert() { Image = "fireIcon", SpecificAlert = "Fire", BrightnessPercent = 23, VibrationPercent = 0 });
-            alertList.Add(new Alert() { Image = "babyIcon", SpecificAlert = "Baby", BrightnessPercent = 0, VibrationPercent = 26 });
-            alertList.Add(new Alert() { Image = "CarIcon", SpecificAlert = "Car", BrightnessPercent = 78, VibrationPercent = 0 });
-            alertList.Add(new Alert() { Image = "weatherIcon", SpecificAlert = "Nature", BrightnessPercent = 15, VibrationPercent = 32 });
-            alertList.Add(new Alert() { Image = "doorbellIcon", SpecificAlert = "Doorbell", BrightnessPercent = 60, VibrationPercent = 0 });
-
-            Alerts = alertList;
+            var data = new AlertsList();
+            Alerts = data.Alerts;
         }
     }
 }

@@ -7,6 +7,7 @@
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:vm="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
              xmlns:controls="clr-namespace:SmartPillow.Controls"
+             xmlns:behaviors="clr-namespace:SmartPillow.Controls.SeachBar"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.AlertsPage"
              Title="Alerts">
@@ -53,8 +54,14 @@
 
                 <!--need to bind command-->
                 <controls:CustomSearchBar
+                    Text="{Binding Keyword}"
                     TextColor="White"
-                    FontFamily="Ubuntu"/>
+                    FontFamily="Ubuntu"
+                    SearchCommand="{Binding SearchCommand}">
+                    <controls:CustomSearchBar.Behaviors>
+                        <behaviors:SearchbarCommand/>
+                    </controls:CustomSearchBar.Behaviors>
+                </controls:CustomSearchBar>
             </Grid>
 
             <CollectionView ItemsSource="{Binding Alerts}" Grid.Row="1" 
