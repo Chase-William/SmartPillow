@@ -60,7 +60,9 @@
                         <Style TargetType="pancake:PancakeView">
                             <Setter Property="CornerRadius" Value="14.5"/>
                             <Setter Property="BackgroundColor" Value="Black"/>
-                            <Setter Property="Opacity" Value=".76"/>
+                            <Setter Property="Opacity" Value=".7"/>
+                            <Setter Property="HasShadow" Value="True"/>
+                            <Setter Property="Elevation" Value="10"/>
                         </Style>
                     </ResourceDictionary>
                 </Grid.Resources>

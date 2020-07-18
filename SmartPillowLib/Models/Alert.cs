@@ -15,7 +15,7 @@ namespace SmartPillowLib.Models
         public DateTime LastUpdated { get; set; }
 
         /// <summary>
-        ///     determine either IsVisble is true or false based on 
+        ///     determine IsVisible is either true or false based on 
         ///     a specific alert has either both or only one setting (vibration/brightness)
         /// </summary>
         #region

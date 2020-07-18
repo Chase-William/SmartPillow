@@ -81,7 +81,9 @@
                     <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" 
                                          VerticalOptions="CenterAndExpand"
                                          HeightRequest="100"
-                                         Opacity=".5"/>
+                                         Opacity=".5"
+                                         HasShadow="True"
+                                         Elevation="10"/>
                     <Image Margin="20,0,0,0" HorizontalOptions="Start"/>
                     <Image Margin="0,0,20,0" Rotation="180" HorizontalOptions="End"/>
                     <CarouselView ItemsSource="{Binding User.UserData}" Position="{Binding Position}"
@@ -125,7 +127,7 @@
                                     </Grid.Resources>
 
                                     <pancake:PancakeView BackgroundColor="Black" CornerRadius="8" HeightRequest="259"
-                                         VerticalOptions="Start"
+                                         VerticalOptions="Start" HasShadow="True" Elevation="10"
                                          Opacity=".5"/>
 
                                     <!--recommanded average sleep quality is ~85%-->
