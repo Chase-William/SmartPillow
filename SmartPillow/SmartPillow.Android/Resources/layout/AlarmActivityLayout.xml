@@ -1,13 +1,39 @@
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:showForAllUsers="true"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:background="@android:color/black">
+    
     <TextView
-        android:text="This is a active alarm..."
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:id="@+id/timeTextView"
+        android:textColor="@android:color/white"
+        android:textSize="50dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/dismissBtn"
+        android:text="@string_txt/dismiss"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/snoozeBtn"
+        android:text="@string_txt/snooze"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    
 
 </LinearLayout>

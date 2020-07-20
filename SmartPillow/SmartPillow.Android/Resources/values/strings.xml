@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <string name="login_txt">Login</string>
+  <string name="dismiss_txt">Dismiss</string>
+  <string name="snooze_txt">Snooze</string>
 </resources>

@@ -50,7 +50,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             
             
             Intent alarmActiveIntent = new Intent(context ,typeof(AlarmActivity));
-            alarmActiveIntent.SetFlags(ActivityFlags.NewTask | ActivityFlags.FromBackground);  // Required when starting a activity outside of a Activity Context
+            alarmActiveIntent.SetFlags(ActivityFlags.NewTask | ActivityFlags.FromBackground | ActivityFlags.BroughtToFront);  // Required when starting a activity outside of a Activity Context
             alarmActiveIntent.PutExtra(AlarmKeys.ID, alarmId);
             alarmActiveIntent.AddCategory(Intent.CategoryLauncher);
 
@@ -58,7 +58,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             PowerManager.WakeLock wakeLock = pm.NewWakeLock(WakeLockFlags.AcquireCausesWakeup | WakeLockFlags.ScreenDim, "Smart Pillow Alarm");
 
             
-            //context.StartActivity(alarmActiveIntent);
+            context.StartActivity(alarmActiveIntent);
             wakeLock.Acquire(30000); //wakelock for 30 sec```
         }
     }
@@ -90,7 +90,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             activeAlarms.AddRange(SmartPillowLib.Data.Local.LocalDataServiceContext.Provider.GetAlarms().Where(x => x.IsAlarmEnabled).Select(x => x.Id));
         }
 
-        public void CancelAlarm(Alarm alarm)
+        public static void CancelAlarm(Alarm alarm)
         {
             // If the alarmId isn't inside the pendingIntents dict abort.
             if (!activeAlarms.Contains(alarm.Id)) return;
@@ -105,7 +105,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             Toast.MakeText(MainActivity, "Alarm " + alarm.Name + " cancelled.", ToastLength.Short).Show();
         }
 
-        public void SetAlarm(TimeSpan timeOffset, Alarm alarm)
+        public static void SetAlarm(TimeSpan timeOffset, Alarm alarm)
         {
             // Calendar stuff           
             Calendar calendar = Calendar.GetInstance(ULocale.Us);
