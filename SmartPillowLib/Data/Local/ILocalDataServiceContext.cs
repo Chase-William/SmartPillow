@@ -5,6 +5,7 @@ namespace SmartPillowLib.Data.Local
 {
     interface ILocalDataServiceContext
     {
+        #region Alarm Category
         /// <summary>
         ///     Inserts an alarm.
         /// </summary>
@@ -29,9 +30,11 @@ namespace SmartPillowLib.Data.Local
         void DeleteAllAlarms(string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
 
         void DeleteAlarm(int alarmId, string collection_key = LocalDataServiceContext.TIMED_ALARM_COL_KEY);
+        #endregion
 
         //-----------------------------------------------------------------------------------------------------//
 
+        #region Access token Category
         /// <summary>
         ///     Stores user login credential when an user is logged in
         /// </summary>
@@ -49,5 +52,22 @@ namespace SmartPillowLib.Data.Local
         /// </summary>
         /// <param name="collection_key"> The key for a specific collection </param>
         AccessToken GetLoginAccessToken(string collection_key = LocalDataServiceContext.LOGIN_COL_KEY);
+        #endregion
+
+        //-----------------------------------------------------------------------------------------------------//
+
+        #region Alert Category
+        // get all alerts when alert collection page is opened
+        IEnumerable<Alert> GetAlerts(string collection_key = LocalDataServiceContext.SAFETY_ALARM_COL_KEY);
+
+        // new alert
+        void InsertAlert(Alert alert, string collection_key = LocalDataServiceContext.SAFETY_ALARM_COL_KEY);
+
+        // update alert
+        void UpdateAlert(Alert alert, string collection_key = LocalDataServiceContext.SAFETY_ALARM_COL_KEY);
+
+        // deletes a specific alert
+        void DeleteAlert(int alertId, string collection_key = LocalDataServiceContext.SAFETY_ALARM_COL_KEY);
+        #endregion
     }
 }

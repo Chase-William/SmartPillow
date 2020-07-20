@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:vm="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
+             xmlns:controls="clr-namespace:SmartPillow.Controls"
+             xmlns:effects="clr-namespace:SmartPillow.Controls.TintColor"
+             mc:Ignorable="d"
+             x:Class="SmartPillow.Pages.AdjustAlertPage">
+
+    <ContentPage.BindingContext>
+        <vm:AdjustAlertViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <!--might need to bind Command-->
+        <ToolbarItem IconImageSource="{Binding Profile}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+
+        <!--<skia:SKCanvasView x:Name="SKCanvas"
+                           PaintSurface="SKCanvas_PaintSurface"/>-->
+
+        <controls:CloudBackground x:Name="cloudBackground"/>
+
+        <Grid BackgroundColor="White" Opacity=".1"/>
+
+        <!--<Image Style="{StaticResource CloudyBG}"/>-->
+
+        <Grid BackgroundColor="{Binding Brightness}"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="254"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="190"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="pancake:PancakeView">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BackgroundColor" Value="Black"/>
+                        <Setter Property="Opacity" Value=".5"/>
+                        <Setter Property="HasShadow" Value="True"/>
+                        <Setter Property="Elevation" Value="1"/>
+                        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+            
+            <!--top card-->
+            <Grid Margin="12">
+
+                <pancake:PancakeView/>
+
+                <Image Source="{Binding Image}" Margin="25"
+                       HeightRequest="75" HorizontalOptions="Start" VerticalOptions="Start"
+                       effects:TintImageEffect.TintColor="{Binding Color}"/>
+
+                <!--name of alert-->
+                <controls:EntryNoUnderline 
+                    HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="200" MaxLength="10"
+                        Text="{Binding SpecificAlert}" Placeholder="Alert Name"
+                    PlaceholderColor="#D4D4D4" FontFamily="Ubuntu" FontSize="27" TextColor="#E1E1E1"
+                    Margin="10,35,0,0" HorizontalTextAlignment="Center"/>
+                
+                <Grid Margin="0,0,0,10" HeightRequest="120" VerticalOptions="End">
+
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="FontFamily" Value="Ubuntu"/>
+                                <Setter Property="Margin" Value="20,0,20,0"/>
+                                <Setter Property="TextColor" Value="#E1E1E1"/>
+                                <Setter Property="FontSize" Value="19"/>
+                            </Style>
+
+                            <Style TargetType="Slider">
+                                <Setter Property="MaximumTrackColor" Value="#AEAEAE"/>
+                                <Setter Property="ThumbColor" Value="#FFFFFF"/>
+                                <Setter Property="Grid.ColumnSpan" Value="2"/>
+                                <Setter Property="Margin" Value="10,0,10,0"/>
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    
+                    <!--brightness setting-->
+                    <Label Text="Brightness"
+                           TranslationY="5"/>
+
+                    <Label Text="{Binding Source={x:Reference brightnessSlider},
+                              Path=Value,
+                              StringFormat='{0:F0}'}"
+                           TranslationY="5" Grid.Column="1" HorizontalTextAlignment="End"/>
+
+                    <Slider x:Name="brightnessSlider" Maximum="100"
+                            Grid.Row="1"
+                            TranslationY="5"
+                            MinimumTrackColor="#D765FF" Value="{Binding BrightnessPercent, Mode=TwoWay}"/>
+                    
+                    <!--vibration setting-->
+                    <Label Text="Vibration Level" Grid.Row="2"/>
+
+                    <Label Text="{Binding Source={x:Reference vibrationSlider},
+                              Path=Value,
+                              StringFormat='{0:F0}'}" Grid.Row="2"
+                           TranslationY="5" Grid.Column="1" HorizontalTextAlignment="End"/>
+
+                    <Slider x:Name="vibrationSlider" Grid.Row="3" Maximum="100"
+                            MinimumTrackColor="#7AC0DF" Value="{Binding VibrationPercent, Mode=TwoWay}"/>
+                </Grid>
+            </Grid>
+
+            <Grid Margin="12,-6,12,12" Grid.Row="1">
+
+                <pancake:PancakeView/>
+
+            </Grid>
+
+            <Grid Margin="12,-6,12,12" Grid.Row="2">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="190"/>
+                    </Grid.ColumnDefinitions>
+
+                    <pancake:PancakeView/>
+
+                    <pancake:PancakeView Margin="6,0,0,0" Grid.Column="1"/>
+
+                    <pancake:PancakeView
+                        x:Name="ColorPickerHolderFrame"
+                        Grid.Column="1"
+                        Margin="6,0,0,0"
+                        CornerRadius="100"
+                        Padding="-5"
+                        Opacity="1"
+                        HeightRequest="160"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="160"
+                        HasShadow="True">
+                        <controls:ColorPicker x:Name="ColorPicker" PickedColorChanged="ColorPicker_PickedColorChanged" />
+                    </pancake:PancakeView>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

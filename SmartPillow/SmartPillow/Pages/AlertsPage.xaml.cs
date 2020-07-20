@@ -1,5 +1,5 @@
-﻿using SkiaSharp.Views.Forms;
-using SmartPillow.Util;
+﻿using SmartPillowLib.Models;
+using SmartPillowLib.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,12 +8,16 @@ namespace SmartPillow.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AlertsPage : ContentPage
     {
+        public AlertsViewModel VM => (AlertsViewModel)BindingContext;
         public AlertsPage()
         {
-            InitializeComponent();    
-        }
+            InitializeComponent();
 
-        //private void SKCanvas_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
+            VM.PushAdjustAlertPage += delegate
+            {
+                Navigation.PushAsync(new AdjustAlertPage());
+            };
+        }
 
         protected async override void OnAppearing()
         {

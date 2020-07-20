@@ -1,25 +1,79 @@
 ﻿using SmartPillowLib.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 
 namespace SmartPillowLib.Models
 {
-    public class Alert
+    public class Alert : NotifyClass
     {
-        public string Image { get; set; }
-        public string SpecificAlert { get; set; }
-        public int VibrationPercent { get; set; }
-        public int BrightnessPercent { get; set; }
-        public DateTime LastUpdated { get; set; }
-
+        #region Fields
+        //private int id;
+        private string image;
+        private string color;
+        private string specificAlert;
+        private int vibrationPercent;
+        private int brightnessPercent;
+        private DateTime lastUpdated;
+        private string brightnessPercentString;
+        private string vibrationPercentString;
         private string lastUpdatedString;
+        private bool hasBothVibandBri;
+        private bool hasOnlyOneSetting;
+        private int font;
+        private string specificSetting;
+        private int percent;
+        #endregion
+
+        #region Basic Properties
+        public int Id { get; set; }
+        public string Image
+        {
+            get => image;
+            set { image = value; NotifyPropertyChanged(); }
+        }
+
+        public string Color 
+        {
+            get => color;
+            set { color = value; NotifyPropertyChanged(); }
+        }
+
+        public string SpecificAlert
+        {
+            get => specificAlert;
+            set { specificAlert = value; NotifyPropertyChanged(); }
+        }
+
+        public int VibrationPercent
+        {
+            get => vibrationPercent;
+            set { vibrationPercent = value; NotifyPropertyChanged(); }
+        }
+
+        public int BrightnessPercent
+        {
+            get => brightnessPercent;
+            set { brightnessPercent = value; NotifyPropertyChanged(); }
+        }
+
+        public DateTime LastUpdated
+        {
+            get => lastUpdated;
+            set { lastUpdated = value; NotifyPropertyChanged(); }
+        }
         public string LastUpdatedString
         {
             get => "Last Updated " + LastUpdated.ToString("d");
-            set => lastUpdatedString = value;
+            set 
+            { 
+                lastUpdatedString = value;
+                NotifyPropertyChanged();
+            }
         }
+        #endregion
 
         /// <summary>
         ///     determine IsVisible is either true or false based on 
@@ -28,42 +82,36 @@ namespace SmartPillowLib.Models
         #region
 
         // the bool property is true if a specific alert has both vibration and brightness are settled by an user
-        private bool hasBothVibandBri;
         public bool HasBothVibandBri 
         {
             get => hasBothVibandBri = (VibrationPercent == 0 || BrightnessPercent == 0) ? false : true;
-            set => hasBothVibandBri = value;
+            set { hasBothVibandBri = value; NotifyPropertyChanged(); }
         }
 
-        private bool hasOnlyOneSetting;
         public bool HasOnlyOneSetting
         {
             get => hasOnlyOneSetting = !HasBothVibandBri;
-            set => hasOnlyOneSetting = value;
+            set { hasOnlyOneSetting = value; NotifyPropertyChanged(); }
         }
-
-        private int font;
 
         public int Font
         {
             get => font = (Percent == 100) ? 32 : 45;
-            set => font = value;
+            set { font = value; NotifyPropertyChanged(); }
         }
 
         // either brightness or vibration if the specific alert has only one setting (doesn't have both vibration and brightness)
-        private string specificSetting;
         public string SpecificSetting
         {
             get => specificSetting = (VibrationPercent == 0) ? "Brightness" : "Vibration";
-            set => specificSetting = value;
+            set { specificSetting = value;  NotifyPropertyChanged(); }
         }
 
         // if HasBothVibandBri is false, applys either brightnessPercent or VibrationPercent that is settled to Percent
-        private int percent;
         public int Percent
         {
             get => percent = (VibrationPercent == 0) ? BrightnessPercent : VibrationPercent;
-            set => percent = value;
+            set { percent = value; NotifyPropertyChanged(); }
         }
         #endregion
 
@@ -72,26 +120,40 @@ namespace SmartPillowLib.Models
         /// </summary>
         #region
 
-        private string brightnessPercentString;
         public string BrightnessPercentString
         {
             get => brightnessPercentString =
                 (HasBothVibandBri) ? BrightnessPercent.ToString() + "%" : BrightnessPercent.ToString();
-            set => brightnessPercentString = value;
+            set { brightnessPercentString = value; NotifyPropertyChanged(); }
         }
 
-
-        private string vibrationPercentString;
         public string VibrationPercentString
         {
             get => vibrationPercentString =
                 (HasBothVibandBri) ? VibrationPercent.ToString() + "%" : VibrationPercent.ToString();
-            set => vibrationPercentString = value;
+            set { vibrationPercentString = value; NotifyPropertyChanged(); }
         }
         #endregion
+
         // -------------------------- //
 
-        // We will work on those more properties below later
-        public Color Color { get; set; }
+        // default constructor
+        public Alert()
+        {
+            Color = "#FFFFFF";
+            BrightnessPercent = 0;
+            VibrationPercent = 0;
+            Image = "babyIcon";
+        }
+
+        // uses this constructor to adjust existed alert -- not referenced yet
+        public Alert(Alert _alert)
+        {
+            SpecificAlert = _alert.SpecificAlert;
+            Color = _alert.Color;
+            BrightnessPercent = _alert.BrightnessPercent;
+            VibrationPercent = _alert.VibrationPercent;
+            Image = _alert.Image;
+        }
     }
 }

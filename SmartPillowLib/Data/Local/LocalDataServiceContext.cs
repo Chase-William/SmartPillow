@@ -28,6 +28,7 @@ namespace SmartPillowLib.Data.Local
 
         private LocalDataServiceContext() { }
 
+        #region Alarm Category
         public void InsertAlarm(Alarm alarm, string collection_key = TIMED_ALARM_COL_KEY)
         {
             // Open database (or create if doesn't exist)
@@ -95,7 +96,9 @@ namespace SmartPillowLib.Data.Local
                 col.Delete(alarmId);
             }
         }
+        #endregion
 
+        #region Access token category
         public void InsertLoginAccessToken(AccessToken loginInfo, string collection_key = LOGIN_COL_KEY)
         {
             // Open database (or create if doesn't exist)
@@ -124,5 +127,53 @@ namespace SmartPillowLib.Data.Local
                 col.DeleteAll();
             }
         }
+        #endregion
+
+        #region Alert Cateogry
+        public IEnumerable<Alert> GetAlerts(string collection_key = SAFETY_ALARM_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alert>(collection_key);
+
+                var collection = col.FindAll().ToList();
+
+                return collection;
+            }
+        }
+
+        public void InsertAlert(Alert alert, string collection_key = SAFETY_ALARM_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alert>(collection_key);
+
+                alert.Id = col.Insert(alert).AsInt32;
+            }
+        }
+
+        public void UpdateAlert(Alert alert, string collection_key = SAFETY_ALARM_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alert>(collection_key);
+
+                // Updates a specific alert
+                if (!col.Update(alert))
+                {
+                    //throw new Exception("Alarm not found inside collection.");
+                }
+            }
+        }
+
+        public void DeleteAlert(int alertId, string collection_key = SAFETY_ALARM_COL_KEY)
+        {
+            using (var db = new LiteDatabase(DatabasePath))
+            {
+                var col = db.GetCollection<Alert>(collection_key);
+                col.Delete(alertId);
+            }
+        }
+        #endregion
     }
 }
