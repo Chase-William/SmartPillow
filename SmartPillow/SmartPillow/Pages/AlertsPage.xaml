@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:SmartPillow.Controls"
              xmlns:behaviors="clr-namespace:SmartPillow.Controls.SeachBar"
              mc:Ignorable="d"
+             x:Name="Pagee"
              xmlns:effects="clr-namespace:SmartPillow.Controls.TintColor"
              x:Class="SmartPillow.Pages.AlertsPage"
              Title="Alerts">
@@ -68,7 +69,7 @@
 
             <RefreshView BackgroundColor="Black" RefreshColor="#7AC0DF" Command="{Binding RefreshCommand}" 
                          IsRefreshing="{Binding IsRefreshing, Mode=OneWay}" Grid.Row="1" Margin="8,-12,8,8">
-                <CollectionView ItemsSource="{Binding Alerts}" SelectedItem="{Binding SelectedItem}"
+                <CollectionView x:Name="list" ItemsSource="{Binding Alerts}" SelectedItem="{Binding SelectedItem}"
                             SelectionChangedCommand="{Binding SelectCommand}"
                                 SelectionMode="Single"
                                  ItemSizingStrategy="MeasureAllItems">
@@ -78,6 +79,10 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid WidthRequest="184" HeightRequest="146" HorizontalOptions="Start" VerticalOptions="Start">
+                                <!--<Grid.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                        Command="{Binding BindingContext.TapCommand, Source={x:Reference Pagee}}"/>
+                                </Grid.GestureRecognizers>-->
                                 <pancake:PancakeView HorizontalOptions="FillAndExpand" Margin="5"
                                      CornerRadius="18"
                                      BackgroundColor="Black"

@@ -1,4 +1,6 @@
-﻿using SmartPillowLib.Data.Local;
+﻿using SkiaSharp.Views.Forms;
+using SmartPillow.Util;
+using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using SmartPillowLib.ViewModels;
 using System;
@@ -20,6 +22,8 @@ namespace SmartPillow.Pages
         {
             InitializeComponent();
         }
+
+        private void SKCanvasDetail_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
 
         private void ColorPicker_PickedColorChanged(object sender, Color colorPicked)
         {
@@ -47,7 +51,6 @@ namespace SmartPillow.Pages
                 AlertsViewModel.SelectedAlert.LastUpdated = DateTime.Now;
                 LocalDataServiceContext.Provider.InsertAlert(AlertsViewModel.SelectedAlert);
             };
-
             base.OnDisappearing();
         }
     }

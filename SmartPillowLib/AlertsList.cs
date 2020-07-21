@@ -9,6 +9,7 @@ namespace SmartPillowLib
     public class AlertsList
     {
         public ObservableCollection<Alert> Alerts;
+        public List<Alert> OptionalAlerts;
         public AlertsList()
         {
             var alertList = new ObservableCollection<Alert>();
@@ -32,6 +33,19 @@ namespace SmartPillowLib
             alertList.Add(new Alert() { Image = "doorbellIcon", Color = "#B1FFD5", SpecificAlert = "Doorbell", BrightnessPercent = 60, VibrationPercent = 0, LastUpdated = new DateTime(2020, 6, 4, 4, 3, 20) });
 
             Alerts = alertList;
+
+
+            var optionalList = new List<Alert>();
+
+            optionalList.Add(new Alert() { Image = "fireIcon", SmallIcon = "fireAlert", Description = "A smoke detector is a device that senses smoke, typically as an indicator of fire." });
+            optionalList.Add(new Alert() { Image = "babyIcon", SmallIcon = "babyAlert", Description = "babyy" });
+            optionalList.Add(new Alert() { Image = "CarIcon", SmallIcon = "CarAlert", Description = "carr" });
+            optionalList.Add(new Alert() { Image = "doorbellIcon", SmallIcon = "doorbellAlert", Description = "doorbell" });
+            optionalList.Add(new Alert() { Image = "weatherIcon", SmallIcon = "weatherAlert", Description = "weather" });
+            optionalList.Add(new Alert() { Image = "smokeAlert", SmallIcon = "smokeAlert", Description = "smoke" });
+            optionalList.Add(new Alert() { Image = "breakAlert", SmallIcon = "breakAlert", Description = "break" });
+
+            OptionalAlerts = optionalList;
         }
     }
 }

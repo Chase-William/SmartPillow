@@ -1,22 +1,23 @@
 ﻿using SmartPillowLib.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartPillowLib.Models
 {
     public class Alert : NotifyClass
     {
+        public event Action OpenDetail;
         #region Fields
         //private int id;
         private string image;
+        private string smallIcon;
         private string color;
         private string specificAlert;
         private int vibrationPercent;
         private int brightnessPercent;
         private DateTime lastUpdated;
+        private string description;
         private string brightnessPercentString;
         private string vibrationPercentString;
         private string lastUpdatedString;
@@ -33,6 +34,12 @@ namespace SmartPillowLib.Models
         {
             get => image;
             set { image = value; NotifyPropertyChanged(); }
+        }
+
+        public string SmallIcon
+        {
+            get => smallIcon;
+            set { smallIcon = value; NotifyPropertyChanged(); }
         }
 
         public string Color 
@@ -64,6 +71,13 @@ namespace SmartPillowLib.Models
             get => lastUpdated;
             set { lastUpdated = value; NotifyPropertyChanged(); }
         }
+
+        public string Description
+        {
+            get => description;
+            set { description = value; NotifyPropertyChanged(); }
+        }
+
         public string LastUpdatedString
         {
             get => "Last Updated " + LastUpdated.ToString("d");

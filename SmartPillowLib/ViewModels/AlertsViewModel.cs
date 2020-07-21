@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json.Bson;
-using SmartPillow.Util;
+﻿using SmartPillow.Util;
 using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -19,6 +16,7 @@ namespace SmartPillowLib.ViewModels
         public static Alert SelectedAlert { get; set; }
         public static bool IsNewAlert;
         public event Action PushAdjustAlertPage;
+        public event Action RefreshPage;
 
         #region Const keys
         private const string BY_NAME_KEY = "ByName";
@@ -29,7 +27,7 @@ namespace SmartPillowLib.ViewModels
 
         #region Fields
         private string profile;
-        private string filterKey = "";
+        private string filterKey = RECENTLY_KEY;
         private ObservableCollection<Alert> alerts = new ObservableCollection<Alert>();
         private string brightness;
         private string keyword;
@@ -94,12 +92,9 @@ namespace SmartPillowLib.ViewModels
         #endregion
 
         #region Filter Commands
-        public ICommand SearchCommand => new Command(() =>
+        public ICommand SearchCommand => new Command(async () =>
         {
-            var list = GetAlertsFromLocal();
-            Alerts = new ObservableCollection<Alert>();
-
-            Search(list);
+            Search();
         });
 
         public ICommand ByNameCommand => new Command(() =>
@@ -116,7 +111,7 @@ namespace SmartPillowLib.ViewModels
 
         public ICommand VibrationEnabledCommand => new Command(() =>
         {
-            FilterVibrationEnbaled();
+            FilterVibrationEnabled();
             filterKey = VIBR_ENABLED_KEY;
         });
 
@@ -128,25 +123,19 @@ namespace SmartPillowLib.ViewModels
         #endregion
 
         #region General Commands
-        public ICommand RefreshCommand => new Command(async() =>
+        public ICommand RefreshCommand => new Command(() =>
         {
-            if (IsRefreshing)
-                return;
-
             IsRefreshing = true;
-            await Task.Run(() =>
+            switch (filterKey)
             {
-                switch(filterKey)
-                {
-                    case BY_NAME_KEY: FilterByName(); break;
-                    case BRIG_ENABLED_KEY: FilterBrightnessEnabled(); break;
-                    case VIBR_ENABLED_KEY: FilterVibrationEnbaled(); break;
-                    case RECENTLY_KEY: FilterRecentlyUpdated(); break;
-                    default: GetAlertsFromLocal(); break;
-                }
+                case BY_NAME_KEY: FilterByName(); break;
+                case BRIG_ENABLED_KEY: FilterBrightnessEnabled(); break;
+                case VIBR_ENABLED_KEY: FilterVibrationEnabled(); break;
+                case RECENTLY_KEY: FilterRecentlyUpdated(); break;
+                default: GetAlertsFromLocal(); break;
+            }
 
-                IsRefreshing = false;
-            });
+            IsRefreshing = false;
         });
 
         public ICommand SelectCommand => new Command(() =>
@@ -171,17 +160,27 @@ namespace SmartPillowLib.ViewModels
             return data.Alerts;
         }
 
-        public void Search(ObservableCollection<Alert> list)
+        public void Search()
         {
-            if (!string.IsNullOrEmpty(Keyword))
-            {
-                var newList = (list.Where(x => x.SpecificAlert.ToLower().Contains(Keyword.ToLower())));
+            /// <summary>
+            ///     this code gives an error because it causes newList to be null
+            ///     after getting alerts list from database and using linq for no reason
+            /// </summary>         
 
-                var filtered = newList.ToList();
-                filtered.ForEach(x => Alerts.Add(x));
-            }
-            else
-                Alerts = list;
+            #region Error code
+
+            //var list = GetAlertsFromLocal();
+            //Alerts = new ObservableCollection<Alert>();
+            //if (!string.IsNullOrEmpty(Keyword))
+            //{
+            //    var newList = list.Where(x => x.SpecificAlert.ToLower().Contains(Keyword.ToLower()));
+            //    var filtered = newList.ToList();
+            //    filtered.ForEach(x => Alerts.Add(x));
+            //}
+            //else
+            //    Alerts = list;
+
+            #endregion
         }
 
         public void FilterByName()
@@ -199,7 +198,7 @@ namespace SmartPillowLib.ViewModels
             list.ForEach(x => { if (x.BrightnessPercent != 0) { Alerts.Add(x); } });
         }
 
-        public void FilterVibrationEnbaled()
+        public void FilterVibrationEnabled()
         {
             var list = GetAlertsFromLocal();
             Alerts = new ObservableCollection<Alert>();
@@ -234,7 +233,20 @@ namespace SmartPillowLib.ViewModels
 
         public AlertsViewModel()
         {
-            GetAlertsFromLocal();
+            //FilterRecentlyUpdated();
+            switch (filterKey)
+            {
+                case BY_NAME_KEY: FilterByName(); break;
+                case BRIG_ENABLED_KEY: FilterBrightnessEnabled(); break;
+                case VIBR_ENABLED_KEY: FilterVibrationEnabled(); break;
+                case RECENTLY_KEY: FilterRecentlyUpdated(); break;
+                default: GetAlertsFromLocal(); break;
+            }
+        }
+
+        public void OnAppearing()
+        {
+            FilterRecentlyUpdated();
         }
     }
 }

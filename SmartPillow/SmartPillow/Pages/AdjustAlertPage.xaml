@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:SmartPillowLib.ViewModels;assembly=SmartPillowLib"
              xmlns:controls="clr-namespace:SmartPillow.Controls"
              xmlns:effects="clr-namespace:SmartPillow.Controls.TintColor"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
              x:Class="SmartPillow.Pages.AdjustAlertPage">
 
@@ -14,142 +15,195 @@
         <vm:AdjustAlertViewModel/>
     </ContentPage.BindingContext>
 
+    
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Delete" IsDestructive="True"/>
         <!--might need to bind Command-->
         <ToolbarItem IconImageSource="{Binding Profile}"/>
     </ContentPage.ToolbarItems>
 
-    <Grid>
+    <AbsoluteLayout>
 
-        <!--<skia:SKCanvasView x:Name="SKCanvas"
-                           PaintSurface="SKCanvas_PaintSurface"/>-->
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 
-        <controls:CloudBackground x:Name="cloudBackground"/>
+            <controls:CloudBackground x:Name="cloudBackground"/>
 
-        <Grid BackgroundColor="White" Opacity=".1"/>
+            <Grid BackgroundColor="White" Opacity=".1"/>
 
-        <!--<Image Style="{StaticResource CloudyBG}"/>-->
+            <Grid BackgroundColor="{Binding Brightness}"/>
 
-        <Grid BackgroundColor="{Binding Brightness}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="254"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="190"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="254"/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="190"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="pancake:PancakeView">
+                            <Setter Property="CornerRadius" Value="10"/>
+                            <Setter Property="BackgroundColor" Value="Black"/>
+                            <Setter Property="Opacity" Value=".5"/>
+                            <Setter Property="HasShadow" Value="True"/>
+                            <Setter Property="Elevation" Value="1"/>
+                            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
 
-            <Grid.Resources>
-                <ResourceDictionary>
-                    <Style TargetType="pancake:PancakeView">
-                        <Setter Property="CornerRadius" Value="10"/>
-                        <Setter Property="BackgroundColor" Value="Black"/>
-                        <Setter Property="Opacity" Value=".5"/>
-                        <Setter Property="HasShadow" Value="True"/>
-                        <Setter Property="Elevation" Value="1"/>
-                        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-                    </Style>
-                </ResourceDictionary>
-            </Grid.Resources>
-            
-            <!--top card-->
-            <Grid Margin="12">
+                <!--top card-->
+                <Grid Margin="12">
 
-                <pancake:PancakeView/>
+                    <pancake:PancakeView/>
 
-                <Image Source="{Binding Image}" Margin="25"
+                    <Image Source="{Binding Image}" Margin="25"
                        HeightRequest="75" HorizontalOptions="Start" VerticalOptions="Start"
-                       effects:TintImageEffect.TintColor="{Binding Color}"/>
+                       effects:TintImageEffect.TintColor="{Binding Color}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding ImageCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
 
-                <!--name of alert-->
-                <controls:EntryNoUnderline 
+                    <!--name of alert-->
+                    <controls:EntryNoUnderline 
                     HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="200" MaxLength="10"
                         Text="{Binding SpecificAlert}" Placeholder="Alert Name"
                     PlaceholderColor="#D4D4D4" FontFamily="Ubuntu" FontSize="27" TextColor="#E1E1E1"
                     Margin="10,35,0,0" HorizontalTextAlignment="Center"/>
-                
-                <Grid Margin="0,0,0,10" HeightRequest="120" VerticalOptions="End">
 
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="FontFamily" Value="Ubuntu"/>
-                                <Setter Property="Margin" Value="20,0,20,0"/>
-                                <Setter Property="TextColor" Value="#E1E1E1"/>
-                                <Setter Property="FontSize" Value="19"/>
-                            </Style>
+                    <Grid Margin="0,0,0,10" HeightRequest="120" VerticalOptions="End">
 
-                            <Style TargetType="Slider">
-                                <Setter Property="MaximumTrackColor" Value="#AEAEAE"/>
-                                <Setter Property="ThumbColor" Value="#FFFFFF"/>
-                                <Setter Property="Grid.ColumnSpan" Value="2"/>
-                                <Setter Property="Margin" Value="10,0,10,0"/>
-                            </Style>
-                        </ResourceDictionary>
-                    </Grid.Resources>
-                    
-                    <!--brightness setting-->
-                    <Label Text="Brightness"
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontFamily" Value="Ubuntu"/>
+                                    <Setter Property="Margin" Value="20,0,20,0"/>
+                                    <Setter Property="TextColor" Value="#E1E1E1"/>
+                                    <Setter Property="FontSize" Value="19"/>
+                                </Style>
+
+                                <Style TargetType="Slider">
+                                    <Setter Property="MaximumTrackColor" Value="#AEAEAE"/>
+                                    <Setter Property="ThumbColor" Value="#FFFFFF"/>
+                                    <Setter Property="Grid.ColumnSpan" Value="2"/>
+                                    <Setter Property="Margin" Value="10,0,10,0"/>
+                                </Style>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+
+                        <!--brightness setting-->
+                        <Label Text="Brightness"
                            TranslationY="5"/>
 
-                    <Label Text="{Binding Source={x:Reference brightnessSlider},
+                        <Label Text="{Binding Source={x:Reference brightnessSlider},
                               Path=Value,
                               StringFormat='{0:F0}'}"
                            TranslationY="5" Grid.Column="1" HorizontalTextAlignment="End"/>
 
-                    <Slider x:Name="brightnessSlider" Maximum="100"
+                        <Slider x:Name="brightnessSlider" Maximum="100"
                             Grid.Row="1"
                             TranslationY="5"
                             MinimumTrackColor="#D765FF" Value="{Binding BrightnessPercent, Mode=TwoWay}"/>
-                    
-                    <!--vibration setting-->
-                    <Label Text="Vibration Level" Grid.Row="2"/>
 
-                    <Label Text="{Binding Source={x:Reference vibrationSlider},
+                        <!--vibration setting-->
+                        <Label Text="Vibration Level" Grid.Row="2"/>
+
+                        <Label Text="{Binding Source={x:Reference vibrationSlider},
                               Path=Value,
                               StringFormat='{0:F0}'}" Grid.Row="2"
                            TranslationY="5" Grid.Column="1" HorizontalTextAlignment="End"/>
 
-                    <Slider x:Name="vibrationSlider" Grid.Row="3" Maximum="100"
+                        <Slider x:Name="vibrationSlider" Grid.Row="3" Maximum="100"
                             MinimumTrackColor="#7AC0DF" Value="{Binding VibrationPercent, Mode=TwoWay}"/>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Grid Margin="12,-6,12,12" Grid.Row="1">
-
-                <pancake:PancakeView/>
-
-            </Grid>
-
-            <Grid Margin="12,-6,12,12" Grid.Row="2">
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="190"/>
-                    </Grid.ColumnDefinitions>
+                <!--description-->
+                <Grid Margin="12,-6,12,12" Grid.Row="1">
 
                     <pancake:PancakeView/>
 
-                    <pancake:PancakeView Margin="6,0,0,0" Grid.Column="1"/>
+                    <Label Text="{Binding Description}" FontFamily="Ubuntu"
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           HorizontalTextAlignment="Center" TextColor="#E1E1E1"/>
+                    
+                </Grid>
 
-                    <pancake:PancakeView
+                <Grid Margin="12,-6,12,12" Grid.Row="2">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="190"/>
+                        </Grid.ColumnDefinitions>
+
+                        <pancake:PancakeView/>
+
+                        <pancake:PancakeView Margin="6,0,0,0" Grid.Column="1"/>
+
+                        <pancake:PancakeView Margin="6,0,0,0" Grid.Column="1" 
+                                             HeightRequest="152"
+                                             WidthRequest="152"
+                                             CornerRadius="100" Opacity="1" 
+                                             BackgroundColor="#FFFFFF" 
+                                             HasShadow="True" Elevation="1"
+                                             HorizontalOptions="Center"
+                                             VerticalOptions="Center"/>
+                        
+                        <pancake:PancakeView
                         x:Name="ColorPickerHolderFrame"
                         Grid.Column="1"
                         Margin="6,0,0,0"
                         CornerRadius="100"
                         Padding="-5"
                         Opacity="1"
-                        HeightRequest="160"
+                        HeightRequest="150"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
-                        WidthRequest="160"
-                        HasShadow="True">
-                        <controls:ColorPicker x:Name="ColorPicker" PickedColorChanged="ColorPicker_PickedColorChanged" />
-                    </pancake:PancakeView>
+                        WidthRequest="150"
+                        HasShadow="True"
+                            Elevation="1">
+                            <controls:ColorPicker x:Name="ColorPicker" PickedColorChanged="ColorPicker_PickedColorChanged" />
+                        </pancake:PancakeView>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
-    </Grid>
+
+        <!--detail popup view-->
+        <ContentView x:Name="DetailPopup" IsVisible="{Binding IsVisible}"
+                     AbsoluteLayout.LayoutBounds="0,0,1,.365"
+                     AbsoluteLayout.LayoutFlags="All">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding CloseCommand}"/>
+            </ContentView.GestureRecognizers>
+
+            <Grid VerticalOptions="Start" HorizontalOptions="Center" 
+              HeightRequest="100" WidthRequest="380" Margin="0,130,0,0">
+
+                <pancake:PancakeView CornerRadius="100" Opacity=".7" HasShadow="True" Elevation="10">
+                    <skia:SKCanvasView x:Name="SKCanvasDetail" PaintSurface="SKCanvasDetail_PaintSurface"/>
+                </pancake:PancakeView>
+
+                <CollectionView ItemsSource="{Binding Options}" Margin="20"
+                                SelectedItem="{Binding SelectedIcon}"
+                                SelectionChangedCommand="{Binding SelectIconCommand}"
+                                SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding SmallIcon}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
+        </ContentView>
+    </AbsoluteLayout>
 </ContentPage>

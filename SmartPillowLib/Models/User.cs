@@ -10,7 +10,7 @@ namespace SmartPillowLib.Models
         /// <summary>
         ///     Information of user that is currently logged in.
         /// </summary>
-        ///
+
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
