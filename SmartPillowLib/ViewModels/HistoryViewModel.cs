@@ -1,20 +1,22 @@
 ﻿using SmartPillow.Util;
 using SmartPillowLib.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using Xamarin.Forms;
+using System.Linq; 
 
 namespace SmartPillowLib.ViewModels
 {
     public class HistoryViewModel : NotifyClass
     {
+        #region Fields
         public List<History> Months { get; set; } = UserInformation.User.UserData;
+        private List<Week> weeks;
         private bool isNoHistoryVisble = false;
         private bool isHaveHistoryVisble = false;
-        public int position;
+        private int position;
         private string brightness;
+        #endregion
+
+        #region Properties
         public bool IsNoHistoryVisble
         {
             get => isNoHistoryVisble;
@@ -65,20 +67,6 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public HistoryViewModel()
-        {
-            // displays "no history" icon if an user doesn't have any history
-            if (History == null) IsNoHistoryVisble = true;
-
-            //  otherwise, it displays user's monthly charts
-            else IsHaveHistoryVisible = true;
-
-            // automatically moves to user's recorded latest month when opening HistoryPage
-            if (Months != null)
-                if (Months.Count() != 0)
-                    position = Months.Count() - 1;
-        }
-
         public int Position
         {
             get 
@@ -96,8 +84,6 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged();
             }
         }
-
-        private List<Week> weeks;
 
         public List<Week> Weeks
         {
@@ -118,6 +104,7 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        #endregion
 
         public void OnAppearing()
         {
@@ -129,6 +116,20 @@ namespace SmartPillowLib.ViewModels
                                     nameof(Weeks),
                                     nameof(IsNoHistoryVisble),
                                     nameof(IsHaveHistoryVisible));
+        }
+
+        public HistoryViewModel()
+        {
+            // displays "no history" icon if an user doesn't have any history
+            if (History == null) IsNoHistoryVisble = true;
+
+            //  otherwise, it displays user's monthly charts
+            else IsHaveHistoryVisible = true;
+
+            // automatically moves to user's recorded latest month when opening HistoryPage
+            if (Months != null)
+                if (Months.Count() != 0)
+                    position = Months.Count() - 1;
         }
     }
 }

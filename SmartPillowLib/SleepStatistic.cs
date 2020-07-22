@@ -17,6 +17,7 @@ namespace SmartPillowLib
         // User's goal to sleep for 8 hours minimum
         public static TimeSpan GoalSleep = new TimeSpan(8, 0, 0);
 
+        #region Properties
         // User's total sleep duration
         public static TimeSpan TotalSleep { get; set; }
         public static double Quality { get; set; }
@@ -42,37 +43,9 @@ namespace SmartPillowLib
         public static PointChart EventChart { get; set; }
         public static LineChart LineChart { get; set; }
         public static PointChart SnoreChart { get; set; }
+        #endregion
 
-        static SleepStatistic()
-        {
-            /// <summary>
-            ///     Calculating percentage for Quality, Awake, REM, Sleep, and Deep with example values
-            /// </summary>
-
-            // Example values
-            TotalSleep = new TimeSpan(7, 12, 12);
-            AwakeDuration = new TimeSpan(4, 2, 12);
-            RemDuration = new TimeSpan(1, 32, 12);
-            SleepDuration = new TimeSpan(1, 12, 12);
-            DeepDuration = new TimeSpan(2, 45, 12);
-
-            SetExampleValues();
-
-            // Calculating for all percentages
-            Quality = Math.Round((TotalSleep.TotalSeconds / GoalSleep.TotalSeconds * 100), 2);
-            AwakePercentage = Math.Round((AwakeDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
-            RemPercentage = Math.Round((RemDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
-            SleepPercentage = Math.Round((SleepDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
-            DeepPercentage = Math.Round((DeepDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
-
-            // Setting radial gauge charts up
-            QualityGauge = SetChartUp(Quality);
-            AwakeGauge = SetChartUp(AwakePercentage);
-            RemGauge = SetChartUp(RemPercentage);
-            SleepGauge = SetChartUp(SleepPercentage);
-            DeepGauge = SetChartUp(DeepPercentage);
-        }
-
+        #region Methods
         /// <summary>
         ///     When user presses "Start Sleep"
         /// </summary>
@@ -230,6 +203,37 @@ namespace SmartPillowLib
 
             stage += watch.Elapsed;
             watch.Reset();
+        }
+        #endregion
+
+        static SleepStatistic()
+        {
+            /// <summary>
+            ///     Calculating percentage for Quality, Awake, REM, Sleep, and Deep with example values
+            /// </summary>
+
+            // Example values
+            TotalSleep = new TimeSpan(7, 12, 12);
+            AwakeDuration = new TimeSpan(4, 2, 12);
+            RemDuration = new TimeSpan(1, 32, 12);
+            SleepDuration = new TimeSpan(1, 12, 12);
+            DeepDuration = new TimeSpan(2, 45, 12);
+
+            SetExampleValues();
+
+            // Calculating for all percentages
+            Quality = Math.Round((TotalSleep.TotalSeconds / GoalSleep.TotalSeconds * 100), 2);
+            AwakePercentage = Math.Round((AwakeDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
+            RemPercentage = Math.Round((RemDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
+            SleepPercentage = Math.Round((SleepDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
+            DeepPercentage = Math.Round((DeepDuration.TotalSeconds / TotalSleep.TotalSeconds * 100), 2);
+
+            // Setting radial gauge charts up
+            QualityGauge = SetChartUp(Quality);
+            AwakeGauge = SetChartUp(AwakePercentage);
+            RemGauge = SetChartUp(RemPercentage);
+            SleepGauge = SetChartUp(SleepPercentage);
+            DeepGauge = SetChartUp(DeepPercentage);
         }
     }
 }

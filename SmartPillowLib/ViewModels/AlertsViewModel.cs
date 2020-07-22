@@ -4,7 +4,6 @@ using SmartPillowLib.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -16,7 +15,8 @@ namespace SmartPillowLib.ViewModels
         public static Alert SelectedAlert { get; set; }
         public static bool IsNewAlert;
         public event Action PushAdjustAlertPage;
-        public event Action RefreshPage;
+        public event Action OpenLoginPage;
+        public event Action OpenProfilePage;
 
         #region Const keys
         private const string BY_NAME_KEY = "ByName";
@@ -26,8 +26,7 @@ namespace SmartPillowLib.ViewModels
         #endregion
 
         #region Fields
-        private string profile;
-        private string filterKey = RECENTLY_KEY;
+        public static string filterKey = RECENTLY_KEY;
         private ObservableCollection<Alert> alerts = new ObservableCollection<Alert>();
         private string brightness;
         private string keyword;
@@ -36,7 +35,6 @@ namespace SmartPillowLib.ViewModels
         #endregion
 
         #region Properties
-
         public bool IsRefreshing
         {
             get { return isRefreshing; }
@@ -44,10 +42,10 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged(); }
         }
 
-        public string Profile
+        public string ProfileImage
         {
             get => UserInformation.User.Image;
-            set => profile = value;
+            set { UserInformation.User.Image = value; NotifyPropertyChanged(); }
         }
 
         public ObservableCollection<Alert> Alerts
@@ -91,6 +89,8 @@ namespace SmartPillowLib.ViewModels
         }
         #endregion
 
+        #region Commands
+
         #region Filter Commands
         public ICommand SearchCommand => new Command(async () =>
         {
@@ -123,6 +123,15 @@ namespace SmartPillowLib.ViewModels
         #endregion
 
         #region General Commands
+        public ICommand UserCommand => new Command(() =>
+        {
+            if (UserInformation.IsUserLogged == false)
+                OpenLoginPage?.Invoke();
+
+            else
+                OpenProfilePage?.Invoke();
+        });
+
         public ICommand RefreshCommand => new Command(() =>
         {
             IsRefreshing = true;
@@ -153,6 +162,8 @@ namespace SmartPillowLib.ViewModels
         });
         #endregion
 
+        #endregion
+
         #region Methods
         public ObservableCollection<Alert> GetExampleAlerts()
         {
@@ -173,9 +184,8 @@ namespace SmartPillowLib.ViewModels
             //Alerts = new ObservableCollection<Alert>();
             //if (!string.IsNullOrEmpty(Keyword))
             //{
-            //    var newList = list.Where(x => x.SpecificAlert.ToLower().Contains(Keyword.ToLower()));
-            //    var filtered = newList.ToList();
-            //    filtered.ForEach(x => Alerts.Add(x));
+            //    var newList = list.Where(x => x.SpecificAlert.ToLower().Contains(Keyword.ToLower())).ToList();
+            //    newList.ForEach(x => Alerts.Add(x));
             //}
             //else
             //    Alerts = list;
@@ -213,6 +223,18 @@ namespace SmartPillowLib.ViewModels
             newList.ForEach(x => Alerts.Add(x));
         }
 
+        public void FilteringBasedOnKey()
+        {
+            switch (filterKey)
+            {
+                case BY_NAME_KEY: FilterByName(); break;
+                case BRIG_ENABLED_KEY: FilterBrightnessEnabled(); break;
+                case VIBR_ENABLED_KEY: FilterVibrationEnabled(); break;
+                case RECENTLY_KEY: FilterRecentlyUpdated(); break;
+                default: GetAlertsFromLocal(); break;
+            }
+        }
+
         public ObservableCollection<Alert> GetAlertsFromLocal()
         {
             var data = LocalDataServiceContext.Provider.GetAlerts();
@@ -229,24 +251,18 @@ namespace SmartPillowLib.ViewModels
             Alerts = list;
             return list;
         }
+
+        public void OnAppearing()
+        {
+            FilteringBasedOnKey();
+
+            ProfileImage = UserInformation.User.Image;
+        }
         #endregion
 
         public AlertsViewModel()
         {
-            //FilterRecentlyUpdated();
-            switch (filterKey)
-            {
-                case BY_NAME_KEY: FilterByName(); break;
-                case BRIG_ENABLED_KEY: FilterBrightnessEnabled(); break;
-                case VIBR_ENABLED_KEY: FilterVibrationEnabled(); break;
-                case RECENTLY_KEY: FilterRecentlyUpdated(); break;
-                default: GetAlertsFromLocal(); break;
-            }
-        }
-
-        public void OnAppearing()
-        {
-            FilterRecentlyUpdated();
+            FilteringBasedOnKey();
         }
     }
 }

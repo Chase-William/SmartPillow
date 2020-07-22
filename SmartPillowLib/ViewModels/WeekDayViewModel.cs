@@ -7,11 +7,14 @@ namespace SmartPillowLib.ViewModels
 {
     public class WeekDayViewModel : NotifyClass
     {
+        #region Fields
         private Day OldDay;
         private Week week;
         private string dayRange;
         private string brightness;
+        #endregion
 
+        #region Properties
         public string ProfileImage
         {
             get => UserInformation.User.Image;
@@ -63,7 +66,9 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        #endregion
 
+        #region Methods
         /// <summary>
         ///     ExpandableListView
         ///     https://www.youtube.com/watch?v=GG10QPrRC3w
@@ -104,6 +109,8 @@ namespace SmartPillowLib.ViewModels
             Days.Remove(day);
             Days.Insert(index, day);
         }
+        #endregion
+
         public WeekDayViewModel() { }
     }
 }

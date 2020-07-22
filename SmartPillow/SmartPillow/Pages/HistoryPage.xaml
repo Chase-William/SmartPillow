@@ -86,7 +86,7 @@
                                          Elevation="10"/>
                     <Image Margin="20,0,0,0" HorizontalOptions="Start"/>
                     <Image Margin="0,0,20,0" Rotation="180" HorizontalOptions="End"/>
-                    <CarouselView ItemsSource="{Binding User.UserData}" Position="{Binding Position}"
+                    <CarouselView ItemsSource="{Binding History}" Position="{Binding Position}"
                                   VerticalOptions="Center">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>

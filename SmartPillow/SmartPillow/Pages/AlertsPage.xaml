@@ -22,7 +22,7 @@
         <ToolbarItem IconImageSource="filterIcon"/>-->
         
         <!--might need to bind Command-->
-        <ToolbarItem IconImageSource="{Binding Profile}"/>
+        <ToolbarItem IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
 
         <!--filters alert collections--> <!-- need to figure how to change the secondary icon -->
         <ToolbarItem Text="By Name" Priority="1" Order="Secondary" Command="{Binding ByNameCommand}"/>

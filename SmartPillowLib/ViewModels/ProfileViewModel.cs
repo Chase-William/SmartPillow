@@ -1,8 +1,6 @@
 ﻿using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,15 +11,7 @@ namespace SmartPillowLib.ViewModels
         public event Action CloseFrame;
         public static event Action CheckStatus;
 
-        public ICommand LogoutCommand => new Command(() =>
-        {
-            CloseFrame?.Invoke();
-            LocalDataServiceContext.Provider.DeleteLoginAccessToken();
-            UserInformation.IsUserLogged = false;
-            User = UserInformation.Guest;
-            CheckStatus?.Invoke();
-        });
-
+        #region Properties
         public User User
         {
             get => UserInformation.User;
@@ -67,6 +57,18 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        #endregion
+
+        #region Commands
+        public ICommand LogoutCommand => new Command(() =>
+        {
+            CloseFrame?.Invoke();
+            LocalDataServiceContext.Provider.DeleteLoginAccessToken();
+            UserInformation.IsUserLogged = false;
+            User = UserInformation.Guest;
+            CheckStatus?.Invoke();
+        });
+        #endregion
 
         public ProfileViewModel()
         {

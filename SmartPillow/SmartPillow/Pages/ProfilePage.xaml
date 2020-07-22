@@ -6,7 +6,7 @@
              xmlns:frame="clr-namespace:SmartPillow.Pages"
              mc:Ignorable="d"
              x:Name="Content"
-             BackgroundColor="#80000000"
+             BackgroundColor="#00000000"
              x:Class="SmartPillow.Pages.ProfilePage">
 
     <AbsoluteLayout>

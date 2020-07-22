@@ -14,23 +14,11 @@ namespace SmartPillowLib
         {
             var alertList = new ObservableCollection<Alert>();
 
-            alertList.Add(new Alert() { Image = "fireIcon", Color = "#FFAD65", SpecificAlert = "Fire", BrightnessPercent = 100, VibrationPercent = 0, LastUpdated = new DateTime(2020, 6, 14, 11, 30, 59) });
-            alertList.Add(new Alert() { Image = "babyIcon", Color = "#FFC4F7", SpecificAlert = "Baby", BrightnessPercent = 27, VibrationPercent = 45, LastUpdated = new DateTime(2020, 5, 26, 4, 36, 43) });
+            alertList.Add(new Alert() { Image = "fireIcon", Color = "#FFAD65", SpecificAlert = "Fire", BrightnessPercent = 100, VibrationPercent = 0, LastUpdated = new DateTime(2020, 6, 14, 11, 30, 59), Description = "A smoke detector is a device that senses smoke, typically as an indicator of fire." });
+            alertList.Add(new Alert() { Image = "babyIcon", Color = "#FFC4F7", SpecificAlert = "Baby", BrightnessPercent = 27, VibrationPercent = 45, LastUpdated = new DateTime(2020, 5, 26, 4, 36, 43), Description = "Baby alarm is a radio system used to detect to sounds made by an infant. It alerts when the sound is detected as crying sound." });
             alertList.Add(new Alert() { Image = "CarIcon", Color = "#91FFFB", SpecificAlert = "Car", BrightnessPercent = 0, VibrationPercent = 18, LastUpdated = new DateTime(2020, 6, 13, 1, 3, 59, 41) });
             alertList.Add(new Alert() { Image = "weatherIcon", Color = "#91BDFF", SpecificAlert = "Nature", BrightnessPercent = 30, VibrationPercent = 13, LastUpdated = new DateTime(2020, 6, 13, 1, 3, 57) });
             alertList.Add(new Alert() { Image = "doorbellIcon", Color = "#B1FFD5", SpecificAlert = "Doorbell", BrightnessPercent = 0, VibrationPercent = 80, LastUpdated = new DateTime(2020, 6, 12, 6, 3, 59) });
-
-            alertList.Add(new Alert() { Image = "fireIcon", Color = "#FFAD65", SpecificAlert = "Fire", BrightnessPercent = 23, VibrationPercent = 0, LastUpdated = new DateTime(2020, 4, 24, 5, 5, 20) });
-            alertList.Add(new Alert() { Image = "babyIcon", Color = "#FFC4F7", SpecificAlert = "Baby", BrightnessPercent = 0, VibrationPercent = 26, LastUpdated = new DateTime(2020, 4, 30, 2, 3, 59) });
-            alertList.Add(new Alert() { Image = "CarIcon", Color = "#91FFFB", SpecificAlert = "Car", BrightnessPercent = 78, VibrationPercent = 0, LastUpdated = new DateTime(2020, 5, 13, 1, 2, 51) });
-            alertList.Add(new Alert() { Image = "weatherIcon", Color = "#91BDFF", SpecificAlert = "Nature", BrightnessPercent = 15, VibrationPercent = 32, LastUpdated = new DateTime(2020, 5, 12, 4, 3, 59) });
-            alertList.Add(new Alert() { Image = "doorbellIcon", Color = "#B1FFD5", SpecificAlert = "Doorbell", BrightnessPercent = 60, VibrationPercent = 0, LastUpdated = new DateTime(2020, 7, 8, 5, 3, 59) });
-
-            alertList.Add(new Alert() { Image = "fireIcon", Color = "#FFAD65", SpecificAlert = "Fire", BrightnessPercent = 23, VibrationPercent = 0, LastUpdated = new DateTime(2020, 7, 18, 4, 3, 59) });
-            alertList.Add(new Alert() { Image = "babyIcon", Color = "#FFC4F7", SpecificAlert = "Baby", BrightnessPercent = 0, VibrationPercent = 26, LastUpdated = new DateTime(2020, 7, 12, 6, 3, 59) });
-            alertList.Add(new Alert() { Image = "CarIcon", Color = "#91FFFB", SpecificAlert = "Car", BrightnessPercent = 78, VibrationPercent = 0, LastUpdated = new DateTime(2020, 7, 14, 5, 3, 59) });
-            alertList.Add(new Alert() { Image = "weatherIcon", Color = "#91BDFF", SpecificAlert = "Nature", BrightnessPercent = 15, VibrationPercent = 32, LastUpdated = new DateTime(2020, 7, 1, 2, 9, 59) });
-            alertList.Add(new Alert() { Image = "doorbellIcon", Color = "#B1FFD5", SpecificAlert = "Doorbell", BrightnessPercent = 60, VibrationPercent = 0, LastUpdated = new DateTime(2020, 6, 4, 4, 3, 20) });
 
             Alerts = alertList;
 
@@ -38,7 +26,7 @@ namespace SmartPillowLib
             var optionalList = new List<Alert>();
 
             optionalList.Add(new Alert() { Image = "fireIcon", SmallIcon = "fireAlert", Description = "A smoke detector is a device that senses smoke, typically as an indicator of fire." });
-            optionalList.Add(new Alert() { Image = "babyIcon", SmallIcon = "babyAlert", Description = "babyy" });
+            optionalList.Add(new Alert() { Image = "babyIcon", SmallIcon = "babyAlert", Description = "Baby alarm is a radio system used to detect to sounds made by an infant. It alerts when the sound is detected as crying sound." });
             optionalList.Add(new Alert() { Image = "CarIcon", SmallIcon = "CarAlert", Description = "carr" });
             optionalList.Add(new Alert() { Image = "doorbellIcon", SmallIcon = "doorbellAlert", Description = "doorbell" });
             optionalList.Add(new Alert() { Image = "weatherIcon", SmallIcon = "weatherAlert", Description = "weather" });

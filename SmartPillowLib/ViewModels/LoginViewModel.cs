@@ -1,16 +1,13 @@
 ﻿using Newtonsoft.Json;
 using SkiaSharp;
-using SmartPillowAuthLib;
 using SmartPillowAuthLib.OAuth1.TwitterOAuth;
 using SmartPillowAuthLib.OAuth2.FacebookOAuth;
-using SmartPillowAuthLib.OAuth2.GoogleOAuth;
 using SmartPillowLib.Data.Local;
 using SmartPillowLib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Auth.Presenters;
@@ -22,8 +19,14 @@ namespace SmartPillowLib.ViewModels
     {
         public event Action PopAsyncPage;
         public static event Action CheckStatus;
+        public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
 
+        #region Fields
         private User user;
+        private bool isVisible;
+        #endregion
+
+        #region Properties
         public User User
         {
             get => user;
@@ -34,10 +37,6 @@ namespace SmartPillowLib.ViewModels
             }
         }
 
-        public static string[] LineColors = new string[] { "#7AC0DF", "#A794EE", "#D06BFC", "#92A9E7", "#BC7FF5" };
-
-        private bool isVisible;
-
         public bool IsVisible
         {
             get => isVisible;
@@ -47,7 +46,9 @@ namespace SmartPillowLib.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        #endregion
 
+        #region Commands
         public ICommand LoginCommand => new Command(async () =>
         {
             // !!! I need to code this deeper for login function
@@ -64,31 +65,6 @@ namespace SmartPillowLib.ViewModels
                 PopAsyncPage?.Invoke();
             });
         });
-
-        public void LoginWithMarkZ()
-        {
-            var user = new User()
-            {
-                FirstName = "Mark",
-                LastName = "Zuckerberg",
-                Image = "Zack.png",
-                Email = "Email@gmail.com",
-                PhoneNumber = "585-585-5858",
-                SmartPillowDeviceID = "ZZ987-19C",
-                DataUrl = "markZ"
-            };
-            user.UserData = HistoryJsonDeserialize(user.DataUrl);
-            GetActualColorsForGraphs(user);
-            UserInformation.User = user;
-            UserInformation.IsUserLogged = true;
-            UserInformation.IsConnected = true;
-            CheckStatus?.Invoke();
-            IsVisible = false;
-
-            var access = new AccessToken();
-            access.LoginWith = "native";
-            LocalDataServiceContext.Provider.InsertLoginAccessToken(access);
-        }
 
         public ICommand TwitterCommand => new Command(() =>
         {
@@ -144,13 +120,9 @@ namespace SmartPillowLib.ViewModels
                 LocalDataServiceContext.Provider.InsertLoginAccessToken(token);
             };
         });
+        #endregion
 
-        public LoginViewModel()
-        {
-            // hides activity indicator when LoginPage gets opened
-            IsVisible = false;
-        }
-
+        #region Methods
         /// <summary>
         ///     Read User's data in json file and deserialize it to User's History
         /// </summary>
@@ -167,6 +139,31 @@ namespace SmartPillowLib.ViewModels
                 list = JsonConvert.DeserializeObject<List<History>>(page);
             }
             return list;
+        }
+
+        public void LoginWithMarkZ()
+        {
+            var user = new User()
+            {
+                FirstName = "Mark",
+                LastName = "Zuckerberg",
+                Image = "Zack.png",
+                Email = "Email@gmail.com",
+                PhoneNumber = "585-585-5858",
+                SmartPillowDeviceID = "ZZ987-19C",
+                DataUrl = "markZ"
+            };
+            user.UserData = HistoryJsonDeserialize(user.DataUrl);
+            GetActualColorsForGraphs(user);
+            UserInformation.User = user;
+            UserInformation.IsUserLogged = true;
+            UserInformation.IsConnected = true;
+            CheckStatus?.Invoke();
+            IsVisible = false;
+
+            var access = new AccessToken();
+            access.LoginWith = "native";
+            LocalDataServiceContext.Provider.InsertLoginAccessToken(access);
         }
 
         public void UpdateTwitterUser(TwitterProfile profile)
@@ -310,6 +307,13 @@ namespace SmartPillowLib.ViewModels
             {
                 return false;
             }
+        }
+        #endregion
+
+        public LoginViewModel()
+        {
+            // hides activity indicator when LoginPage gets opened
+            IsVisible = false;
         }
     }
 }

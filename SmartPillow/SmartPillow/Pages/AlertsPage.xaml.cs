@@ -14,10 +14,9 @@ namespace SmartPillow.Pages
         {
             InitializeComponent();
 
-            VM.PushAdjustAlertPage += delegate
-            {
-                Navigation.PushAsync(new AdjustAlertPage());
-            };
+            VM.PushAdjustAlertPage += async delegate { await Navigation.PushAsync(new AdjustAlertPage()); };
+            VM.OpenLoginPage += async delegate { await Navigation.PushModalAsync(new LoginPage()); };
+            VM.OpenProfilePage += async delegate { await Navigation.PushModalAsync(new ProfilePage()); };
         }
 
         protected async override void OnAppearing()
@@ -29,7 +28,6 @@ namespace SmartPillow.Pages
 
         protected override void OnDisappearing()
         {
-            Task.Delay(100);
             cloudBackground.StopAnimation();
             base.OnDisappearing();
         }

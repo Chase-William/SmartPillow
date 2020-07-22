@@ -7,7 +7,6 @@ namespace SmartPillowLib.Models
 {
     public class Alert : NotifyClass
     {
-        public event Action OpenDetail;
         #region Fields
         //private int id;
         private string image;
@@ -158,16 +157,6 @@ namespace SmartPillowLib.Models
             BrightnessPercent = 0;
             VibrationPercent = 0;
             Image = "babyIcon";
-        }
-
-        // uses this constructor to adjust existed alert -- not referenced yet
-        public Alert(Alert _alert)
-        {
-            SpecificAlert = _alert.SpecificAlert;
-            Color = _alert.Color;
-            BrightnessPercent = _alert.BrightnessPercent;
-            VibrationPercent = _alert.VibrationPercent;
-            Image = _alert.Image;
         }
     }
 }

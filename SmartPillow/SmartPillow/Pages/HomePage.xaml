@@ -25,6 +25,7 @@
                      Order="Secondary"
                      Priority="0"
                      Command="{Binding SettingsCMD}"/>
+        
     </ContentPage.ToolbarItems>
 
 

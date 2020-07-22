@@ -21,6 +21,10 @@ namespace SmartPillow.Pages
         public AdjustAlertPage()
         {
             InitializeComponent();
+
+            VM.PopPage += async delegate { await Navigation.PopAsync(); };
+            VM.OpenLoginPage += async delegate { await Navigation.PushModalAsync(new LoginPage()); };
+            VM.OpenProfilePage += async delegate { await Navigation.PushModalAsync(new ProfilePage()); };
         }
 
         private void SKCanvasDetail_PaintSurface(object sender, SKPaintSurfaceEventArgs e) => Painter.PaintGradientBG(e);
@@ -38,6 +42,7 @@ namespace SmartPillow.Pages
 
         protected async override void OnAppearing()
         {
+            VM.OnAppearing();
             await cloudBackground.StartAnimation();
             base.OnAppearing();
         }
@@ -45,12 +50,6 @@ namespace SmartPillow.Pages
         protected override void OnDisappearing()
         {
             cloudBackground.StopAnimation();
-
-            if (AlertsViewModel.IsNewAlert)
-            {
-                AlertsViewModel.SelectedAlert.LastUpdated = DateTime.Now;
-                LocalDataServiceContext.Provider.InsertAlert(AlertsViewModel.SelectedAlert);
-            };
             base.OnDisappearing();
         }
     }

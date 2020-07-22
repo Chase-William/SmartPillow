@@ -15,11 +15,10 @@
         <vm:AdjustAlertViewModel/>
     </ContentPage.BindingContext>
 
-    
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Delete" IsDestructive="True"/>
-        <!--might need to bind Command-->
-        <ToolbarItem IconImageSource="{Binding Profile}"/>
+        <ToolbarItem IconImageSource="{Binding ProfileImage}" Command="{Binding UserCommand}"/>
+        <ToolbarItem IconImageSource="{Binding ToolbarIcon}" Command="{Binding ToolbarCommand}"/>
     </ContentPage.ToolbarItems>
 
     <AbsoluteLayout>
@@ -126,7 +125,7 @@
 
                     <pancake:PancakeView/>
 
-                    <Label Text="{Binding Description}" FontFamily="Ubuntu"
+                    <Label Text="{Binding Description}" FontFamily="Ubuntu" Margin="10,0,10,0"
                            HorizontalOptions="Center" VerticalOptions="Center"
                            HorizontalTextAlignment="Center" TextColor="#E1E1E1"/>
                     
