@@ -90,7 +90,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             activeAlarms.AddRange(SmartPillowLib.Data.Local.LocalDataServiceContext.Provider.GetAlarms().Where(x => x.IsAlarmEnabled).Select(x => x.Id));
         }
 
-        public static void CancelAlarm(Alarm alarm)
+        public void CancelAlarm(Alarm alarm)
         {
             // If the alarmId isn't inside the pendingIntents dict abort.
             if (!activeAlarms.Contains(alarm.Id)) return;
@@ -105,7 +105,7 @@ namespace SmartPillow.Droid.Locals.SmartPillowAlarm
             Toast.MakeText(MainActivity, "Alarm " + alarm.Name + " cancelled.", ToastLength.Short).Show();
         }
 
-        public static void SetAlarm(TimeSpan timeOffset, Alarm alarm)
+        public void SetAlarm(TimeSpan timeOffset, Alarm alarm)
         {
             // Calendar stuff           
             Calendar calendar = Calendar.GetInstance(ULocale.Us);

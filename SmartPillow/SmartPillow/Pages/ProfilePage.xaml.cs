@@ -1,6 +1,5 @@
 ﻿using SmartPillowLib.ViewModels;
 using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,15 +13,19 @@ namespace SmartPillow.Pages
         {
             InitializeComponent();
 
-            //#80000000
-
-            //#00000000
-            ShiftColorTo(Content, Content.BackgroundColor, Color.FromHex("#80000000"), color =>
+            //#80000000 to #00000000 - noting for myself
+            ShiftColorTo(Content, Content.BackgroundColor, Color.FromRgba(0, 0, 0, 128), color =>
             {
                 Content.BackgroundColor = color;
             },
             length: 500,
             easing: Easing.CubicIn);
+
+            ProfileFrame.ChangeAlpha += (alpha, scale) =>
+            {
+                Content.BackgroundColor = Color.FromRgba(0, 0, 0, alpha);
+                image.Scale = scale;
+            };
 
             ProfileFrame.PopProfile += async delegate
             {

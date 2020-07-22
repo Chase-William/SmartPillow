@@ -10,6 +10,9 @@
              x:Class="SmartPillow.Pages.ProfilePage">
 
     <AbsoluteLayout>
+        <Image x:Name="image" Source="kwait.png" AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds=".5,.17" WidthRequest="350" Scale="1"/>
+        
         <frame:ProfileFrame AbsoluteLayout.LayoutFlags="PositionProportional" Opacity="1"
                                                             AbsoluteLayout.LayoutBounds=".5,.5" />
     </AbsoluteLayout>

@@ -1,16 +1,10 @@
 ﻿using SkiaSharp.Views.Forms;
 using SmartPillow.Controls;
 using SmartPillow.Util;
-using SmartPillowLib;
 using SmartPillowLib.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace SmartPillow.Pages
 {
@@ -21,6 +15,7 @@ namespace SmartPillow.Pages
         public ProfileViewModel VM => (ProfileViewModel)BindingContext;
 
         public static event Action PopProfile;
+        public static event Action<int, double> ChangeAlpha;
         public ProfileFrame()
         {
             InitializeComponent();
@@ -35,7 +30,7 @@ namespace SmartPillow.Pages
                 PopProfile?.Invoke();
             };
 
-            PanGestureRecognizer = new PanGestureRecognizer
+            PanGestureRecognizer = new PanGestureRecognizer()
             {
                 TouchPoints = 1
             };
@@ -55,38 +50,68 @@ namespace SmartPillow.Pages
             {
                 // Move frame up or down
                 case GestureStatus.Running:
+                    TranslationY = (Device.RuntimePlatform == Device.Android ? TranslationY : 0) + e.TotalY;
 
-                    if (TranslationY > 219)
-                        TranslationY = (Device.RuntimePlatform == Device.Android ? TranslationY : 0) + e.TotalY;
-                    
+                    // it will be not able to move upwards when the translationY hits 220
+                    if (219 > TranslationY + e.TotalY)
+                        TranslationY = 220;
+
                     // if we are moving downwards (downwards is positive) then dont go up.
-                    if (e.TotalY > 0)
+                    if (TranslationY > 500)
                         GoUp = false;
-
-                    // if we are moving upwards (upwards is negative) then go up.
-                    if (e.TotalY < 0)
+                    
+                    if (TranslationY <= 500)
                         GoUp = true;
 
+                    //// if we are moving downwards (downwards is positive) then dont go up.
+                    //if (e.TotalY > 0)
+                    //    GoUp = false;
+
+                    //// if we are moving upwards (upwards is negative) then go up.
+                    //if (e.TotalY < 0)
+                    //    GoUp = true;
+
+                    ChangingAlpha();
                     break;
                 case GestureStatus.Completed:
-                    
                     // if the frame should go up tranlate it to go up
                     if (GoUp)
+                    {
                         await this.TranslateTo(TranslationX, 220, 100);
+                        ChangingAlpha();
+                    }
 
                     // if the frame should go down translate it to go down
                     if (!GoUp)
                     {
                         await this.TranslateTo(TranslationX, DeviceDisplay.MainDisplayInfo.Height / 2 - 170, 100);
                         PopProfile?.Invoke();
+                        ChangingAlpha();
                     }
-                    break;
 
+                    break;
                 case GestureStatus.Canceled:
                     break;
                 case GestureStatus.Started:
                     break;
             }
+        }
+
+        /// <summary>
+        ///     changes alpha to darker or more opacity outside the slide as the slide is being moved either upwards or downwards
+        /// </summary>
+        public void ChangingAlpha()
+        {
+            var translation = TranslationY - 220;
+            var total = Math.Round(translation / 4.14);
+            var alpha = (int)(128 - total);
+
+            var translation2 = TranslationY - 400;
+            //var scaleMeasure = 0.0035;
+            var scaleMeasure = 0.005;
+            var scale = translation2 * scaleMeasure;
+
+            ChangeAlpha?.Invoke(alpha, scale);
         }
     }
 }
