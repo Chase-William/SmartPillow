@@ -55,21 +55,21 @@ namespace SmartPillow.Pages
                     // it will be not able to move upwards when the translationY hits 220
                     if (219 > TranslationY + e.TotalY)
                         TranslationY = 220;
-
-                    // if we are moving downwards (downwards is positive) then dont go up.
-                    if (TranslationY > 500)
-                        GoUp = false;
                     
                     if (TranslationY <= 500)
                         GoUp = true;
 
-                    //// if we are moving downwards (downwards is positive) then dont go up.
-                    //if (e.TotalY > 0)
-                    //    GoUp = false;
+                    // if we are moving downwards (downwards is positive) then dont go up.
+                    if (e.TotalY > 5)
+                        GoUp = false;
 
-                    //// if we are moving upwards (upwards is negative) then go up.
-                    //if (e.TotalY < 0)
-                    //    GoUp = true;
+                    // if we are moving upwards (upwards is negative) then go up.
+                    if (e.TotalY < 5)
+                        GoUp = true;
+
+                    // if we are moving downwards (downwards is positive) then dont go up.
+                    if (TranslationY > 500)
+                        GoUp = false;
 
                     ChangingAlpha();
                     break;

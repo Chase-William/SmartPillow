@@ -135,15 +135,7 @@ namespace SmartPillowLib.ViewModels
         public ICommand RefreshCommand => new Command(() =>
         {
             IsRefreshing = true;
-            switch (filterKey)
-            {
-                case BY_NAME_KEY: FilterByName(); break;
-                case BRIG_ENABLED_KEY: FilterBrightnessEnabled(); break;
-                case VIBR_ENABLED_KEY: FilterVibrationEnabled(); break;
-                case RECENTLY_KEY: FilterRecentlyUpdated(); break;
-                default: GetAlertsFromLocal(); break;
-            }
-
+            FilteringBasedOnKey();
             IsRefreshing = false;
         });
 

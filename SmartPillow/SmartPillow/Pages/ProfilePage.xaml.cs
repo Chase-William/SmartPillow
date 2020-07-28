@@ -30,6 +30,7 @@ namespace SmartPillow.Pages
             ProfileFrame.PopProfile += async delegate
             {
                 Content.BackgroundColor = Color.Transparent;
+                image.Scale = 0;
                 await this.Navigation.PopModalAsync();
             };
         }
